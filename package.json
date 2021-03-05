@@ -1,0 +1,12 @@
+{
+  "name": "fastfeet",
+  "version": "1.0.0",
+  "main": "index.js",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "license": "MIT"
+}
