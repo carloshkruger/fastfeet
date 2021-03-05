@@ -8,5 +8,8 @@
       "packages/*"
     ]
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@fastfeet/eslint-config": "*"
+  }
 }
