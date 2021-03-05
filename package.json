@@ -10,6 +10,7 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@fastfeet/eslint-config": "*"
+    "@fastfeet/eslint-config": "*",
+    "typescript": "^4.2.3"
   }
 }
