@@ -8,7 +8,7 @@ import { UserRepository } from '../../repositories/UserRepository'
 import { CreateUserErrors } from './CreateUserErrors'
 import { CreateUserRequest } from './CreateUserRequest'
 
-class CreateUserUseCase implements UseCase<CreateUserRequest, void> {
+class CreateUserUseCase implements UseCase<CreateUserRequest, User> {
   constructor(private userRepository: UserRepository) {}
 
   async execute({
@@ -16,7 +16,7 @@ class CreateUserUseCase implements UseCase<CreateUserRequest, void> {
     email,
     password,
     cpf
-  }: CreateUserRequest): Promise<void> {
+  }: CreateUserRequest): Promise<User> {
     const user = User.create({
       name: UserName.create({ value: name }),
       email: Email.create({ value: email }),
@@ -31,6 +31,8 @@ class CreateUserUseCase implements UseCase<CreateUserRequest, void> {
     }
 
     await this.userRepository.save(user)
+
+    return user
   }
 }
 
