@@ -22,6 +22,18 @@ class User extends Entity<UserProps> {
     return new User(props, id)
   }
 
+  public updateName(userName: UserName): void {
+    this.props.name = userName
+  }
+
+  public updateCpf(cpf: CPF): void {
+    this.props.cpf = cpf
+  }
+
+  public updateEmail(email: Email): void {
+    this.props.email = email
+  }
+
   get name(): UserName {
     return this.props.name
   }

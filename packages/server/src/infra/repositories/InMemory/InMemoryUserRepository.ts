@@ -8,6 +8,12 @@ class InMemoryUserRepository implements UserRepository {
     this.data.push(user)
   }
 
+  async findById(userId: string): Promise<User | null> {
+    const user = this.data.find(user => user.id.value === userId)
+
+    return user
+  }
+
   async findByEmail(email: string): Promise<User | null> {
     const user = this.data.find(user => user.email.value === email)
 
