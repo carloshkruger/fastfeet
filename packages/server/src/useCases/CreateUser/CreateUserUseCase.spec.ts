@@ -111,6 +111,29 @@ describe('CreateUserUseCase', () => {
     ).rejects.toThrow(CreateUserErrors.EmailAlreadyRegistered)
   })
 
+  it('should not be possible to create an user with a cpf already registered', async () => {
+    const validCPF = '39782449008'
+
+    const user = User.create({
+      name: UserName.create({ value: 'valid name' }),
+      email: Email.create({ value: 'valid_email@domain.com' }),
+      password: Password.create({ value: 'valid_password', hashedValue: '' }),
+      cpf: CPF.create({ value: validCPF })
+    })
+
+    await inMemoryUserRepository.save(user)
+
+    await expect(
+      createUserUseCase.execute({
+        name: 'another user',
+        email: 'another_valid_email@domain.com',
+        cpf: validCPF,
+        password: 'valid_password',
+        isAdmin: false
+      })
+    ).rejects.toThrow(CreateUserErrors.CPFAlreadyRegistered)
+  })
+
   it('should create an user with valid data', async () => {
     const saveSpy = jest.spyOn(inMemoryUserRepository, 'save')
     const hashSpy = jest.spyOn(fakeEncrypter, 'hash')

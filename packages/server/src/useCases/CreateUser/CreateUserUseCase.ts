@@ -26,10 +26,20 @@ class CreateUserUseCase implements UseCase<CreateUserRequest, User> {
     const emailValueObject = Email.create({ value: email })
     const cpfValueObject = CPF.create({ value: cpf })
 
-    const userAlreadyRegistered = await this.userRepository.findByEmail(email)
+    const userAlreadyRegisteredWithGivenEmail = await this.userRepository.findByEmail(
+      email
+    )
 
-    if (userAlreadyRegistered) {
+    if (userAlreadyRegisteredWithGivenEmail) {
       throw new CreateUserErrors.EmailAlreadyRegistered(email)
+    }
+
+    const userAlreadyRegisteredWithGivenCpf = await this.userRepository.findByCpf(
+      cpf
+    )
+
+    if (userAlreadyRegisteredWithGivenCpf) {
+      throw new CreateUserErrors.CPFAlreadyRegistered(cpf)
     }
 
     const hashedPassword = await this.encrypter.hash(password)

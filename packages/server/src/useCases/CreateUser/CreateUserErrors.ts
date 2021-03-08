@@ -7,6 +7,13 @@ namespace CreateUserErrors {
       this.name = EmailAlreadyRegistered.name
     }
   }
+
+  export class CPFAlreadyRegistered extends Error implements AppError {
+    constructor(cpf: string) {
+      super(`The CPF "${cpf}" is already registered.`)
+      this.name = CPFAlreadyRegistered.name
+    }
+  }
 }
 
 export { CreateUserErrors }

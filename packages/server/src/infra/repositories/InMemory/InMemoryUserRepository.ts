@@ -13,6 +13,12 @@ class InMemoryUserRepository implements UserRepository {
 
     return user
   }
+
+  async findByCpf(cpf: string): Promise<User | null> {
+    const user = this.data.find(user => user.cpf.value === cpf)
+
+    return user
+  }
 }
 
 export { InMemoryUserRepository }
