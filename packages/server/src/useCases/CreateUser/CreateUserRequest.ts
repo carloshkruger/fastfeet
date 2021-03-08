@@ -3,6 +3,7 @@ interface CreateUserRequest {
   email: string
   password: string
   cpf: string
+  isAdmin: boolean
 }
 
 export { CreateUserRequest }

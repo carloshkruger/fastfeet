@@ -10,6 +10,7 @@ interface UserProps {
   email: Email
   password: Password
   cpf: CPF
+  isAdmin?: boolean
 }
 
 class User extends Entity<UserProps> {
@@ -35,6 +36,10 @@ class User extends Entity<UserProps> {
 
   get cpf(): CPF {
     return this.props.cpf
+  }
+
+  get isAdmin(): boolean {
+    return this.props.isAdmin || false
   }
 }
 

@@ -34,7 +34,8 @@ describe('CreateUserUseCase', () => {
         name: '',
         email: validEmail,
         cpf: validCPF,
-        password: validPassword
+        password: validPassword,
+        isAdmin: false
       })
     ).rejects.toThrow()
   })
@@ -49,7 +50,8 @@ describe('CreateUserUseCase', () => {
         name: validName,
         email: 'invalid_email',
         cpf: validCPF,
-        password: validPassword
+        password: validPassword,
+        isAdmin: false
       })
     ).rejects.toThrow()
   })
@@ -64,7 +66,8 @@ describe('CreateUserUseCase', () => {
         name: validName,
         email: validEmail,
         cpf: '999.999',
-        password: validPassword
+        password: validPassword,
+        isAdmin: false
       })
     ).rejects.toThrow()
   })
@@ -79,7 +82,8 @@ describe('CreateUserUseCase', () => {
         name: validName,
         email: validEmail,
         cpf: validCPF,
-        password: ''
+        password: '',
+        isAdmin: false
       })
     ).rejects.toThrow()
   })
@@ -101,7 +105,8 @@ describe('CreateUserUseCase', () => {
         name: 'another user',
         email: validEmail,
         cpf: '832.877.490-99',
-        password: 'valid_password'
+        password: 'valid_password',
+        isAdmin: false
       })
     ).rejects.toThrow(CreateUserErrors.EmailAlreadyRegistered)
   })
@@ -117,7 +122,8 @@ describe('CreateUserUseCase', () => {
         name: 'valid name',
         email: 'valid_email@domain.com',
         password,
-        cpf: '832.877.490-99'
+        cpf: '832.877.490-99',
+        isAdmin: false
       })
     ).resolves.not.toThrow()
 

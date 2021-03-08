@@ -19,7 +19,8 @@ class CreateUserUseCase implements UseCase<CreateUserRequest, User> {
     name,
     email,
     password,
-    cpf
+    cpf,
+    isAdmin
   }: CreateUserRequest): Promise<User> {
     const userNameValueObject = UserName.create({ value: name })
     const emailValueObject = Email.create({ value: email })
@@ -42,7 +43,8 @@ class CreateUserUseCase implements UseCase<CreateUserRequest, User> {
       name: userNameValueObject,
       email: emailValueObject,
       password: passwordValueObject,
-      cpf: cpfValueObject
+      cpf: cpfValueObject,
+      isAdmin
     })
 
     await this.userRepository.save(user)
