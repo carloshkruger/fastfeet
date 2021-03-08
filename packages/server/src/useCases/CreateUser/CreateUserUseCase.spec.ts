@@ -3,27 +3,10 @@ import { Email } from '../../domain/Email'
 import { Password } from '../../domain/Password'
 import { User } from '../../domain/User'
 import { UserName } from '../../domain/UserName'
+import { InMemoryUserRepository } from '../../infra/repositories/InMemory/InMemoryUserRepository'
+import { UserRepository } from '../../repositories/UserRepository'
 import { CreateUserErrors } from './CreateUserErrors'
 import { CreateUserUseCase } from './CreateUserUseCase'
-
-export interface UserRepository {
-  save(user: User): Promise<void>
-  findByEmail(email: string): Promise<User | null>
-}
-
-class InMemoryUserRepository implements UserRepository {
-  private data: User[] = []
-
-  async save(user: User): Promise<void> {
-    this.data.push(user)
-  }
-
-  async findByEmail(email: string): Promise<User | null> {
-    const user = this.data.find(user => user.email.value === email)
-
-    return user
-  }
-}
 
 let createUserUseCase: CreateUserUseCase
 let inMemoryUserRepository: UserRepository

@@ -4,9 +4,9 @@ import { Email } from '../../domain/Email'
 import { Password } from '../../domain/Password'
 import { User } from '../../domain/User'
 import { UserName } from '../../domain/UserName'
+import { UserRepository } from '../../repositories/UserRepository'
 import { CreateUserErrors } from './CreateUserErrors'
 import { CreateUserRequest } from './CreateUserRequest'
-import { UserRepository } from './CreateUserUseCase.spec'
 
 class CreateUserUseCase implements UseCase<CreateUserRequest, void> {
   constructor(private userRepository: UserRepository) {}
