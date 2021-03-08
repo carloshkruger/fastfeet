@@ -3,6 +3,7 @@ import { InvalidPasswordLengthError } from './errors/InvalidPasswordLengthError'
 
 interface PasswordProps {
   value: string
+  hashedValue: string
 }
 
 class Password extends ValueObject<PasswordProps> {
@@ -24,8 +25,15 @@ class Password extends ValueObject<PasswordProps> {
     return new Password(props)
   }
 
+  public static createWithValidatedValue(hashedValue: string) {
+    return new Password({
+      value: '',
+      hashedValue
+    })
+  }
+
   get value(): string {
-    return this.props.value
+    return this.props.hashedValue
   }
 }
 

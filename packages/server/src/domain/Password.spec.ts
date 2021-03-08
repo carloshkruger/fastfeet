@@ -10,7 +10,7 @@ describe('Password validation', () => {
       text += 'a'
     }
 
-    expect(() => Password.create({ value: text })).toThrow(
+    expect(() => Password.create({ value: text, hashedValue: '' })).toThrow(
       InvalidPasswordLengthError
     )
   })
@@ -23,7 +23,7 @@ describe('Password validation', () => {
       text += ' '
     }
 
-    expect(() => Password.create({ value: text })).toThrow(
+    expect(() => Password.create({ value: text, hashedValue: '' })).toThrow(
       InvalidPasswordLengthError
     )
   })
@@ -36,6 +36,8 @@ describe('Password validation', () => {
       text += 'a'
     }
 
-    expect(Password.create({ value: text })).toBeInstanceOf(Password)
+    expect(Password.create({ value: text, hashedValue: '' })).toBeInstanceOf(
+      Password
+    )
   })
 })
