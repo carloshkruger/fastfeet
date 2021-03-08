@@ -5,16 +5,23 @@ import { User } from '../../domain/User'
 import { UserName } from '../../domain/UserName'
 import { InMemoryUserRepository } from '../../infra/repositories/InMemory/InMemoryUserRepository'
 import { UserRepository } from '../../repositories/UserRepository'
+import { Encrypter } from '../../shared/providers/EncrypterProvider/Encrypter'
+import { FakeEncrypter } from '../../shared/providers/EncrypterProvider/FakeEncrypter'
 import { CreateUserErrors } from './CreateUserErrors'
 import { CreateUserUseCase } from './CreateUserUseCase'
 
 let createUserUseCase: CreateUserUseCase
+let fakeEncrypter: Encrypter
 let inMemoryUserRepository: UserRepository
 
 describe('CreateUserUseCase', () => {
   beforeEach(() => {
     inMemoryUserRepository = new InMemoryUserRepository()
-    createUserUseCase = new CreateUserUseCase(inMemoryUserRepository)
+    fakeEncrypter = new FakeEncrypter()
+    createUserUseCase = new CreateUserUseCase(
+      inMemoryUserRepository,
+      fakeEncrypter
+    )
   })
 
   it('should not be possible to create an user with invalid name', async () => {
@@ -83,7 +90,7 @@ describe('CreateUserUseCase', () => {
     const user = User.create({
       name: UserName.create({ value: 'valid name' }),
       email: Email.create({ value: validEmail }),
-      password: Password.create({ value: 'valid_password' }),
+      password: Password.create({ value: 'valid_password', hashedValue: '' }),
       cpf: CPF.create({ value: '39782449008' })
     })
 
@@ -101,16 +108,20 @@ describe('CreateUserUseCase', () => {
 
   it('should create an user with valid data', async () => {
     const saveSpy = jest.spyOn(inMemoryUserRepository, 'save')
+    const hashSpy = jest.spyOn(fakeEncrypter, 'hash')
+
+    const password = 'valid_password'
 
     await expect(
       createUserUseCase.execute({
         name: 'valid name',
         email: 'valid_email@domain.com',
-        password: 'valid_password',
+        password,
         cpf: '832.877.490-99'
       })
     ).resolves.not.toThrow()
 
     expect(saveSpy).toHaveBeenCalledTimes(1)
+    expect(hashSpy).toHaveBeenCalledWith(password)
   })
 })

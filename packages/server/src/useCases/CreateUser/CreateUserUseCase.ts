@@ -5,11 +5,15 @@ import { Password } from '../../domain/Password'
 import { User } from '../../domain/User'
 import { UserName } from '../../domain/UserName'
 import { UserRepository } from '../../repositories/UserRepository'
+import { Encrypter } from '../../shared/providers/EncrypterProvider/Encrypter'
 import { CreateUserErrors } from './CreateUserErrors'
 import { CreateUserRequest } from './CreateUserRequest'
 
 class CreateUserUseCase implements UseCase<CreateUserRequest, User> {
-  constructor(private userRepository: UserRepository) {}
+  constructor(
+    private userRepository: UserRepository,
+    private encrypter: Encrypter
+  ) {}
 
   async execute({
     name,
@@ -17,18 +21,29 @@ class CreateUserUseCase implements UseCase<CreateUserRequest, User> {
     password,
     cpf
   }: CreateUserRequest): Promise<User> {
-    const user = User.create({
-      name: UserName.create({ value: name }),
-      email: Email.create({ value: email }),
-      password: Password.create({ value: password }),
-      cpf: CPF.create({ value: cpf })
-    })
+    const userNameValueObject = UserName.create({ value: name })
+    const emailValueObject = Email.create({ value: email })
+    const cpfValueObject = CPF.create({ value: cpf })
 
     const userAlreadyRegistered = await this.userRepository.findByEmail(email)
 
     if (userAlreadyRegistered) {
       throw new CreateUserErrors.EmailAlreadyRegistered(email)
     }
+
+    const hashedPassword = await this.encrypter.hash(password)
+
+    const passwordValueObject = Password.create({
+      value: password,
+      hashedValue: hashedPassword
+    })
+
+    const user = User.create({
+      name: userNameValueObject,
+      email: emailValueObject,
+      password: passwordValueObject,
+      cpf: cpfValueObject
+    })
 
     await this.userRepository.save(user)
 
