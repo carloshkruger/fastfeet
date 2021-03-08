@@ -100,6 +100,8 @@ describe('CreateUserUseCase', () => {
 
     await inMemoryUserRepository.save(user)
 
+    const saveSpy = jest.spyOn(inMemoryUserRepository, 'save')
+
     await expect(
       createUserUseCase.execute({
         name: 'another user',
@@ -109,6 +111,8 @@ describe('CreateUserUseCase', () => {
         isAdmin: false
       })
     ).rejects.toThrow(CreateUserErrors.EmailAlreadyRegistered)
+
+    expect(saveSpy).not.toHaveBeenCalled()
   })
 
   it('should not be possible to create an user with a cpf already registered', async () => {
@@ -123,6 +127,8 @@ describe('CreateUserUseCase', () => {
 
     await inMemoryUserRepository.save(user)
 
+    const saveSpy = jest.spyOn(inMemoryUserRepository, 'save')
+
     await expect(
       createUserUseCase.execute({
         name: 'another user',
@@ -132,6 +138,8 @@ describe('CreateUserUseCase', () => {
         isAdmin: false
       })
     ).rejects.toThrow(CreateUserErrors.CPFAlreadyRegistered)
+
+    expect(saveSpy).not.toHaveBeenCalled()
   })
 
   it('should create an user with valid data', async () => {
