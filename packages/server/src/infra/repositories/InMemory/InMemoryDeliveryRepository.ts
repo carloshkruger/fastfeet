@@ -18,6 +18,16 @@ class InMemoryDeliveryRepository implements DeliveryRepository {
 
     return deliveries
   }
+
+  async listDeliveriesAlreadyMadeByUserId(
+    deliveryManId: UniqueEntityId
+  ): Promise<Delivery[]> {
+    const deliveries = this.data
+      .filter(delivery => delivery.deliveryManId.value === deliveryManId.value)
+      .filter(delivery => delivery.isFinished())
+
+    return deliveries
+  }
 }
 
 export { InMemoryDeliveryRepository }

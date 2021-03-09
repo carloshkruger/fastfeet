@@ -6,6 +6,9 @@ interface DeliveryRepository {
   listDeliveriesToBeMadeByUserId(
     deliveryManId: UniqueEntityId
   ): Promise<Delivery[]>
+  listDeliveriesAlreadyMadeByUserId(
+    deliveryManId: UniqueEntityId
+  ): Promise<Delivery[]>
 }
 
 export { DeliveryRepository }
