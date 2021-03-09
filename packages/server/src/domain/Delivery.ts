@@ -46,6 +46,22 @@ class Delivery extends Entity<DeliveryProps> {
     this.props.endDate = new Date()
   }
 
+  public setDeliveryManId(deliveryManId: UniqueEntityId): void {
+    this.props.deliveryManId = deliveryManId
+  }
+
+  public setProductName(productName: string): void {
+    if (isEmpty(productName)) {
+      throw new Error('Product name is required.')
+    }
+
+    this.props.productName = productName
+  }
+
+  public setAddress(address: Address): void {
+    this.props.address = address
+  }
+
   public setSignatureImage(signatureImage: string): void {
     this.props.signatureImage = signatureImage
   }
