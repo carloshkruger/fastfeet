@@ -46,6 +46,10 @@ class Delivery extends Entity<DeliveryProps> {
     this.props.endDate = new Date()
   }
 
+  public setSignatureImage(signatureImage: string): void {
+    this.props.signatureImage = signatureImage
+  }
+
   get deliveryManId(): UniqueEntityId {
     return this.props.deliveryManId
   }

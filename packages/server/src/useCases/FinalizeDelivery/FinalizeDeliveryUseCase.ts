@@ -2,6 +2,7 @@ import { UniqueEntityId } from '../../core/domain/UniqueEntityId'
 import { UseCase } from '../../core/domain/UseCase'
 import { DeliveryRepository } from '../../repositories/DeliveryRepository'
 import { UserRepository } from '../../repositories/UserRepository'
+import { StorageProvider } from '../../shared/providers/StorageProvider/StorageProvider'
 import { isEmpty } from '../../shared/utils/String'
 import { FinalizeDeliveryErrors } from './FinalizeDeliveryErrors'
 import { FinalizeDeliveryRequest } from './FinalizeDeliveryRequest'
@@ -10,12 +11,14 @@ class FinalizeDeliveryUseCase
   implements UseCase<FinalizeDeliveryRequest, void> {
   constructor(
     private userRepository: UserRepository,
-    private deliveryRepository: DeliveryRepository
+    private deliveryRepository: DeliveryRepository,
+    private storageProvider: StorageProvider
   ) {}
 
   async execute({
     deliveryManId,
-    deliveryId
+    deliveryId,
+    signatureImage
   }: FinalizeDeliveryRequest): Promise<void> {
     if (isEmpty(deliveryManId)) {
       throw new Error('Delivery man id not provided.')
@@ -49,7 +52,27 @@ class FinalizeDeliveryUseCase
 
     delivery.defineEndDateAsNow()
 
-    await this.deliveryRepository.save(delivery)
+    const hasSignatureImage = !isEmpty(signatureImage)
+    const saveFileParam = {
+      fileName: signatureImage,
+      filePath: ['signatures']
+    }
+
+    if (hasSignatureImage) {
+      delivery.setSignatureImage(signatureImage)
+
+      await this.storageProvider.saveFile(saveFileParam)
+    }
+
+    try {
+      await this.deliveryRepository.save(delivery)
+    } catch (error) {
+      if (hasSignatureImage) {
+        await this.storageProvider.deleteFile(saveFileParam)
+      }
+
+      throw error
+    }
   }
 }
 

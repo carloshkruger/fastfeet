@@ -11,11 +11,14 @@ import { InMemoryDeliveryRepository } from '../../infra/repositories/InMemory/In
 import { InMemoryUserRepository } from '../../infra/repositories/InMemory/InMemoryUserRepository'
 import { DeliveryRepository } from '../../repositories/DeliveryRepository'
 import { UserRepository } from '../../repositories/UserRepository'
+import { FakeStorageProvider } from '../../shared/providers/StorageProvider/FakeStorageProvider'
+import { StorageProvider } from '../../shared/providers/StorageProvider/StorageProvider'
 import { FinalizeDeliveryErrors } from './FinalizeDeliveryErrors'
 import { FinalizeDeliveryUseCase } from './FinalizeDeliveryUseCase'
 
 let inMemoryUserRepository: UserRepository
 let inMemoryDeliveryRepository: DeliveryRepository
+let fakeStorageProvider: StorageProvider
 let finalizeDeliveryUseCase: FinalizeDeliveryUseCase
 
 const user = User.create({
@@ -43,9 +46,11 @@ describe('FinalizeDeliveryUseCase', () => {
   beforeEach(() => {
     inMemoryUserRepository = new InMemoryUserRepository()
     inMemoryDeliveryRepository = new InMemoryDeliveryRepository()
+    fakeStorageProvider = new FakeStorageProvider()
     finalizeDeliveryUseCase = new FinalizeDeliveryUseCase(
       inMemoryUserRepository,
-      inMemoryDeliveryRepository
+      inMemoryDeliveryRepository,
+      fakeStorageProvider
     )
   })
 
@@ -177,7 +182,7 @@ describe('FinalizeDeliveryUseCase', () => {
     expect(saveSpy).not.toHaveBeenCalled()
   })
 
-  it('should be possible to the user finalize a delivery', async () => {
+  it('should be possible to the user finalize a delivery without signature image', async () => {
     jest
       .spyOn(inMemoryUserRepository, 'findById')
       .mockImplementation(async () => user)
@@ -187,6 +192,7 @@ describe('FinalizeDeliveryUseCase', () => {
       .mockImplementation(async () => delivery)
 
     const saveSpy = jest.spyOn(inMemoryDeliveryRepository, 'save')
+    const saveFileSpy = jest.spyOn(fakeStorageProvider, 'saveFile')
 
     await expect(
       finalizeDeliveryUseCase.execute({
@@ -198,7 +204,105 @@ describe('FinalizeDeliveryUseCase', () => {
     const paramPassedToSaveMethod: Delivery = saveSpy.mock.calls[0][0]
 
     expect(saveSpy).toHaveBeenCalledTimes(1)
+    expect(saveFileSpy).not.toHaveBeenCalled()
     expect(paramPassedToSaveMethod.id.value).toBe(delivery.id.value)
     expect(paramPassedToSaveMethod.endDate).toBeInstanceOf(Date)
+    expect(paramPassedToSaveMethod.signatureImage).toBeFalsy()
+  })
+
+  it('should be possible to the user finalize a delivery with client signature image', async () => {
+    jest
+      .spyOn(inMemoryUserRepository, 'findById')
+      .mockImplementation(async () => user)
+
+    jest
+      .spyOn(inMemoryDeliveryRepository, 'findById')
+      .mockImplementation(async () => delivery)
+
+    const saveSpy = jest.spyOn(inMemoryDeliveryRepository, 'save')
+    const saveFileSpy = jest.spyOn(fakeStorageProvider, 'saveFile')
+
+    const signatureImage = 'signature_image.jpg'
+
+    await expect(
+      finalizeDeliveryUseCase.execute({
+        deliveryId: delivery.id.value,
+        deliveryManId: user.id.value,
+        signatureImage
+      })
+    ).resolves.not.toThrow()
+
+    const paramPassedToSaveMethod: Delivery = saveSpy.mock.calls[0][0]
+
+    expect(saveSpy).toHaveBeenCalledTimes(1)
+    expect(saveFileSpy).toHaveBeenCalledTimes(1)
+    expect(saveFileSpy).toHaveBeenCalledWith({
+      fileName: signatureImage,
+      filePath: ['signatures']
+    })
+    expect(paramPassedToSaveMethod.id.value).toBe(delivery.id.value)
+    expect(paramPassedToSaveMethod.endDate).toBeInstanceOf(Date)
+    expect(paramPassedToSaveMethod.signatureImage).toBe(signatureImage)
+  })
+
+  it('should throw if DeliveryRepository throws', async () => {
+    jest
+      .spyOn(inMemoryUserRepository, 'findById')
+      .mockImplementation(async () => user)
+
+    jest
+      .spyOn(inMemoryDeliveryRepository, 'findById')
+      .mockImplementation(async () => delivery)
+
+    jest
+      .spyOn(inMemoryDeliveryRepository, 'save')
+      .mockImplementation(async () => {
+        throw new Error()
+      })
+
+    const deleteFileSpy = jest.spyOn(fakeStorageProvider, 'deleteFile')
+
+    await expect(
+      finalizeDeliveryUseCase.execute({
+        deliveryId: delivery.id.value,
+        deliveryManId: user.id.value
+      })
+    ).rejects.toThrow()
+
+    expect(deleteFileSpy).not.toHaveBeenCalled()
+  })
+
+  it('should delete the signature image and throw if the "save" method of DeliveryRepository throws', async () => {
+    jest
+      .spyOn(inMemoryUserRepository, 'findById')
+      .mockImplementation(async () => user)
+
+    jest
+      .spyOn(inMemoryDeliveryRepository, 'findById')
+      .mockImplementation(async () => delivery)
+
+    jest
+      .spyOn(inMemoryDeliveryRepository, 'save')
+      .mockImplementation(async () => {
+        throw new Error()
+      })
+
+    const deleteFileSpy = jest.spyOn(fakeStorageProvider, 'deleteFile')
+
+    const signatureImage = 'signature_image.jpg'
+
+    await expect(
+      finalizeDeliveryUseCase.execute({
+        deliveryId: delivery.id.value,
+        deliveryManId: user.id.value,
+        signatureImage
+      })
+    ).rejects.toThrow()
+
+    expect(deleteFileSpy).toHaveBeenCalledTimes(1)
+    expect(deleteFileSpy).toHaveBeenCalledWith({
+      fileName: signatureImage,
+      filePath: ['signatures']
+    })
   })
 })
