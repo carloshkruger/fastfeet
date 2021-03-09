@@ -3,6 +3,7 @@ import { UseCase } from '../../core/domain/UseCase'
 import { Address } from '../../domain/Address'
 import { CEP } from '../../domain/CEP'
 import { Delivery } from '../../domain/Delivery'
+import { ProductName } from '../../domain/ProductName'
 import { DeliveryRepository } from '../../repositories/DeliveryRepository'
 import { UserRepository } from '../../repositories/UserRepository'
 import { CreateDeliveryRequest } from './CreateDeliveryRequest'
@@ -27,7 +28,7 @@ class CreateDeliveryUseCase
   }: CreateDeliveryRequest): Promise<Delivery> {
     const delivery = Delivery.create({
       deliveryManId: new UniqueEntityId(deliveryManId),
-      productName,
+      productName: ProductName.create({ value: productName }),
       address: Address.create({
         address,
         postalCode: CEP.create({ value: postalCode }),

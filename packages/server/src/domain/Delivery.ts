@@ -1,11 +1,11 @@
 import { Entity } from '../core/domain/Entity'
 import { UniqueEntityId } from '../core/domain/UniqueEntityId'
-import { isEmpty } from '../shared/utils/String'
 import { Address } from './Address'
+import { ProductName } from './ProductName'
 
 interface DeliveryProps {
   deliveryManId: UniqueEntityId
-  productName: string
+  productName: ProductName
   address: Address
   signatureImage?: string
   canceledAt?: Date
@@ -19,10 +19,6 @@ class Delivery extends Entity<DeliveryProps> {
   }
 
   public static create(props: DeliveryProps, id?: UniqueEntityId): Delivery {
-    if (isEmpty(props.productName)) {
-      throw new Error('Product name is required.')
-    }
-
     return new Delivery(props, id)
   }
 
@@ -50,11 +46,7 @@ class Delivery extends Entity<DeliveryProps> {
     this.props.deliveryManId = deliveryManId
   }
 
-  public setProductName(productName: string): void {
-    if (isEmpty(productName)) {
-      throw new Error('Product name is required.')
-    }
-
+  public setProductName(productName: ProductName): void {
     this.props.productName = productName
   }
 
@@ -70,7 +62,7 @@ class Delivery extends Entity<DeliveryProps> {
     return this.props.deliveryManId
   }
 
-  get productName(): string {
+  get productName(): ProductName {
     return this.props.productName
   }
 

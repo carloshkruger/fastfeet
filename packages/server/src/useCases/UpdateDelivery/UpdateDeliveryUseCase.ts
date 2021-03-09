@@ -7,6 +7,7 @@ import { UpdateDeliveryRequest } from './UpdateDeliveryRequest'
 import { Address } from '../../domain/Address'
 import { CEP } from '../../domain/CEP'
 import { UpdateDeliveryErrors } from './UpdateDeliveryErrors'
+import { ProductName } from '../../domain/ProductName'
 
 class UpdateDeliveryUseCase implements UseCase<UpdateDeliveryRequest, void> {
   constructor(
@@ -61,7 +62,7 @@ class UpdateDeliveryUseCase implements UseCase<UpdateDeliveryRequest, void> {
     }
 
     delivery.setDeliveryManId(new UniqueEntityId(deliveryManId))
-    delivery.setProductName(productName)
+    delivery.setProductName(ProductName.create({ value: productName }))
     delivery.setAddress(
       Address.create({
         address,
