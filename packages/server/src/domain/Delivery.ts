@@ -25,6 +25,42 @@ class Delivery extends Entity<DeliveryProps> {
 
     return new Delivery(props, id)
   }
+
+  public isFinished(): boolean {
+    return !!this.endDate
+  }
+
+  public isCanceled(): boolean {
+    return !!this.canceledAt
+  }
+
+  get deliveryManId(): UniqueEntityId {
+    return this.props.deliveryManId
+  }
+
+  get productName(): string {
+    return this.props.productName
+  }
+
+  get address(): Address {
+    return this.props.address
+  }
+
+  get signatureImage(): string | undefined {
+    return this.props.signatureImage
+  }
+
+  get canceledAt(): Date | undefined {
+    return this.props.canceledAt
+  }
+
+  get startDate(): Date | undefined {
+    return this.props.startDate
+  }
+
+  get endDate(): Date | undefined {
+    return this.props.endDate
+  }
 }
 
 export { Delivery }
