@@ -3,6 +3,7 @@ import { UseCase } from '../../core/domain/UseCase'
 import { Delivery } from '../../domain/Delivery'
 import { DeliveryRepository } from '../../repositories/DeliveryRepository'
 import { UserRepository } from '../../repositories/UserRepository'
+import { isEmpty } from '../../shared/utils/String'
 import { ListDeliveriesToBeMadeByTheUserRequest } from './ListDeliveriesToBeMadeByTheUserRequest'
 
 class ListDeliveriesToBeMadeByTheUserUseCase
@@ -13,7 +14,8 @@ class ListDeliveriesToBeMadeByTheUserUseCase
   ) {}
 
   async execute({
-    deliveryManId
+    deliveryManId,
+    neighborhood
   }: ListDeliveriesToBeMadeByTheUserRequest): Promise<Delivery[]> {
     if (!deliveryManId) {
       throw new Error('Delivery man not informed.')
@@ -26,12 +28,22 @@ class ListDeliveriesToBeMadeByTheUserUseCase
     }
 
     const deliveries = await this.deliveryRepository.listDeliveriesToBeMadeByUserId(
-      new UniqueEntityId(deliveryManId)
+      new UniqueEntityId(deliveryManId),
+      neighborhood
     )
 
-    const filteredDeliveries = deliveries.filter(
+    let filteredDeliveries = deliveries.filter(
       delivery => !delivery.isFinished() && !delivery.isCanceled()
     )
+
+    if (!isEmpty(neighborhood)) {
+      neighborhood = neighborhood.trim().toLowerCase()
+
+      filteredDeliveries = filteredDeliveries.filter(
+        delivery =>
+          delivery.address.neighborhood.trim().toLowerCase() === neighborhood
+      )
+    }
 
     return filteredDeliveries
   }

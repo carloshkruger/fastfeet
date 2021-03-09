@@ -4,10 +4,12 @@ import { Delivery } from '../domain/Delivery'
 interface DeliveryRepository {
   save(delivery: Delivery): Promise<void>
   listDeliveriesToBeMadeByUserId(
-    deliveryManId: UniqueEntityId
+    deliveryManId: UniqueEntityId,
+    neighborhood?: string
   ): Promise<Delivery[]>
   listDeliveriesAlreadyMadeByUserId(
-    deliveryManId: UniqueEntityId
+    deliveryManId: UniqueEntityId,
+    neighborhood?: string
   ): Promise<Delivery[]>
 }
 

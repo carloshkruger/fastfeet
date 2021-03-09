@@ -98,6 +98,73 @@ describe('ListDeliveriesToBeMadeByTheUserUseCase', () => {
     expect(response[0].isFinished()).toBe(false)
   })
 
+  it('should return a list of deliveries to be made by a specific delivery man filtered by a specific neighborhood', async () => {
+    const user = User.create({
+      name: UserName.create({ value: 'valid name' }),
+      email: Email.create({ value: 'valid_email@domain.com' }),
+      password: Password.create({ value: 'valid_password', hashedValue: '' }),
+      cpf: CPF.create({ value: '39782449008' })
+    })
+
+    jest
+      .spyOn(inMemoryUserRepository, 'findById')
+      .mockImplementation(async () => user)
+
+    const validNeighborhood = 'valid neighborhood'
+
+    const delivery = Delivery.create({
+      deliveryManId: user.id,
+      productName: 'valid product name',
+      address: Address.create({
+        address: 'valid address',
+        postalCode: CEP.create({ value: '89186000' }),
+        number: 9999,
+        neighborhood: validNeighborhood,
+        city: 'valid city',
+        state: 'valid state'
+      })
+    })
+
+    const delivery2 = Delivery.create({
+      deliveryManId: user.id,
+      productName: 'valid product name',
+      address: Address.create({
+        address: 'valid address',
+        postalCode: CEP.create({ value: '89186000' }),
+        number: 9999,
+        neighborhood: validNeighborhood,
+        city: 'valid city',
+        state: 'valid state'
+      })
+    })
+
+    const delivery3 = Delivery.create({
+      deliveryManId: user.id,
+      productName: 'valid product name',
+      address: Address.create({
+        address: 'valid address',
+        postalCode: CEP.create({ value: '89186000' }),
+        number: 9999,
+        neighborhood: 'valid neighborhood 3',
+        city: 'valid city',
+        state: 'valid state'
+      })
+    })
+
+    jest
+      .spyOn(inMemoryDeliveryRepository, 'listDeliveriesToBeMadeByUserId')
+      .mockImplementation(async () => [delivery, delivery2, delivery3])
+
+    const response = await listDeliveriesToBeMadeByTheUserUseCase.execute({
+      deliveryManId: user.id.value,
+      neighborhood: validNeighborhood
+    })
+
+    expect(response).toHaveLength(2)
+    expect(response[0]).toBeInstanceOf(Delivery)
+    expect(response[1]).toBeInstanceOf(Delivery)
+  })
+
   it('should throw if delivery man id was not provided', async () => {
     await expect(
       listDeliveriesToBeMadeByTheUserUseCase.execute({
