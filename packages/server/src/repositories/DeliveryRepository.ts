@@ -13,6 +13,7 @@ interface DeliveryRepository {
     deliveryManId: UniqueEntityId,
     neighborhood?: string
   ): Promise<Delivery[]>
+  deleteById(deliveryId: UniqueEntityId): Promise<void>
 }
 
 export { DeliveryRepository }

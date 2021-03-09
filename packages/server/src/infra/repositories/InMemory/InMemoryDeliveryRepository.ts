@@ -56,6 +56,12 @@ class InMemoryDeliveryRepository implements DeliveryRepository {
 
     return deliveries
   }
+
+  async deleteById(deliveryId: UniqueEntityId): Promise<void> {
+    this.data = this.data.filter(
+      delivery => delivery.id.value !== deliveryId.value
+    )
+  }
 }
 
 export { InMemoryDeliveryRepository }
