@@ -25,7 +25,7 @@ class Password extends ValueObject<PasswordProps> {
     return new Password(props)
   }
 
-  public static createWithValidatedValue(hashedValue: string) {
+  public static createWithValidatedValue(hashedValue: string): Password {
     return new Password({
       value: '',
       hashedValue
