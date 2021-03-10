@@ -1,4 +1,5 @@
 import { UseCase } from '../../core/domain/UseCase'
+import { AppError } from '../../core/errors/AppError'
 import { CPF } from '../../domain/CPF'
 import { Email } from '../../domain/Email'
 import { UserName } from '../../domain/UserName'
@@ -16,7 +17,7 @@ class UpdateUserUseCase implements UseCase<UpdateUserRequest, void> {
     cpf
   }: UpdateUserRequest): Promise<void> {
     if (!userId) {
-      throw new Error('User not found.')
+      throw new AppError('User not found.')
     }
 
     const userNameValueObject = UserName.create({ value: name })
@@ -26,7 +27,7 @@ class UpdateUserUseCase implements UseCase<UpdateUserRequest, void> {
     const user = await this.userRepository.findById(userId)
 
     if (!user) {
-      throw new Error('User not found.')
+      throw new AppError('User not found.')
     }
 
     const userAlreadyRegisteredWithGivenEmail = await this.userRepository.findByEmail(

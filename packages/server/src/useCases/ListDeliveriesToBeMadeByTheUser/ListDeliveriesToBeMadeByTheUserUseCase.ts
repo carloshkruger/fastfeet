@@ -1,5 +1,6 @@
 import { UniqueEntityId } from '../../core/domain/UniqueEntityId'
 import { UseCase } from '../../core/domain/UseCase'
+import { AppError } from '../../core/errors/AppError'
 import { Delivery } from '../../domain/Delivery'
 import { DeliveryRepository } from '../../repositories/DeliveryRepository'
 import { UserRepository } from '../../repositories/UserRepository'
@@ -18,13 +19,13 @@ class ListDeliveriesToBeMadeByTheUserUseCase
     neighborhood
   }: ListDeliveriesToBeMadeByTheUserRequest): Promise<Delivery[]> {
     if (!deliveryManId) {
-      throw new Error('Delivery man not informed.')
+      throw new AppError('Delivery man not informed.')
     }
 
     const deliveryMan = await this.userRepository.findById(deliveryManId)
 
     if (!deliveryMan) {
-      throw new Error('Delivery man not found.')
+      throw new AppError('Delivery man not found.')
     }
 
     const deliveries = await this.deliveryRepository.listDeliveriesToBeMadeByUserId(

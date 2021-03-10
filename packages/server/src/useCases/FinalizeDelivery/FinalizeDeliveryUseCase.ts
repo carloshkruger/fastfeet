@@ -1,5 +1,6 @@
 import { UniqueEntityId } from '../../core/domain/UniqueEntityId'
 import { UseCase } from '../../core/domain/UseCase'
+import { AppError } from '../../core/errors/AppError'
 import { DeliveryRepository } from '../../repositories/DeliveryRepository'
 import { UserRepository } from '../../repositories/UserRepository'
 import { StorageProvider } from '../../shared/providers/StorageProvider/StorageProvider'
@@ -21,17 +22,17 @@ class FinalizeDeliveryUseCase
     signatureImage
   }: FinalizeDeliveryRequest): Promise<void> {
     if (isEmpty(deliveryManId)) {
-      throw new Error('Delivery man id not provided.')
+      throw new AppError('Delivery man id not provided.')
     }
 
     if (isEmpty(deliveryId)) {
-      throw new Error('Delivery id not provided.')
+      throw new AppError('Delivery id not provided.')
     }
 
     const deliveryMan = await this.userRepository.findById(deliveryManId)
 
     if (!deliveryMan) {
-      throw new Error('Delivery man was not found.')
+      throw new AppError('Delivery man was not found.')
     }
 
     const delivery = await this.deliveryRepository.findById(
@@ -39,7 +40,7 @@ class FinalizeDeliveryUseCase
     )
 
     if (!delivery) {
-      throw new Error('Delivery not found.')
+      throw new AppError('Delivery not found.')
     }
 
     if (delivery.deliveryManId.value !== deliveryMan.id.value) {

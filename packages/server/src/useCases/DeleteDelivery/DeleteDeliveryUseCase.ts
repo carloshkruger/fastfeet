@@ -1,5 +1,6 @@
 import { UniqueEntityId } from '../../core/domain/UniqueEntityId'
 import { UseCase } from '../../core/domain/UseCase'
+import { AppError } from '../../core/errors/AppError'
 import { DeliveryRepository } from '../../repositories/DeliveryRepository'
 import { isEmpty } from '../../shared/utils/String'
 import { DeleteDeliveryRequest } from './DeleteDeliveryRequest'
@@ -9,7 +10,7 @@ class DeleteDeliveryUseCase implements UseCase<DeleteDeliveryRequest, void> {
 
   async execute({ deliveryId }: DeleteDeliveryRequest): Promise<void> {
     if (isEmpty(deliveryId)) {
-      throw new Error('Delivery id is required.')
+      throw new AppError('Delivery id is required.')
     }
 
     const entityId = new UniqueEntityId(deliveryId)
@@ -17,7 +18,7 @@ class DeleteDeliveryUseCase implements UseCase<DeleteDeliveryRequest, void> {
     const delivery = await this.deliveryRepository.findById(entityId)
 
     if (!delivery) {
-      throw new Error('Delivery not found.')
+      throw new AppError('Delivery not found.')
     }
 
     await this.deliveryRepository.deleteById(entityId)

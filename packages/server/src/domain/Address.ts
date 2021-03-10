@@ -1,4 +1,5 @@
 import { ValueObject } from '../core/domain/ValueObject'
+import { AppError } from '../core/errors/AppError'
 import { isEmpty } from '../shared/utils/String'
 import { CEP } from './CEP'
 
@@ -19,27 +20,27 @@ class Address extends ValueObject<AddressProps> {
 
   public static create(props: AddressProps): Address {
     if (isEmpty(props.address)) {
-      throw new Error('Address is required.')
+      throw new AppError('Address is required.')
     }
 
     if (!props.number) {
-      throw new Error('Number is required.')
+      throw new AppError('Number is required.')
     }
 
     if (!props.postalCode) {
-      throw new Error('Postal code is required.')
+      throw new AppError('Postal code is required.')
     }
 
     if (isEmpty(props.neighborhood)) {
-      throw new Error('Neighborhood is required.')
+      throw new AppError('Neighborhood is required.')
     }
 
     if (isEmpty(props.city)) {
-      throw new Error('City is required.')
+      throw new AppError('City is required.')
     }
 
     if (isEmpty(props.state)) {
-      throw new Error('State is required.')
+      throw new AppError('State is required.')
     }
 
     return new Address(props)

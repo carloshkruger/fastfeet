@@ -8,6 +8,7 @@ import { Address } from '../../domain/Address'
 import { CEP } from '../../domain/CEP'
 import { UpdateDeliveryErrors } from './UpdateDeliveryErrors'
 import { ProductName } from '../../domain/ProductName'
+import { AppError } from '../../core/errors/AppError'
 
 class UpdateDeliveryUseCase implements UseCase<UpdateDeliveryRequest, void> {
   constructor(
@@ -28,11 +29,11 @@ class UpdateDeliveryUseCase implements UseCase<UpdateDeliveryRequest, void> {
     state
   }: UpdateDeliveryRequest): Promise<void> {
     if (isEmpty(deliveryId)) {
-      throw new Error('Delivery id is required.')
+      throw new AppError('Delivery id is required.')
     }
 
     if (isEmpty(deliveryManId)) {
-      throw new Error('Delivery id is required.')
+      throw new AppError('Delivery id is required.')
     }
 
     const delivery = await this.deliveryRepository.findById(
@@ -40,13 +41,13 @@ class UpdateDeliveryUseCase implements UseCase<UpdateDeliveryRequest, void> {
     )
 
     if (!delivery) {
-      throw new Error('Delivery not found.')
+      throw new AppError('Delivery not found.')
     }
 
     const user = await this.userRepository.findById(deliveryManId)
 
     if (!user) {
-      throw new Error('Delivery man not found.')
+      throw new AppError('Delivery man not found.')
     }
 
     if (delivery.isFinished()) {
