@@ -17,6 +17,16 @@ let fakeEncrypter: Encrypter
 let fakeAuthTokenProvider: AuthTokenProvider
 let authenticateUserUseCase: AuthenticateUserUseCase
 
+const validCPF = '39782449008'
+const validPassword = 'valid_password'
+
+const user = User.create({
+  name: UserName.create({ value: 'valid name' }),
+  email: Email.create({ value: 'valid_email@domain.com' }),
+  password: Password.create({ value: validPassword, hashedValue: '' }),
+  cpf: CPF.create({ value: validCPF })
+})
+
 describe('AuthenticateUserUseCase', () => {
   beforeEach(() => {
     inMemoryUserRepository = new InMemoryUserRepository()
@@ -30,19 +40,9 @@ describe('AuthenticateUserUseCase', () => {
   })
 
   it('should be able to authenticate with correct values', async () => {
-    const validCPF = '39782449008'
-    const validPassword = 'valid_password'
-
-    const user = User.create({
-      name: UserName.create({ value: 'valid name' }),
-      email: Email.create({ value: 'valid_email@domain.com' }),
-      password: Password.create({ value: validPassword, hashedValue: '' }),
-      cpf: CPF.create({ value: validCPF })
-    })
-
     jest
       .spyOn(inMemoryUserRepository, 'findByCpf')
-      .mockImplementation(async cpf => user)
+      .mockImplementation(async () => user)
 
     jest.spyOn(fakeEncrypter, 'compare').mockImplementation(async () => true)
 
@@ -59,8 +59,6 @@ describe('AuthenticateUserUseCase', () => {
   })
 
   it('should not be possible to authenticate without a cpf', async () => {
-    const validPassword = 'valid_password'
-
     await expect(
       authenticateUserUseCase.execute({
         cpf: '',
@@ -70,8 +68,6 @@ describe('AuthenticateUserUseCase', () => {
   })
 
   it('should not be possible to authenticate without a password', async () => {
-    const validCPF = '39782449008'
-
     await expect(
       authenticateUserUseCase.execute({
         cpf: validCPF,
@@ -81,9 +77,6 @@ describe('AuthenticateUserUseCase', () => {
   })
 
   it('should not be possible to authenticate with a non existing user', async () => {
-    const validCPF = '39782449008'
-    const validPassword = 'valid_password'
-
     await expect(
       authenticateUserUseCase.execute({
         cpf: validCPF,
@@ -93,19 +86,9 @@ describe('AuthenticateUserUseCase', () => {
   })
 
   it('should not be possible to authenticate with an invalid password', async () => {
-    const validCPF = '39782449008'
-    const validPassword = 'valid_password'
-
     jest
       .spyOn(inMemoryUserRepository, 'findByCpf')
-      .mockImplementation(async cpf => {
-        return User.create({
-          name: UserName.create({ value: 'valid name' }),
-          email: Email.create({ value: 'valid_email@domain.com' }),
-          password: Password.create({ value: validPassword, hashedValue: '' }),
-          cpf: CPF.create({ value: validCPF })
-        })
-      })
+      .mockImplementation(async () => user)
 
     jest.spyOn(fakeEncrypter, 'compare').mockImplementation(async () => false)
 
