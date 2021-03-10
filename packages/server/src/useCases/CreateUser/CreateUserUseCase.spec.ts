@@ -29,15 +29,20 @@ describe('CreateUserUseCase', () => {
     const validEmail = 'valid_email@domain.com'
     const validPassword = '123456789'
 
+    const saveSpy = jest.spyOn(inMemoryUserRepository, 'save')
+
     await expect(
       createUserUseCase.execute({
         name: '',
         email: validEmail,
         cpf: validCPF,
         password: validPassword,
+        passwordConfirmation: validPassword,
         isAdmin: false
       })
     ).rejects.toThrow()
+
+    expect(saveSpy).not.toHaveBeenCalled()
   })
 
   it('should not be possible to create an user with invalid email', async () => {
@@ -45,15 +50,20 @@ describe('CreateUserUseCase', () => {
     const validName = 'valid name'
     const validPassword = '123456789'
 
+    const saveSpy = jest.spyOn(inMemoryUserRepository, 'save')
+
     await expect(
       createUserUseCase.execute({
         name: validName,
         email: 'invalid_email',
         cpf: validCPF,
         password: validPassword,
+        passwordConfirmation: validPassword,
         isAdmin: false
       })
     ).rejects.toThrow()
+
+    expect(saveSpy).not.toHaveBeenCalled()
   })
 
   it('should not be possible to create an user with invalid cpf', async () => {
@@ -61,15 +71,20 @@ describe('CreateUserUseCase', () => {
     const validName = 'valid name'
     const validPassword = '123456789'
 
+    const saveSpy = jest.spyOn(inMemoryUserRepository, 'save')
+
     await expect(
       createUserUseCase.execute({
         name: validName,
         email: validEmail,
         cpf: '999.999',
         password: validPassword,
+        passwordConfirmation: validPassword,
         isAdmin: false
       })
     ).rejects.toThrow()
+
+    expect(saveSpy).not.toHaveBeenCalled()
   })
 
   it('should not be possible to create an user with invalid password', async () => {
@@ -77,15 +92,41 @@ describe('CreateUserUseCase', () => {
     const validName = 'valid name'
     const validCPF = '39782449008'
 
+    const saveSpy = jest.spyOn(inMemoryUserRepository, 'save')
+
     await expect(
       createUserUseCase.execute({
         name: validName,
         email: validEmail,
         cpf: validCPF,
         password: '',
+        passwordConfirmation: '',
         isAdmin: false
       })
     ).rejects.toThrow()
+
+    expect(saveSpy).not.toHaveBeenCalled()
+  })
+
+  it('should not be possible to create an user with different password confirmation', async () => {
+    const validEmail = 'valid_email@domain.com'
+    const validName = 'valid name'
+    const validCPF = '39782449008'
+
+    const saveSpy = jest.spyOn(inMemoryUserRepository, 'save')
+
+    await expect(
+      createUserUseCase.execute({
+        name: validName,
+        email: validEmail,
+        cpf: validCPF,
+        password: 'valid_password',
+        passwordConfirmation: 'different_valid_password',
+        isAdmin: false
+      })
+    ).rejects.toThrow()
+
+    expect(saveSpy).not.toHaveBeenCalled()
   })
 
   it('should not be possible to create an user with an email already registered', async () => {
@@ -108,6 +149,7 @@ describe('CreateUserUseCase', () => {
         email: validEmail,
         cpf: '832.877.490-99',
         password: 'valid_password',
+        passwordConfirmation: 'valid_password',
         isAdmin: false
       })
     ).rejects.toThrow(CreateUserErrors.EmailAlreadyRegistered)
@@ -135,6 +177,7 @@ describe('CreateUserUseCase', () => {
         email: 'another_valid_email@domain.com',
         cpf: validCPF,
         password: 'valid_password',
+        passwordConfirmation: 'valid_password',
         isAdmin: false
       })
     ).rejects.toThrow(CreateUserErrors.CPFAlreadyRegistered)
@@ -152,6 +195,7 @@ describe('CreateUserUseCase', () => {
       name: 'valid name',
       email: 'valid_email@domain.com',
       password,
+      passwordConfirmation: password,
       cpf: '832.877.490-99',
       isAdmin: false
     })

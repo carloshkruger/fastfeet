@@ -21,6 +21,7 @@ class CreateUserUseCase
     name,
     email,
     password,
+    passwordConfirmation,
     cpf,
     isAdmin
   }: CreateUserRequest): Promise<CreateUserResponse> {
@@ -50,6 +51,10 @@ class CreateUserUseCase
       value: password,
       hashedValue: hashedPassword
     })
+
+    if (password !== passwordConfirmation) {
+      throw new CreateUserErrors.PasswordNotMatch()
+    }
 
     const user = User.create({
       name: userNameValueObject,
