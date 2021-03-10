@@ -36,8 +36,27 @@ describe('Password validation', () => {
       text += 'a'
     }
 
-    expect(Password.create({ value: text, hashedValue: '' })).toBeInstanceOf(
-      Password
-    )
+    const hashedValue = ''
+
+    const password = Password.create({ value: text, hashedValue })
+
+    expect(password).toBeInstanceOf(Password)
+    expect(password.value).toBe(hashedValue)
+  })
+
+  it('should create a Password instance with correct values using "createWithValidatedValue" method', () => {
+    const minLengthAllowed = Password.MIN_LENGTH
+    let text = ''
+
+    for (let i = 0; i < minLengthAllowed; i++) {
+      text += 'a'
+    }
+
+    const hashedValue = ''
+
+    const password = Password.createWithValidatedValue(hashedValue)
+
+    expect(password).toBeInstanceOf(Password)
+    expect(password.value).toBe(hashedValue)
   })
 })

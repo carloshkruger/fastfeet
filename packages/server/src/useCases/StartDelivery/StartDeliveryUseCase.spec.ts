@@ -5,6 +5,7 @@ import { CPF } from '../../domain/CPF'
 import { Delivery } from '../../domain/Delivery'
 import { Email } from '../../domain/Email'
 import { Password } from '../../domain/Password'
+import { ProductName } from '../../domain/ProductName'
 import { User } from '../../domain/User'
 import { UserName } from '../../domain/UserName'
 import { InMemoryDeliveryRepository } from '../../infra/repositories/InMemory/InMemoryDeliveryRepository'
@@ -30,7 +31,7 @@ const user = User.create({
 
 const delivery = Delivery.create({
   deliveryManId: user.id,
-  productName: 'valid product name',
+  productName: ProductName.create({ value: 'valid product name' }),
   address: Address.create({
     address: 'valid address',
     postalCode: CEP.create({ value: '89186000' }),
@@ -117,7 +118,7 @@ describe('StartDeliveryUseCase', () => {
 
     const deliveryNotLinkedToTheUser = Delivery.create({
       deliveryManId: new UniqueEntityId(),
-      productName: 'valid product name',
+      productName: ProductName.create({ value: 'valid product name' }),
       address: Address.create({
         address: 'valid address',
         postalCode: CEP.create({ value: '89186000' }),

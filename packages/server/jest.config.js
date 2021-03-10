@@ -7,7 +7,7 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: [
     '<rootDir>/src/**/useCases/**/*.ts',
-    '!<rootDir>/src/**/useCases/**/index.ts'
+    '<rootDir>/src/**/domain/**/*.ts'
   ],
   coverageDirectory: 'coverage',
   coverageReporters: ['text-summary', 'lcov'],

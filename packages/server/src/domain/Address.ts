@@ -13,34 +13,6 @@ interface AddressProps {
 }
 
 class Address extends ValueObject<AddressProps> {
-  get postalCode(): CEP {
-    return this.props.postalCode
-  }
-
-  get number(): number {
-    return this.props.number
-  }
-
-  get address(): string {
-    return this.props.address
-  }
-
-  get neighborhood(): string {
-    return this.props.neighborhood
-  }
-
-  get city(): string {
-    return this.props.city
-  }
-
-  get state(): string {
-    return this.props.state
-  }
-
-  get complement(): string {
-    return this.props.complement || ''
-  }
-
   private constructor(props: AddressProps) {
     super(props)
   }
@@ -73,36 +45,32 @@ class Address extends ValueObject<AddressProps> {
     return new Address(props)
   }
 
-  public getFormattedCityAndState(): string {
-    return `${this.city} - ${this.state}`
+  get postalCode(): CEP {
+    return this.props.postalCode
   }
 
-  public updatePostalCode(postalCode: CEP): void {
-    this.props.postalCode = postalCode
+  get number(): number {
+    return this.props.number
   }
 
-  public updateNumber(number: number): void {
-    this.props.number = number
+  get address(): string {
+    return this.props.address
   }
 
-  public updateAddress(address: string): void {
-    this.props.address = address
+  get neighborhood(): string {
+    return this.props.neighborhood
   }
 
-  public updateNeighborhood(neighborhood: string): void {
-    this.props.neighborhood = neighborhood
+  get city(): string {
+    return this.props.city
   }
 
-  public updateCity(city: string): void {
-    this.props.city = city
+  get state(): string {
+    return this.props.state
   }
 
-  public updateState(state: string): void {
-    this.props.state = state
-  }
-
-  public updateComplement(complement = ''): void {
-    this.props.complement = complement
+  get complement(): string {
+    return this.props.complement || ''
   }
 }
 

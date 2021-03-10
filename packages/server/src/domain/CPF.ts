@@ -1,4 +1,5 @@
 import { ValueObject } from '../core/domain/ValueObject'
+import { removeNonNumericCharacters } from '../shared/utils/removeNonNumericCharacters'
 import { InvalidCPFError } from './errors/InvalidCPFError'
 
 interface CPFProps {
@@ -11,6 +12,8 @@ class CPF extends ValueObject<CPFProps> {
   }
 
   public static create(props: CPFProps): CPF {
+    props.value = removeNonNumericCharacters(props.value)
+
     if (!CPF.validate(props.value)) {
       throw new InvalidCPFError(props.value)
     }
@@ -19,11 +22,7 @@ class CPF extends ValueObject<CPFProps> {
   }
 
   public static validate(cpf: string): boolean {
-    if (typeof cpf !== 'string') {
-      return false
-    }
-
-    cpf = cpf.replace(/\D/g, '')
+    cpf = removeNonNumericCharacters(cpf)
 
     if (
       !cpf ||

@@ -13,6 +13,9 @@ describe('UserName validation', () => {
   it('should create a UserName instance with valid value', () => {
     const validName = 'valid_name'
 
-    expect(UserName.create({ value: validName })).toBeInstanceOf(UserName)
+    const userName = UserName.create({ value: validName })
+
+    expect(userName).toBeInstanceOf(UserName)
+    expect(userName.value).toBe(validName)
   })
 })

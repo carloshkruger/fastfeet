@@ -7,6 +7,7 @@ const validNeighborhood = 'valid neighborhood'
 const validPostalCode = CEP.create({ value: '89186-000' })
 const validCity = 'valid city'
 const validState = 'SC'
+const validComplement = 'valid complement'
 
 describe('Address validation', () => {
   it('should not create an Address instance with invalid values (without address info)', () => {
@@ -88,15 +89,36 @@ describe('Address validation', () => {
   })
 
   it('should create an Address instance with valid values', () => {
-    expect(
-      Address.create({
-        address: validAddress,
-        number: validNumber,
-        neighborhood: validNeighborhood,
-        postalCode: validPostalCode,
-        city: validCity,
-        state: validState
-      })
-    ).toBeInstanceOf(Address)
+    const address = Address.create({
+      address: validAddress,
+      number: validNumber,
+      neighborhood: validNeighborhood,
+      postalCode: validPostalCode,
+      city: validCity,
+      state: validState,
+      complement: validComplement
+    })
+
+    expect(address).toBeInstanceOf(Address)
+    expect(address.address).toBe(validAddress)
+    expect(address.number).toBe(validNumber)
+    expect(address.neighborhood).toBe(validNeighborhood)
+    expect(address.postalCode).toBeInstanceOf(CEP)
+    expect(address.city).toBe(validCity)
+    expect(address.state).toBe(validState)
+    expect(address.complement).toBe(validComplement)
+  })
+
+  it('should return an empty complement string even if not informed on creation', () => {
+    const address = Address.create({
+      address: validAddress,
+      number: validNumber,
+      neighborhood: validNeighborhood,
+      postalCode: validPostalCode,
+      city: validCity,
+      state: validState
+    })
+
+    expect(address.complement).toBe('')
   })
 })

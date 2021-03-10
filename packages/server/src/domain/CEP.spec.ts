@@ -20,7 +20,15 @@ describe('CEP validation', () => {
     expect(() => CEP.create({ value: '' })).toThrow(InvalidCEPError)
   })
 
-  it('should create a CEP instance with valid values', () => {
-    expect(CEP.create({ value: '89186-000' })).toBeInstanceOf(CEP)
+  it('should create a CEP instance with valid values and save the value with numbers only', () => {
+    const cep = CEP.create({ value: '89186-000' })
+    expect(cep).toBeInstanceOf(CEP)
+    expect(cep.value).toBe('89186000')
+  })
+
+  it('should create a CEP instance with valid values and be possible to return a formatting value', () => {
+    const cep = CEP.create({ value: '89186000' })
+    expect(cep).toBeInstanceOf(CEP)
+    expect(cep.getFormattedCEP()).toBe('89186-000')
   })
 })

@@ -136,7 +136,7 @@ describe('UpdateUserUseCase', () => {
 
   it('should not update an user with an CPF already registered', async () => {
     const validCPF = '39782449008'
-    const validCPFUser2 = '582.603.220-05'
+    const validCPFUser2 = '58260322005'
     const validPassword = 'valid_password'
 
     const user = User.create({

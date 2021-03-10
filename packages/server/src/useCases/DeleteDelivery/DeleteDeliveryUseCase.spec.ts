@@ -2,7 +2,7 @@ import { UniqueEntityId } from '../../core/domain/UniqueEntityId'
 import { Address } from '../../domain/Address'
 import { CEP } from '../../domain/CEP'
 import { Delivery } from '../../domain/Delivery'
-import { User } from '../../domain/User'
+import { ProductName } from '../../domain/ProductName'
 import { InMemoryDeliveryRepository } from '../../infra/repositories/InMemory/InMemoryDeliveryRepository'
 import { DeliveryRepository } from '../../repositories/DeliveryRepository'
 import { DeleteDeliveryUseCase } from './DeleteDeliveryUseCase'
@@ -37,7 +37,7 @@ describe('DeleteDeliveryUseCase', () => {
   it('should delete a delivery', async () => {
     const delivery = Delivery.create({
       deliveryManId: new UniqueEntityId(),
-      productName: 'valid product name',
+      productName: ProductName.create({ value: 'valid product name' }),
       address: Address.create({
         address: 'valid address',
         postalCode: CEP.create({ value: '89186000' }),

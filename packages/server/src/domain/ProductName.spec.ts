@@ -9,9 +9,12 @@ describe('ProductName validation', () => {
     expect(() => ProductName.create({ value: '   ' })).toThrow()
   })
 
-  it('should create an instance of ProductName if valid values is provided', () => {
-    expect(ProductName.create({ value: 'valid product name' })).toBeInstanceOf(
-      ProductName
-    )
+  it('should create an instance of ProductName if valid value is provided', () => {
+    const validName = 'valid product name'
+
+    const productName = ProductName.create({ value: validName })
+
+    expect(productName).toBeInstanceOf(ProductName)
+    expect(productName.value).toBe(validName)
   })
 })

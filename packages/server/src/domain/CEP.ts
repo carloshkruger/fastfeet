@@ -1,4 +1,5 @@
 import { ValueObject } from '../core/domain/ValueObject'
+import { removeNonNumericCharacters } from '../shared/utils/removeNonNumericCharacters'
 import { InvalidCEPError } from './errors/InvalidCEPError'
 
 interface CEPProps {
@@ -19,7 +20,7 @@ class CEP extends ValueObject<CEPProps> {
   public static create(props: CEPProps): CEP {
     const valueWithoutFormatting = props.value
 
-    props.value = props.value.replace(/\D/g, '')
+    props.value = removeNonNumericCharacters(props.value)
 
     if (props.value.length !== CEP.LENGTH) {
       throw new InvalidCEPError(valueWithoutFormatting)
