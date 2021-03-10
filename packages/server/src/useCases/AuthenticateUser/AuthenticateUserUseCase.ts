@@ -2,6 +2,7 @@ import { UseCase } from '../../core/domain/UseCase'
 import { UserRepository } from '../../repositories/UserRepository'
 import { AuthTokenProvider } from '../../shared/providers/AuthTokenProvider/AuthTokenProvider'
 import { Encrypter } from '../../shared/providers/EncrypterProvider/Encrypter'
+import { isEmpty } from '../../shared/utils/String'
 import { AuthenticateUserErrors } from './AuthenticateUserErrors'
 import { AuthenticateUserRequest } from './AuthenticateUserRequest'
 import { AuthenticateUserResponse } from './AuthenticateUserResponse'
@@ -18,7 +19,7 @@ class AuthenticateUserUseCase
     cpf,
     password
   }: AuthenticateUserRequest): Promise<AuthenticateUserResponse> {
-    if (!cpf || !password) {
+    if (isEmpty(cpf) || isEmpty(password)) {
       throw new AuthenticateUserErrors.IncorrectCredentials()
     }
 
