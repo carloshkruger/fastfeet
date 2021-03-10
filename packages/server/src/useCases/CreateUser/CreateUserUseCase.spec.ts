@@ -148,16 +148,15 @@ describe('CreateUserUseCase', () => {
 
     const password = 'valid_password'
 
-    await expect(
-      createUserUseCase.execute({
-        name: 'valid name',
-        email: 'valid_email@domain.com',
-        password,
-        cpf: '832.877.490-99',
-        isAdmin: false
-      })
-    ).resolves.not.toThrow()
+    const useCaseResponse = await createUserUseCase.execute({
+      name: 'valid name',
+      email: 'valid_email@domain.com',
+      password,
+      cpf: '832.877.490-99',
+      isAdmin: false
+    })
 
+    expect(useCaseResponse.user).toBeInstanceOf(User)
     expect(saveSpy).toHaveBeenCalledTimes(1)
     expect(hashSpy).toHaveBeenCalledWith(password)
   })

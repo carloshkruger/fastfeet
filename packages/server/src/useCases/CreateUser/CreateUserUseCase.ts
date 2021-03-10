@@ -8,8 +8,10 @@ import { UserRepository } from '../../repositories/UserRepository'
 import { Encrypter } from '../../shared/providers/EncrypterProvider/Encrypter'
 import { CreateUserErrors } from './CreateUserErrors'
 import { CreateUserRequest } from './CreateUserRequest'
+import { CreateUserResponse } from './CreateUserResponse'
 
-class CreateUserUseCase implements UseCase<CreateUserRequest, User> {
+class CreateUserUseCase
+  implements UseCase<CreateUserRequest, CreateUserResponse> {
   constructor(
     private userRepository: UserRepository,
     private encrypter: Encrypter
@@ -21,7 +23,7 @@ class CreateUserUseCase implements UseCase<CreateUserRequest, User> {
     password,
     cpf,
     isAdmin
-  }: CreateUserRequest): Promise<User> {
+  }: CreateUserRequest): Promise<CreateUserResponse> {
     const userNameValueObject = UserName.create({ value: name })
     const emailValueObject = Email.create({ value: email })
     const cpfValueObject = CPF.create({ value: cpf })
@@ -59,7 +61,7 @@ class CreateUserUseCase implements UseCase<CreateUserRequest, User> {
 
     await this.userRepository.save(user)
 
-    return user
+    return { user }
   }
 }
 
