@@ -6,7 +6,7 @@ import { isEmpty } from '../../../shared/utils/String'
 class InMemoryDeliveryRepository implements DeliveryRepository {
   private data: Delivery[] = []
 
-  async findById(deliveryId: UniqueEntityId): Promise<Delivery | null> {
+  async findById(deliveryId: UniqueEntityId): Promise<Delivery | undefined> {
     return this.data.find(delivery => delivery.id.value === deliveryId.value)
   }
 
@@ -36,7 +36,7 @@ class InMemoryDeliveryRepository implements DeliveryRepository {
       .filter(delivery => delivery.deliveryManId.value === deliveryManId.value)
       .filter(delivery => !delivery.isCanceled() && !delivery.isFinished())
 
-    if (!isEmpty(neighborhood)) {
+    if (neighborhood) {
       deliveries = deliveries.filter(
         delivery =>
           delivery.address.neighborhood.trim().toLowerCase() ===
