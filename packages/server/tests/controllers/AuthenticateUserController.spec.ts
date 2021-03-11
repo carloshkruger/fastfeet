@@ -69,6 +69,15 @@ describe('AuthenticateUserController', () => {
 
   it('should return 500 if Presenter throws', async () => {
     jest
+      .spyOn(authenticateUserUseCase, 'execute')
+      .mockImplementation(async () => {
+        return {
+          accessToken: 'access_token',
+          user: UserTestFactory.create()
+        }
+      })
+
+    jest
       .spyOn(authenticateUserPresenter, 'transform')
       .mockImplementation(() => {
         throw new Error()
