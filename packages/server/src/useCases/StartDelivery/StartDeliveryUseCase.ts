@@ -64,7 +64,7 @@ class StartDeliveryUseCase implements UseCase<StartDeliveryRequest, void> {
     )
 
     if (
-      deliveriesMadeByUserToday.length >
+      deliveriesMadeByUserToday.length >=
       StartDeliveryUseCase.MAX_DELIVERIES_PER_USER_PER_DAY
     ) {
       throw new StartDeliveryErrors.MaxDeliveriesReached()
