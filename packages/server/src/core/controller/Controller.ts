@@ -1,7 +1,7 @@
 import { AppError } from '@core/errors/AppError'
 
 abstract class Controller {
-  public abstract handle(props: ControllerRequest): Promise<ControllerResponse>
+  public abstract handle(props: any): Promise<ControllerResponse>
 
   protected ok(data: any): ControllerResponse {
     return {
@@ -30,38 +30,19 @@ abstract class Controller {
   }
 
   protected fail(error: Error): ControllerResponse {
-    if (error instanceof AppError) {
-      return {
-        statusCode: error.statusCode,
-        errorMessage: error.message.trim()
+    try {
+      if (error instanceof AppError) {
+        return {
+          statusCode: error.statusCode,
+          errorMessage: error.message.trim()
+        }
       }
+
+      return this.serverError(error)
+    } catch {
+      return this.serverError(error)
     }
-
-    return this.serverError(error)
   }
-}
-
-interface ControllerRequestBody {
-  [key: string]: any
-}
-
-interface ControllerRequestQuery {
-  [key: string]: any
-}
-
-interface ControllerRequestParams {
-  [key: string]: any
-}
-
-interface ControllerRequestAuthData {
-  userId: string
-}
-
-interface ControllerRequest {
-  body: ControllerRequestBody
-  query: ControllerRequestQuery
-  params: ControllerRequestParams
-  authData?: ControllerRequestAuthData
 }
 
 interface ControllerResponse {
@@ -70,12 +51,4 @@ interface ControllerResponse {
   errorMessage?: string
 }
 
-export {
-  Controller,
-  ControllerRequest,
-  ControllerResponse,
-  ControllerRequestBody,
-  ControllerRequestQuery,
-  ControllerRequestParams,
-  ControllerRequestAuthData
-}
+export { Controller, ControllerResponse }
