@@ -37,11 +37,7 @@ describe('CreateUserController', () => {
   })
 
   it('should return 200 if user is successfully created', async () => {
-    const response = await createUserController.handle({
-      body: validUserInfo,
-      params: {},
-      query: {}
-    })
+    const response = await createUserController.handle(validUserInfo)
 
     expect(response.statusCode).toBe(200)
     expect(response.body).toHaveProperty('id')
@@ -51,11 +47,7 @@ describe('CreateUserController', () => {
   it('should call use case with correct values', async () => {
     const useCaseSpy = jest.spyOn(createUserUseCase, 'execute')
 
-    await createUserController.handle({
-      body: validUserInfo,
-      params: {},
-      query: {}
-    })
+    await createUserController.handle(validUserInfo)
 
     expect(useCaseSpy).toHaveBeenCalledWith(validUserInfo)
   })
@@ -65,11 +57,7 @@ describe('CreateUserController', () => {
       throw new Error()
     })
 
-    const response = await createUserController.handle({
-      body: validUserInfo,
-      params: {},
-      query: {}
-    })
+    const response = await createUserController.handle(validUserInfo)
 
     expect(response.statusCode).toBe(500)
   })

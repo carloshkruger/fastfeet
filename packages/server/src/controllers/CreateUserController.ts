@@ -1,10 +1,15 @@
 import { CreateUserPresenter } from '@presenters/CreateUserPresenter'
 import { CreateUserUseCase } from '@useCases/CreateUser/CreateUserUseCase'
-import {
-  Controller,
-  ControllerRequest,
-  ControllerResponse
-} from '../core/controller'
+import { Controller, ControllerResponse } from '../core/controller'
+
+interface HandleParams {
+  name: string
+  email: string
+  cpf: string
+  password: string
+  passwordConfirmation: string
+  isAdmin: boolean
+}
 
 class CreateUserController extends Controller {
   constructor(
@@ -14,25 +19,9 @@ class CreateUserController extends Controller {
     super()
   }
 
-  async handle(request: ControllerRequest): Promise<ControllerResponse> {
+  async handle(params: HandleParams): Promise<ControllerResponse> {
     try {
-      const {
-        name,
-        email,
-        cpf,
-        password,
-        passwordConfirmation,
-        isAdmin
-      } = request.body
-
-      const useCaseResponse = await this.createUserUseCase.execute({
-        name,
-        email,
-        cpf,
-        password,
-        passwordConfirmation,
-        isAdmin
-      })
+      const useCaseResponse = await this.createUserUseCase.execute(params)
 
       const viewModel = this.createUserPresenter.transform(useCaseResponse)
 
