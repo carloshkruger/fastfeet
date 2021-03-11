@@ -1,14 +1,14 @@
-import { CPF } from '../../domain/CPF'
-import { Email } from '../../domain/Email'
-import { Password } from '../../domain/Password'
-import { User } from '../../domain/User'
-import { UserName } from '../../domain/UserName'
-import { InMemoryUserRepository } from '../../infra/repositories/InMemory/InMemoryUserRepository'
-import { UserRepository } from '../../repositories/UserRepository'
-import { Encrypter } from '../../shared/providers/EncrypterProvider/Encrypter'
-import { FakeEncrypter } from '../../shared/providers/EncrypterProvider/FakeEncrypter'
-import { CreateUserErrors } from './CreateUserErrors'
-import { CreateUserUseCase } from './CreateUserUseCase'
+import { CPF } from '@domain/CPF'
+import { Email } from '@domain/Email'
+import { Password } from '@domain/Password'
+import { User } from '@domain/User'
+import { UserName } from '@domain/UserName'
+import { InMemoryUserRepository } from '@infra/repositories/InMemory/InMemoryUserRepository'
+import { UserRepository } from '@repositories/UserRepository'
+import { Encrypter } from '@shared/providers/EncrypterProvider/Encrypter'
+import { FakeEncrypter } from '@shared/providers/EncrypterProvider/FakeEncrypter'
+import { CreateUserErrors } from '@useCases/CreateUser/CreateUserErrors'
+import { CreateUserUseCase } from '@useCases/CreateUser/CreateUserUseCase'
 
 let createUserUseCase: CreateUserUseCase
 let fakeEncrypter: Encrypter
@@ -124,7 +124,7 @@ describe('CreateUserUseCase', () => {
         passwordConfirmation: 'different_valid_password',
         isAdmin: false
       })
-    ).rejects.toThrow()
+    ).rejects.toThrow(new CreateUserErrors.PasswordNotMatch())
 
     expect(saveSpy).not.toHaveBeenCalled()
   })
@@ -152,7 +152,7 @@ describe('CreateUserUseCase', () => {
         passwordConfirmation: 'valid_password',
         isAdmin: false
       })
-    ).rejects.toThrow(CreateUserErrors.EmailAlreadyRegistered)
+    ).rejects.toThrow(new CreateUserErrors.EmailAlreadyRegistered(validEmail))
 
     expect(saveSpy).not.toHaveBeenCalled()
   })
@@ -180,7 +180,7 @@ describe('CreateUserUseCase', () => {
         passwordConfirmation: 'valid_password',
         isAdmin: false
       })
-    ).rejects.toThrow(CreateUserErrors.CPFAlreadyRegistered)
+    ).rejects.toThrow(new CreateUserErrors.CPFAlreadyRegistered(validCPF))
 
     expect(saveSpy).not.toHaveBeenCalled()
   })

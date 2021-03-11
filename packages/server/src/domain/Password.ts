@@ -1,5 +1,5 @@
-import { ValueObject } from '../core/domain/ValueObject'
-import { InvalidPasswordLengthError } from './errors/InvalidPasswordLengthError'
+import { ValueObject } from '@core/domain/ValueObject'
+import { InvalidPasswordLengthError } from '@domain/errors/InvalidPasswordLengthError'
 
 interface PasswordProps {
   value: string

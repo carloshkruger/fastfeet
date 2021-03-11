@@ -1,8 +1,8 @@
-import { UniqueEntityId } from '../core/domain/UniqueEntityId'
-import { Address } from './Address'
-import { CEP } from './CEP'
-import { Delivery } from './Delivery'
-import { ProductName } from './ProductName'
+import { UniqueEntityId } from '@core/domain'
+import { Address } from '@domain/Address'
+import { CEP } from '@domain/CEP'
+import { Delivery } from '@domain/Delivery'
+import { ProductName } from '@domain/ProductName'
 
 const validAddress = Address.create({
   address: 'valid address',

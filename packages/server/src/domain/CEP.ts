@@ -1,8 +1,8 @@
-import { ValueObject } from '../core/domain/ValueObject'
-import { FieldRequiredError } from '../core/errors/FieldRequiredError'
-import { removeNonNumericCharacters } from '../shared/utils/removeNonNumericCharacters'
-import { isEmpty } from '../shared/utils/String'
-import { InvalidCEPError } from './errors/InvalidCEPError'
+import { ValueObject } from '@core/domain'
+import { FieldRequiredError } from '@core/errors'
+import { removeNonNumericCharacters } from '@shared/utils/removeNonNumericCharacters'
+import { isEmpty } from '@shared/utils/String'
+import { InvalidCEPError } from '@domain/errors/InvalidCEPError'
 
 interface CEPProps {
   value: string

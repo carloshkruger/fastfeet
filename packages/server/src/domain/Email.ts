@@ -1,5 +1,5 @@
-import { ValueObject } from '../core/domain/ValueObject'
-import { InvalidEmailError } from './errors/InvalidEmailError'
+import { ValueObject } from '../core/domain'
+import { InvalidEmailError } from '../domain/errors/InvalidEmailError'
 
 interface EmailProps {
   value: string

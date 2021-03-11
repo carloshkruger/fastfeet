@@ -1,4 +1,4 @@
-import { AppError } from '../../core/errors/AppError'
+import { AppError } from '@core/errors/AppError'
 
 export namespace UpdateDeliveryErrors {
   export class DeliveryAlreadyInitialized extends AppError {

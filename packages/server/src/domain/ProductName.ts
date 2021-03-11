@@ -1,7 +1,6 @@
-import { ValueObject } from '../core/domain/ValueObject'
-import { AppError } from '../core/errors/AppError'
-import { FieldRequiredError } from '../core/errors/FieldRequiredError'
-import { isEmpty } from '../shared/utils/String'
+import { ValueObject } from '@core/domain'
+import { FieldRequiredError } from '@core/errors'
+import { isEmpty } from '@shared/utils/String'
 
 interface ProductNameProps {
   value: string

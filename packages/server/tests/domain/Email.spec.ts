@@ -1,42 +1,42 @@
-import { Email } from './Email'
-import { InvalidEmailError } from './errors/InvalidEmailError'
+import { Email } from '@domain/Email'
+import { InvalidEmailError } from '@domain/errors/InvalidEmailError'
 
 describe('Email validation', () => {
   it('should not create a instance of Email with an invalid email (with only username)', () => {
     const invalidEmail = 'invalid_email'
     expect(() => Email.create({ value: invalidEmail })).toThrow(
-      InvalidEmailError
+      new InvalidEmailError(invalidEmail).message
     )
   })
 
   it('should not create a instance of Email with an invalid email (without domain name)', () => {
     const invalidEmail = 'invalid_email@'
     expect(() => Email.create({ value: invalidEmail })).toThrow(
-      InvalidEmailError
+      new InvalidEmailError(invalidEmail).message
     )
   })
 
   it('should not create a instance of Email with an invalid email (with incorrect domain name)', () => {
     const invalidEmail = 'invalid_email@domain'
     expect(() => Email.create({ value: invalidEmail })).toThrow(
-      InvalidEmailError
+      new InvalidEmailError(invalidEmail).message
     )
 
     const invalidEmail2 = 'invalid_email@domain.'
     expect(() => Email.create({ value: invalidEmail2 })).toThrow(
-      InvalidEmailError
+      new InvalidEmailError(invalidEmail2).message
     )
 
     const invalidEmail3 = 'invalid_email@domain.com.'
     expect(() => Email.create({ value: invalidEmail3 })).toThrow(
-      InvalidEmailError
+      new InvalidEmailError(invalidEmail3).message
     )
   })
 
   it('should not create a instance of Email with an invalid email (without username)', () => {
     const invalidEmail = '@domain.com'
     expect(() => Email.create({ value: invalidEmail })).toThrow(
-      InvalidEmailError
+      new InvalidEmailError(invalidEmail).message
     )
   })
 

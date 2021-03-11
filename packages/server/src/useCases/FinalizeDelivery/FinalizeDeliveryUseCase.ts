@@ -56,12 +56,12 @@ class FinalizeDeliveryUseCase
 
     const hasSignatureImage = !isEmpty(signatureImage)
     const saveFileParam = {
-      fileName: signatureImage,
+      fileName: signatureImage || '',
       filePath: ['signatures']
     }
 
     if (hasSignatureImage) {
-      delivery.setSignatureImage(signatureImage)
+      delivery.setSignatureImage(String(signatureImage))
 
       await this.storageProvider.saveFile(saveFileParam)
     }

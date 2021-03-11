@@ -1,21 +1,21 @@
-import { UniqueEntityId } from '../../core/domain/UniqueEntityId'
-import { FieldRequiredError } from '../../core/errors/FieldRequiredError'
-import { Address } from '../../domain/Address'
-import { CEP } from '../../domain/CEP'
-import { CPF } from '../../domain/CPF'
-import { Delivery } from '../../domain/Delivery'
-import { Email } from '../../domain/Email'
-import { Password } from '../../domain/Password'
-import { ProductName } from '../../domain/ProductName'
-import { User } from '../../domain/User'
-import { UserName } from '../../domain/UserName'
-import { InMemoryDeliveryRepository } from '../../infra/repositories/InMemory/InMemoryDeliveryRepository'
-import { InMemoryUserRepository } from '../../infra/repositories/InMemory/InMemoryUserRepository'
-import { DeliveryRepository } from '../../repositories/DeliveryRepository'
-import { UserRepository } from '../../repositories/UserRepository'
-import { getRandomIntegerInRange } from '../../shared/utils/getRandomIntegerInRange'
-import { StartDeliveryErrors } from './StartDeliveryErrors'
-import { StartDeliveryUseCase } from './StartDeliveryUseCase'
+import { UniqueEntityId } from '@core/domain/UniqueEntityId'
+import { FieldRequiredError } from '@core/errors/FieldRequiredError'
+import { Address } from '@domain/Address'
+import { CEP } from '@domain/CEP'
+import { CPF } from '@domain/CPF'
+import { Delivery } from '@domain/Delivery'
+import { Email } from '@domain/Email'
+import { Password } from '@domain/Password'
+import { ProductName } from '@domain/ProductName'
+import { User } from '@domain/User'
+import { UserName } from '@domain/UserName'
+import { InMemoryDeliveryRepository } from '@infra/repositories/InMemory/InMemoryDeliveryRepository'
+import { InMemoryUserRepository } from '@infra/repositories/InMemory/InMemoryUserRepository'
+import { DeliveryRepository } from '@repositories/DeliveryRepository'
+import { UserRepository } from '@repositories/UserRepository'
+import { getRandomIntegerInRange } from '@shared/utils/getRandomIntegerInRange'
+import { StartDeliveryErrors } from '@useCases/StartDelivery/StartDeliveryErrors'
+import { StartDeliveryUseCase } from '@useCases/StartDelivery/StartDeliveryUseCase'
 
 let inMemoryUserRepository: UserRepository
 let inMemoryDeliveryRepository: DeliveryRepository
@@ -107,7 +107,7 @@ describe('StartDeliveryUseCase', () => {
         deliveryId: delivery.id.value,
         deliveryManId: user.id.value
       })
-    ).rejects.toThrow(StartDeliveryErrors.TimeNotAllowed)
+    ).rejects.toThrow(new StartDeliveryErrors.TimeNotAllowed())
 
     expect(saveSpy).not.toHaveBeenCalled()
   })
@@ -145,7 +145,7 @@ describe('StartDeliveryUseCase', () => {
         deliveryId: deliveryNotLinkedToTheUser.id.value,
         deliveryManId: user.id.value
       })
-    ).rejects.toThrow(StartDeliveryErrors.DeliveryNotLinkedToUser)
+    ).rejects.toThrow(new StartDeliveryErrors.DeliveryNotLinkedToUser())
 
     expect(saveSpy).not.toHaveBeenCalled()
   })
@@ -184,7 +184,7 @@ describe('StartDeliveryUseCase', () => {
         deliveryId: delivery.id.value,
         deliveryManId: user.id.value
       })
-    ).rejects.toThrow(StartDeliveryErrors.MaxDeliveriesReached)
+    ).rejects.toThrow(new StartDeliveryErrors.MaxDeliveriesReached())
 
     expect(saveSpy).not.toHaveBeenCalled()
   })
@@ -197,7 +197,7 @@ describe('StartDeliveryUseCase', () => {
         deliveryId: delivery.id.value,
         deliveryManId: ''
       })
-    ).rejects.toThrow(FieldRequiredError)
+    ).rejects.toThrow(new FieldRequiredError('Delivery man id'))
 
     expect(saveSpy).not.toHaveBeenCalled()
   })
@@ -210,7 +210,7 @@ describe('StartDeliveryUseCase', () => {
         deliveryId: '',
         deliveryManId: user.id.value
       })
-    ).rejects.toThrow(FieldRequiredError)
+    ).rejects.toThrow(new FieldRequiredError('Delivery id'))
 
     expect(saveSpy).not.toHaveBeenCalled()
   })
@@ -218,7 +218,7 @@ describe('StartDeliveryUseCase', () => {
   it('should throw if delivery man was not found', async () => {
     jest
       .spyOn(inMemoryUserRepository, 'findById')
-      .mockImplementation(async () => null)
+      .mockImplementation(async () => undefined)
 
     jest
       .spyOn(inMemoryDeliveryRepository, 'findById')
@@ -247,7 +247,7 @@ describe('StartDeliveryUseCase', () => {
 
     jest
       .spyOn(inMemoryDeliveryRepository, 'findById')
-      .mockImplementation(async () => null)
+      .mockImplementation(async () => undefined)
 
     const saveSpy = jest.spyOn(inMemoryDeliveryRepository, 'save')
 

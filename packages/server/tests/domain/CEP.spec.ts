@@ -1,24 +1,28 @@
-import { FieldRequiredError } from '../core/errors/FieldRequiredError'
-import { CEP } from './CEP'
-import { InvalidCEPError } from './errors/InvalidCEPError'
+import { FieldRequiredError } from '@core/errors'
+import { CEP } from '@domain/CEP'
+import { InvalidCEPError } from '@domain/errors/InvalidCEPError'
 
 describe('CEP validation', () => {
   it('should not create a CEP instance with invalid values (less characters than needed)', () => {
-    expect(() => CEP.create({ value: '123' })).toThrow(InvalidCEPError)
+    const cep = '123'
+    expect(() => CEP.create({ value: cep })).toThrow(new InvalidCEPError(cep))
   })
 
   it('should not create a CEP instance with invalid values (more characters than allowed)', () => {
-    expect(() => CEP.create({ value: '123456789123456789' })).toThrow(
-      InvalidCEPError
-    )
+    const cep = '123456789123456789'
+    expect(() => CEP.create({ value: cep })).toThrow(new InvalidCEPError(cep))
   })
 
   it('should not create a CEP instance with invalid values (with letters)', () => {
-    expect(() => CEP.create({ value: '89186-aaa' })).toThrow(InvalidCEPError)
+    const cep = '89186-aaa'
+    expect(() => CEP.create({ value: cep })).toThrow(new InvalidCEPError(cep))
   })
 
   it('should not create a CEP instance with invalid values (with empty string)', () => {
-    expect(() => CEP.create({ value: '' })).toThrow(FieldRequiredError)
+    const cep = ''
+    expect(() => CEP.create({ value: cep })).toThrow(
+      new FieldRequiredError('CEP')
+    )
   })
 
   it('should create a CEP instance with valid values and save the value with numbers only', () => {

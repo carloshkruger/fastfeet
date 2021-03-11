@@ -1,4 +1,4 @@
-import { AppError } from '../../core/errors/AppError'
+import { AppError } from '@core/errors/AppError'
 
 namespace CreateUserErrors {
   export class EmailAlreadyRegistered extends AppError {

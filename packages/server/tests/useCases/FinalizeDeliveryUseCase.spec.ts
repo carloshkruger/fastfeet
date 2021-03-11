@@ -1,22 +1,22 @@
-import { UniqueEntityId } from '../../core/domain/UniqueEntityId'
-import { FieldRequiredError } from '../../core/errors/FieldRequiredError'
-import { Address } from '../../domain/Address'
-import { CEP } from '../../domain/CEP'
-import { CPF } from '../../domain/CPF'
-import { Delivery } from '../../domain/Delivery'
-import { Email } from '../../domain/Email'
-import { Password } from '../../domain/Password'
-import { ProductName } from '../../domain/ProductName'
-import { User } from '../../domain/User'
-import { UserName } from '../../domain/UserName'
-import { InMemoryDeliveryRepository } from '../../infra/repositories/InMemory/InMemoryDeliveryRepository'
-import { InMemoryUserRepository } from '../../infra/repositories/InMemory/InMemoryUserRepository'
-import { DeliveryRepository } from '../../repositories/DeliveryRepository'
-import { UserRepository } from '../../repositories/UserRepository'
-import { FakeStorageProvider } from '../../shared/providers/StorageProvider/FakeStorageProvider'
-import { StorageProvider } from '../../shared/providers/StorageProvider/StorageProvider'
-import { FinalizeDeliveryErrors } from './FinalizeDeliveryErrors'
-import { FinalizeDeliveryUseCase } from './FinalizeDeliveryUseCase'
+import { UniqueEntityId } from '@core/domain/UniqueEntityId'
+import { FieldRequiredError } from '@core/errors/FieldRequiredError'
+import { Address } from '@domain/Address'
+import { CEP } from '@domain/CEP'
+import { CPF } from '@domain/CPF'
+import { Delivery } from '@domain/Delivery'
+import { Email } from '@domain/Email'
+import { Password } from '@domain/Password'
+import { ProductName } from '@domain/ProductName'
+import { User } from '@domain/User'
+import { UserName } from '@domain/UserName'
+import { InMemoryDeliveryRepository } from '@infra/repositories/InMemory/InMemoryDeliveryRepository'
+import { InMemoryUserRepository } from '@infra/repositories/InMemory/InMemoryUserRepository'
+import { DeliveryRepository } from '@repositories/DeliveryRepository'
+import { UserRepository } from '@repositories/UserRepository'
+import { FakeStorageProvider } from '@shared/providers/StorageProvider/FakeStorageProvider'
+import { StorageProvider } from '@shared/providers/StorageProvider/StorageProvider'
+import { FinalizeDeliveryErrors } from '@useCases/FinalizeDelivery/FinalizeDeliveryErrors'
+import { FinalizeDeliveryUseCase } from '@useCases/FinalizeDelivery/FinalizeDeliveryUseCase'
 
 let inMemoryUserRepository: UserRepository
 let inMemoryDeliveryRepository: DeliveryRepository
@@ -62,7 +62,7 @@ describe('FinalizeDeliveryUseCase', () => {
         deliveryManId: '',
         deliveryId: new UniqueEntityId().value
       })
-    ).rejects.toThrow(FieldRequiredError)
+    ).rejects.toThrow(new FieldRequiredError('Delivery man id'))
   })
 
   it('should throw if no delivery id is provided', async () => {
@@ -71,13 +71,13 @@ describe('FinalizeDeliveryUseCase', () => {
         deliveryManId: new UniqueEntityId().value,
         deliveryId: ''
       })
-    ).rejects.toThrow(FieldRequiredError)
+    ).rejects.toThrow(new FieldRequiredError('Delivery id'))
   })
 
   it('should throw if delivery man was not found', async () => {
     jest
       .spyOn(inMemoryUserRepository, 'findById')
-      .mockImplementation(async () => null)
+      .mockImplementation(async () => undefined)
 
     jest
       .spyOn(inMemoryDeliveryRepository, 'findById')
@@ -102,7 +102,7 @@ describe('FinalizeDeliveryUseCase', () => {
 
     jest
       .spyOn(inMemoryDeliveryRepository, 'findById')
-      .mockImplementation(async () => null)
+      .mockImplementation(async () => undefined)
 
     const saveSpy = jest.spyOn(inMemoryDeliveryRepository, 'save')
 
@@ -145,7 +145,7 @@ describe('FinalizeDeliveryUseCase', () => {
         deliveryId: deliveryNotLinkedToTheUser.id.value,
         deliveryManId: user.id.value
       })
-    ).rejects.toThrow(FinalizeDeliveryErrors.DeliveryNotLinkedToUser)
+    ).rejects.toThrow(new FinalizeDeliveryErrors.DeliveryNotLinkedToUser())
 
     expect(saveSpy).not.toHaveBeenCalled()
   })
@@ -179,7 +179,7 @@ describe('FinalizeDeliveryUseCase', () => {
         deliveryId: deliveryNotInitialized.id.value,
         deliveryManId: user.id.value
       })
-    ).rejects.toThrow(FinalizeDeliveryErrors.DeliveryNotInitialized)
+    ).rejects.toThrow(new FinalizeDeliveryErrors.DeliveryNotInitialized())
 
     expect(saveSpy).not.toHaveBeenCalled()
   })

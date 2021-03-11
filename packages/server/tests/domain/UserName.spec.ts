@@ -1,12 +1,12 @@
-import { FieldRequiredError } from '../core/errors/FieldRequiredError'
-import { UserName } from './UserName'
+import { FieldRequiredError } from '@core/errors/FieldRequiredError'
+import { UserName } from '@domain/UserName'
 
 describe('UserName validation', () => {
   it('should not create a UserName instance with invalid value (empty string)', () => {
     const invalidName = ''
 
     expect(() => UserName.create({ value: invalidName })).toThrow(
-      FieldRequiredError
+      new FieldRequiredError('Username')
     )
   })
 

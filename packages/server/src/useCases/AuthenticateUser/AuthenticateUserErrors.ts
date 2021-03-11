@@ -1,4 +1,4 @@
-import { AppError } from '../../core/errors/AppError'
+import { AppError } from '@core/errors/AppError'
 
 export namespace AuthenticateUserErrors {
   export class IncorrectCredentials extends AppError {

@@ -1,5 +1,5 @@
-import { InvalidPasswordLengthError } from './errors/InvalidPasswordLengthError'
-import { Password } from './Password'
+import { InvalidPasswordLengthError } from '@domain/errors/InvalidPasswordLengthError'
+import { Password } from '@domain/Password'
 
 describe('Password validation', () => {
   it('should not create a Password instance with incorrect value (fewer characters than allowed)', () => {
@@ -11,7 +11,7 @@ describe('Password validation', () => {
     }
 
     expect(() => Password.create({ value: text, hashedValue: '' })).toThrow(
-      InvalidPasswordLengthError
+      new InvalidPasswordLengthError(minLengthAllowed)
     )
   })
 
@@ -24,7 +24,7 @@ describe('Password validation', () => {
     }
 
     expect(() => Password.create({ value: text, hashedValue: '' })).toThrow(
-      InvalidPasswordLengthError
+      new InvalidPasswordLengthError(minLengthAllowed)
     )
   })
 

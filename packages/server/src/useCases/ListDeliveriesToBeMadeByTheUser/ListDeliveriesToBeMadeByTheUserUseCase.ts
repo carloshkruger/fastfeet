@@ -20,13 +20,13 @@ class ListDeliveriesToBeMadeByTheUserUseCase
     neighborhood
   }: ListDeliveriesToBeMadeByTheUserRequest): Promise<Delivery[]> {
     if (!deliveryManId) {
-      throw new FieldRequiredError('Delivery man id.')
+      throw new FieldRequiredError('Delivery man id')
     }
 
     const deliveryMan = await this.userRepository.findById(deliveryManId)
 
     if (!deliveryMan) {
-      throw new AppError('Delivery man not found.')
+      throw new AppError('Delivery man not found')
     }
 
     const deliveries = await this.deliveryRepository.listDeliveriesToBeMadeByUserId(
@@ -39,7 +39,7 @@ class ListDeliveriesToBeMadeByTheUserUseCase
     )
 
     if (!isEmpty(neighborhood)) {
-      neighborhood = neighborhood.trim().toLowerCase()
+      neighborhood = String(neighborhood).trim().toLowerCase()
 
       filteredDeliveries = filteredDeliveries.filter(
         delivery =>

@@ -1,4 +1,4 @@
-import { AppError } from '../../core/errors/AppError'
+import { AppError } from '@core/errors/AppError'
 
 export namespace StartDeliveryErrors {
   export class TimeNotAllowed extends AppError {

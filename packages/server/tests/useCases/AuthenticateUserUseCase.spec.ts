@@ -1,16 +1,16 @@
-import { CPF } from '../../domain/CPF'
-import { Email } from '../../domain/Email'
-import { Password } from '../../domain/Password'
-import { User } from '../../domain/User'
-import { UserName } from '../../domain/UserName'
-import { InMemoryUserRepository } from '../../infra/repositories/InMemory/InMemoryUserRepository'
-import { UserRepository } from '../../repositories/UserRepository'
-import { AuthTokenProvider } from '../../shared/providers/AuthTokenProvider/AuthTokenProvider'
-import { FakeAuthTokenProvider } from '../../shared/providers/AuthTokenProvider/FakeAuthTokenProvider'
-import { Encrypter } from '../../shared/providers/EncrypterProvider/Encrypter'
-import { FakeEncrypter } from '../../shared/providers/EncrypterProvider/FakeEncrypter'
-import { AuthenticateUserErrors } from './AuthenticateUserErrors'
-import { AuthenticateUserUseCase } from './AuthenticateUserUseCase'
+import { CPF } from '@domain/CPF'
+import { Email } from '@domain/Email'
+import { Password } from '@domain/Password'
+import { User } from '@domain/User'
+import { UserName } from '@domain/UserName'
+import { InMemoryUserRepository } from '@infra/repositories/InMemory/InMemoryUserRepository'
+import { UserRepository } from '@repositories/UserRepository'
+import { AuthTokenProvider } from '@shared/providers/AuthTokenProvider/AuthTokenProvider'
+import { FakeAuthTokenProvider } from '@shared/providers/AuthTokenProvider/FakeAuthTokenProvider'
+import { Encrypter } from '@shared/providers/EncrypterProvider/Encrypter'
+import { FakeEncrypter } from '@shared/providers/EncrypterProvider/FakeEncrypter'
+import { AuthenticateUserErrors } from '@useCases/AuthenticateUser/AuthenticateUserErrors'
+import { AuthenticateUserUseCase } from '@useCases/AuthenticateUser/AuthenticateUserUseCase'
 
 let inMemoryUserRepository: UserRepository
 let fakeEncrypter: Encrypter
@@ -64,7 +64,7 @@ describe('AuthenticateUserUseCase', () => {
         cpf: '',
         password: validPassword
       })
-    ).rejects.toThrow(AuthenticateUserErrors.IncorrectCredentials)
+    ).rejects.toThrow(new AuthenticateUserErrors.IncorrectCredentials())
   })
 
   it('should not be possible to authenticate without a password', async () => {
@@ -73,7 +73,7 @@ describe('AuthenticateUserUseCase', () => {
         cpf: validCPF,
         password: ''
       })
-    ).rejects.toThrow(AuthenticateUserErrors.IncorrectCredentials)
+    ).rejects.toThrow(new AuthenticateUserErrors.IncorrectCredentials())
   })
 
   it('should not be possible to authenticate with a non existing user', async () => {
@@ -82,7 +82,7 @@ describe('AuthenticateUserUseCase', () => {
         cpf: validCPF,
         password: validPassword
       })
-    ).rejects.toThrow(AuthenticateUserErrors.IncorrectCredentials)
+    ).rejects.toThrow(new AuthenticateUserErrors.IncorrectCredentials())
   })
 
   it('should not be possible to authenticate with an invalid password', async () => {
@@ -97,6 +97,6 @@ describe('AuthenticateUserUseCase', () => {
         cpf: validCPF,
         password: validPassword
       })
-    ).rejects.toThrow(AuthenticateUserErrors.IncorrectCredentials)
+    ).rejects.toThrow(new AuthenticateUserErrors.IncorrectCredentials())
   })
 })

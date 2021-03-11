@@ -1,13 +1,13 @@
-import { UniqueEntityId } from '../../core/domain/UniqueEntityId'
-import { FieldRequiredError } from '../../core/errors/FieldRequiredError'
-import { CPF } from '../../domain/CPF'
-import { Email } from '../../domain/Email'
-import { Password } from '../../domain/Password'
-import { User } from '../../domain/User'
-import { UserName } from '../../domain/UserName'
-import { InMemoryUserRepository } from '../../infra/repositories/InMemory/InMemoryUserRepository'
-import { UserRepository } from '../../repositories/UserRepository'
-import { UpdateUserUseCase } from './UpdateUserUseCase'
+import { UniqueEntityId } from '@core/domain/UniqueEntityId'
+import { FieldRequiredError } from '@core/errors/FieldRequiredError'
+import { CPF } from '@domain/CPF'
+import { Email } from '@domain/Email'
+import { Password } from '@domain/Password'
+import { User } from '@domain/User'
+import { UserName } from '@domain/UserName'
+import { InMemoryUserRepository } from '@infra/repositories/InMemory/InMemoryUserRepository'
+import { UserRepository } from '@repositories/UserRepository'
+import { UpdateUserUseCase } from '@useCases/UpdateUser/UpdateUserUseCase'
 
 let inMemoryUserRepository: UserRepository
 let updateUserUseCase: UpdateUserUseCase
@@ -95,7 +95,7 @@ describe('UpdateUserUseCase', () => {
         cpf: '122.998.660-00',
         email: 'another_valid_email@domain.com'
       })
-    ).rejects.toThrow(FieldRequiredError)
+    ).rejects.toThrow(new FieldRequiredError('User id'))
 
     expect(saveSpy).not.toHaveBeenCalled()
   })

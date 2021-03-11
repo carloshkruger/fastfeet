@@ -1,5 +1,5 @@
-import { Entity } from '../core/domain/Entity'
-import { UniqueEntityId } from '../core/domain/UniqueEntityId'
+import { Entity } from '@core/domain'
+import { UniqueEntityId } from '@core/domain'
 import { Address } from './Address'
 import { ProductName } from './ProductName'
 

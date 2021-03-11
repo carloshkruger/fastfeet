@@ -1,14 +1,16 @@
-import { FieldRequiredError } from '../core/errors/FieldRequiredError'
-import { ProductName } from './ProductName'
+import { FieldRequiredError } from '@core/errors/FieldRequiredError'
+import { ProductName } from '@domain/ProductName'
 
 describe('ProductName validation', () => {
   it('should throw if empty value is provided', () => {
-    expect(() => ProductName.create({ value: '' })).toThrow(FieldRequiredError)
+    expect(() => ProductName.create({ value: '' })).toThrow(
+      new FieldRequiredError('Product name')
+    )
   })
 
   it('should throw if blank string is provided', () => {
     expect(() => ProductName.create({ value: '   ' })).toThrow(
-      FieldRequiredError
+      new FieldRequiredError('Product name')
     )
   })
 

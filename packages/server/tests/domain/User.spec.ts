@@ -1,9 +1,9 @@
-import { UniqueEntityId } from '../core/domain/UniqueEntityId'
-import { CPF } from './CPF'
-import { Email } from './Email'
-import { Password } from './Password'
-import { User } from './User'
-import { UserName } from './UserName'
+import { UniqueEntityId } from '@core/domain/UniqueEntityId'
+import { CPF } from '@domain/CPF'
+import { Email } from '@domain/Email'
+import { Password } from '@domain/Password'
+import { User } from '@domain/User'
+import { UserName } from '@domain/UserName'
 
 describe('User validation', () => {
   it('should create a User instance with valid values', () => {

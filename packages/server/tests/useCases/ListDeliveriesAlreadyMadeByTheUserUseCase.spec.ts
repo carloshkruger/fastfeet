@@ -1,19 +1,19 @@
-import { UniqueEntityId } from '../../core/domain/UniqueEntityId'
-import { FieldRequiredError } from '../../core/errors/FieldRequiredError'
-import { Address } from '../../domain/Address'
-import { CEP } from '../../domain/CEP'
-import { CPF } from '../../domain/CPF'
-import { Delivery } from '../../domain/Delivery'
-import { Email } from '../../domain/Email'
-import { Password } from '../../domain/Password'
-import { ProductName } from '../../domain/ProductName'
-import { User } from '../../domain/User'
-import { UserName } from '../../domain/UserName'
-import { InMemoryDeliveryRepository } from '../../infra/repositories/InMemory/InMemoryDeliveryRepository'
-import { InMemoryUserRepository } from '../../infra/repositories/InMemory/InMemoryUserRepository'
-import { DeliveryRepository } from '../../repositories/DeliveryRepository'
-import { UserRepository } from '../../repositories/UserRepository'
-import { ListDeliveriesAlreadyMadeByTheUserUseCase } from './ListDeliveriesAlreadyMadeByTheUserUseCase'
+import { UniqueEntityId } from '@core/domain/UniqueEntityId'
+import { FieldRequiredError } from '@core/errors/FieldRequiredError'
+import { Address } from '@domain/Address'
+import { CEP } from '@domain/CEP'
+import { CPF } from '@domain/CPF'
+import { Delivery } from '@domain/Delivery'
+import { Email } from '@domain/Email'
+import { Password } from '@domain/Password'
+import { ProductName } from '@domain/ProductName'
+import { User } from '@domain/User'
+import { UserName } from '@domain/UserName'
+import { InMemoryDeliveryRepository } from '@infra/repositories/InMemory/InMemoryDeliveryRepository'
+import { InMemoryUserRepository } from '@infra/repositories/InMemory/InMemoryUserRepository'
+import { DeliveryRepository } from '@repositories/DeliveryRepository'
+import { UserRepository } from '@repositories/UserRepository'
+import { ListDeliveriesAlreadyMadeByTheUserUseCase } from '@useCases/ListDeliveriesAlreadyMadeByTheUser/ListDeliveriesAlreadyMadeByTheUserUseCase'
 
 let inMemoryUserRepository: UserRepository
 let inMemoryDeliveryRepository: DeliveryRepository
@@ -105,7 +105,7 @@ describe('ListDeliveriesAlreadyMadeByTheUserUseCase', () => {
       listDeliveriesAlreadyMadeByTheUserUseCase.execute({
         deliveryManId: ''
       })
-    ).rejects.toThrow(FieldRequiredError)
+    ).rejects.toThrow(new FieldRequiredError('Delivery man id'))
   })
 
   it('should throw if delivery man was not found', async () => {

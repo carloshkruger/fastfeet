@@ -1,20 +1,20 @@
-import { UniqueEntityId } from '../../core/domain/UniqueEntityId'
-import { FieldRequiredError } from '../../core/errors/FieldRequiredError'
-import { Address } from '../../domain/Address'
-import { CEP } from '../../domain/CEP'
-import { CPF } from '../../domain/CPF'
-import { Delivery } from '../../domain/Delivery'
-import { Email } from '../../domain/Email'
-import { Password } from '../../domain/Password'
-import { ProductName } from '../../domain/ProductName'
-import { User } from '../../domain/User'
-import { UserName } from '../../domain/UserName'
-import { InMemoryDeliveryRepository } from '../../infra/repositories/InMemory/InMemoryDeliveryRepository'
-import { InMemoryUserRepository } from '../../infra/repositories/InMemory/InMemoryUserRepository'
-import { DeliveryRepository } from '../../repositories/DeliveryRepository'
-import { UserRepository } from '../../repositories/UserRepository'
-import { UpdateDeliveryErrors } from './UpdateDeliveryErrors'
-import { UpdateDeliveryUseCase } from './UpdateDeliveryUseCase'
+import { UniqueEntityId } from '@core/domain/UniqueEntityId'
+import { FieldRequiredError } from '@core/errors/FieldRequiredError'
+import { Address } from '@domain/Address'
+import { CEP } from '@domain/CEP'
+import { CPF } from '@domain/CPF'
+import { Delivery } from '@domain/Delivery'
+import { Email } from '@domain/Email'
+import { Password } from '@domain/Password'
+import { ProductName } from '@domain/ProductName'
+import { User } from '@domain/User'
+import { UserName } from '@domain/UserName'
+import { InMemoryDeliveryRepository } from '@infra/repositories/InMemory/InMemoryDeliveryRepository'
+import { InMemoryUserRepository } from '@infra/repositories/InMemory/InMemoryUserRepository'
+import { DeliveryRepository } from '@repositories/DeliveryRepository'
+import { UserRepository } from '@repositories/UserRepository'
+import { UpdateDeliveryErrors } from '@useCases/UpdateDelivery/UpdateDeliveryErrors'
+import { UpdateDeliveryUseCase } from '@useCases/UpdateDelivery/UpdateDeliveryUseCase'
 
 let inMemoryUserRepository: UserRepository
 let inMemoryDeliveryRepository: DeliveryRepository
@@ -68,7 +68,7 @@ describe('UpdateDeliveryUseCase', () => {
         deliveryId: '',
         deliveryManId: new UniqueEntityId().value
       })
-    ).rejects.toThrow(FieldRequiredError)
+    ).rejects.toThrow(new FieldRequiredError('Delivery id'))
   })
 
   it('should throw if no delivery man id is provided', async () => {
@@ -78,7 +78,7 @@ describe('UpdateDeliveryUseCase', () => {
         deliveryId: new UniqueEntityId().value,
         deliveryManId: ''
       })
-    ).rejects.toThrow(FieldRequiredError)
+    ).rejects.toThrow(new FieldRequiredError('Delivery man id'))
   })
 
   it('should throw if delivery was not found', async () => {
@@ -88,7 +88,7 @@ describe('UpdateDeliveryUseCase', () => {
 
     jest
       .spyOn(inMemoryDeliveryRepository, 'findById')
-      .mockImplementation(async () => null)
+      .mockImplementation(async () => undefined)
 
     await expect(
       updateDeliveryUseCase.execute({
@@ -102,7 +102,7 @@ describe('UpdateDeliveryUseCase', () => {
   it('should throw if delivery man was not found', async () => {
     jest
       .spyOn(inMemoryUserRepository, 'findById')
-      .mockImplementation(async () => null)
+      .mockImplementation(async () => undefined)
 
     jest
       .spyOn(inMemoryDeliveryRepository, 'findById')
@@ -146,7 +146,7 @@ describe('UpdateDeliveryUseCase', () => {
         deliveryId: deliveryAlreadyInitialized.id.value,
         deliveryManId: user.id.value
       })
-    ).rejects.toThrow(UpdateDeliveryErrors.DeliveryAlreadyInitialized)
+    ).rejects.toThrow(new UpdateDeliveryErrors.DeliveryAlreadyInitialized())
   })
 
   it('should not be possible to update a delivery already finished', async () => {
@@ -179,7 +179,7 @@ describe('UpdateDeliveryUseCase', () => {
         deliveryId: deliveryAlreadyFinished.id.value,
         deliveryManId: user.id.value
       })
-    ).rejects.toThrow(UpdateDeliveryErrors.DeliveryAlreadyFinished)
+    ).rejects.toThrow(new UpdateDeliveryErrors.DeliveryAlreadyFinished())
   })
 
   it('should not be possible to update a delivery canceled', async () => {
@@ -211,7 +211,7 @@ describe('UpdateDeliveryUseCase', () => {
         deliveryId: deliveryCanceled.id.value,
         deliveryManId: user.id.value
       })
-    ).rejects.toThrow(UpdateDeliveryErrors.DeliveryCanceled)
+    ).rejects.toThrow(new UpdateDeliveryErrors.DeliveryCanceled())
   })
 
   it('should update a delivery', async () => {

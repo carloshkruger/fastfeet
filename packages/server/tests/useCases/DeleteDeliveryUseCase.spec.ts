@@ -1,12 +1,12 @@
-import { UniqueEntityId } from '../../core/domain/UniqueEntityId'
-import { FieldRequiredError } from '../../core/errors/FieldRequiredError'
-import { Address } from '../../domain/Address'
-import { CEP } from '../../domain/CEP'
-import { Delivery } from '../../domain/Delivery'
-import { ProductName } from '../../domain/ProductName'
-import { InMemoryDeliveryRepository } from '../../infra/repositories/InMemory/InMemoryDeliveryRepository'
-import { DeliveryRepository } from '../../repositories/DeliveryRepository'
-import { DeleteDeliveryUseCase } from './DeleteDeliveryUseCase'
+import { UniqueEntityId } from '@core/domain/UniqueEntityId'
+import { FieldRequiredError } from '@core/errors/FieldRequiredError'
+import { Address } from '@domain/Address'
+import { CEP } from '@domain/CEP'
+import { Delivery } from '@domain/Delivery'
+import { ProductName } from '@domain/ProductName'
+import { InMemoryDeliveryRepository } from '@infra/repositories/InMemory/InMemoryDeliveryRepository'
+import { DeliveryRepository } from '@repositories/DeliveryRepository'
+import { DeleteDeliveryUseCase } from '@useCases/DeleteDelivery/DeleteDeliveryUseCase'
 
 let inMemoryDeliveryRepository: DeliveryRepository
 let deleteDeliveryUseCase: DeleteDeliveryUseCase
@@ -24,7 +24,7 @@ describe('DeleteDeliveryUseCase', () => {
       deleteDeliveryUseCase.execute({
         deliveryId: ''
       })
-    ).rejects.toThrow(FieldRequiredError)
+    ).rejects.toThrow(new FieldRequiredError('Delivery id'))
   })
 
   it('should throw if delivery was not found', async () => {

@@ -1,6 +1,6 @@
-import { FieldRequiredError } from '../core/errors/FieldRequiredError'
-import { Address } from './Address'
-import { CEP } from './CEP'
+import { FieldRequiredError } from '@core/errors'
+import { Address } from '@domain/Address'
+import { CEP } from '@domain/CEP'
 
 const validAddress = 'valid address'
 const validNumber = 9999
@@ -21,20 +21,20 @@ describe('Address validation', () => {
         city: validCity,
         state: validState
       })
-    ).toThrow(FieldRequiredError)
+    ).toThrow(new FieldRequiredError('Address').message)
   })
 
   it('should not create an Address instance with invalid values (without number info)', () => {
     expect(() =>
       Address.create({
         address: validAddress,
-        number: null,
+        number: 0,
         neighborhood: validNeighborhood,
         postalCode: validPostalCode,
         city: validCity,
         state: validState
       })
-    ).toThrow(FieldRequiredError)
+    ).toThrow(new FieldRequiredError('Number').message)
   })
 
   it('should not create an Address instance with invalid values (without neighborhood info)', () => {
@@ -47,20 +47,7 @@ describe('Address validation', () => {
         city: validCity,
         state: validState
       })
-    ).toThrow(FieldRequiredError)
-  })
-
-  it('should not create an Address instance with invalid values (without postalCode info)', () => {
-    expect(() =>
-      Address.create({
-        address: validAddress,
-        number: validNumber,
-        neighborhood: validNeighborhood,
-        postalCode: null,
-        city: validCity,
-        state: validState
-      })
-    ).toThrow(FieldRequiredError)
+    ).toThrow(new FieldRequiredError('Neighborhood').message)
   })
 
   it('should not create an Address instance with invalid values (without city info)', () => {
@@ -73,7 +60,7 @@ describe('Address validation', () => {
         city: '',
         state: validState
       })
-    ).toThrow(FieldRequiredError)
+    ).toThrow(new FieldRequiredError('City').message)
   })
 
   it('should not create an Address instance with invalid values (without state info)', () => {
@@ -86,7 +73,7 @@ describe('Address validation', () => {
         city: validCity,
         state: ''
       })
-    ).toThrow(FieldRequiredError)
+    ).toThrow(new FieldRequiredError('State').message)
   })
 
   it('should create an Address instance with valid values', () => {
