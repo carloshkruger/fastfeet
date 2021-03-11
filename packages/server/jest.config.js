@@ -20,6 +20,7 @@ module.exports = {
     '^@presenters/(.*)$': '<rootDir>/src/presenters/$1',
     '^@repositories/(.*)$': '<rootDir>/src/repositories/$1',
     '^@shared/(.*)$': '<rootDir>/src/shared/$1',
-    '^@useCases/(.*)$': '<rootDir>/src/useCases/$1'
+    '^@useCases/(.*)$': '<rootDir>/src/useCases/$1',
+    '^@tests/(.*)$': '<rootDir>/tests/$1'
   }
 }

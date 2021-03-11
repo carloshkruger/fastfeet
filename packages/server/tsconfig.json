@@ -8,7 +8,7 @@
     "target": "es5",
     "module": "commonjs",
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": ".",
     "strict": true,
     "strictPropertyInitialization": false,
     "baseUrl": ".",
@@ -23,6 +23,7 @@
       "@repositories/*": ["./src/repositories/*"],
       "@shared/*": ["./src/shared/*"],
       "@useCases/*": ["./src/useCases/*"],
+      "@tests/*": ["./tests/*"],
     },
     "resolveJsonModule": true,
     "composite": true, // required on the dependency project for references to work
