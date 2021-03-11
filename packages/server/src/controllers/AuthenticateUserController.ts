@@ -15,9 +15,12 @@ class AuthenticateUserController extends Controller {
     super()
   }
 
-  async handle(params: HandleParams): Promise<ControllerResponse> {
+  async handle({ cpf, password }: HandleParams): Promise<ControllerResponse> {
     try {
-      const useCaseResponse = await this.authenticateUserUseCase.execute(params)
+      const useCaseResponse = await this.authenticateUserUseCase.execute({
+        cpf,
+        password
+      })
 
       const viewModel = this.authenticateUserPresenter.transform(
         useCaseResponse

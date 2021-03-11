@@ -40,6 +40,8 @@ abstract class Controller {
 
       return this.serverError(error)
     } catch {
+      console.log(error)
+
       return this.serverError(error)
     }
   }
