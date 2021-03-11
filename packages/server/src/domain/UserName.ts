@@ -1,5 +1,6 @@
 import { ValueObject } from '../core/domain/ValueObject'
-import { InvalidUserNameError } from './errors/InvalidUserNameError'
+import { FieldRequiredError } from '../core/errors/FieldRequiredError'
+import { isEmpty } from '../shared/utils/String'
 
 interface UserNameProps {
   value: string
@@ -13,8 +14,8 @@ class UserName extends ValueObject<UserNameProps> {
   public static create(props: UserNameProps): UserName {
     props.value = props.value.trim()
 
-    if (!props.value) {
-      throw new InvalidUserNameError()
+    if (isEmpty(props.value)) {
+      throw new FieldRequiredError('Username')
     }
 
     return new UserName(props)

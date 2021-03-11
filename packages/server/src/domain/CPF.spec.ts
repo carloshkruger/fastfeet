@@ -1,3 +1,4 @@
+import { FieldRequiredError } from '../core/errors/FieldRequiredError'
 import { CPF } from './CPF'
 import { InvalidCPFError } from './errors/InvalidCPFError'
 
@@ -36,12 +37,16 @@ describe('CPF validation', () => {
 
   it('should not create a CPF instance with invalid value (with empty string)', () => {
     const incorrectCPF = ''
-    expect(() => CPF.create({ value: incorrectCPF })).toThrow(InvalidCPFError)
+    expect(() => CPF.create({ value: incorrectCPF })).toThrow(
+      FieldRequiredError
+    )
   })
 
   it('should not create a CPF instance with invalid value (with blank value)', () => {
     const incorrectCPF = ' '
-    expect(() => CPF.create({ value: incorrectCPF })).toThrow(InvalidCPFError)
+    expect(() => CPF.create({ value: incorrectCPF })).toThrow(
+      FieldRequiredError
+    )
   })
 
   it('should create a CPF instance with valid value (with numbers only)', () => {

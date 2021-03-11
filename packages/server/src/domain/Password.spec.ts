@@ -45,13 +45,6 @@ describe('Password validation', () => {
   })
 
   it('should create a Password instance with correct values using "createWithValidatedValue" method', () => {
-    const minLengthAllowed = Password.MIN_LENGTH
-    let text = ''
-
-    for (let i = 0; i < minLengthAllowed; i++) {
-      text += 'a'
-    }
-
     const hashedValue = ''
 
     const password = Password.createWithValidatedValue(hashedValue)

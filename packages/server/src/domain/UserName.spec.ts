@@ -1,4 +1,4 @@
-import { InvalidUserNameError } from './errors/InvalidUserNameError'
+import { FieldRequiredError } from '../core/errors/FieldRequiredError'
 import { UserName } from './UserName'
 
 describe('UserName validation', () => {
@@ -6,7 +6,7 @@ describe('UserName validation', () => {
     const invalidName = ''
 
     expect(() => UserName.create({ value: invalidName })).toThrow(
-      InvalidUserNameError
+      FieldRequiredError
     )
   })
 

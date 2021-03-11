@@ -1,3 +1,4 @@
+import { FieldRequiredError } from '../core/errors/FieldRequiredError'
 import { CEP } from './CEP'
 import { InvalidCEPError } from './errors/InvalidCEPError'
 
@@ -17,7 +18,7 @@ describe('CEP validation', () => {
   })
 
   it('should not create a CEP instance with invalid values (with empty string)', () => {
-    expect(() => CEP.create({ value: '' })).toThrow(InvalidCEPError)
+    expect(() => CEP.create({ value: '' })).toThrow(FieldRequiredError)
   })
 
   it('should create a CEP instance with valid values and save the value with numbers only', () => {

@@ -1,5 +1,6 @@
 import { UseCase } from '../../core/domain/UseCase'
 import { AppError } from '../../core/errors/AppError'
+import { FieldRequiredError } from '../../core/errors/FieldRequiredError'
 import { CPF } from '../../domain/CPF'
 import { Email } from '../../domain/Email'
 import { UserName } from '../../domain/UserName'
@@ -17,7 +18,7 @@ class UpdateUserUseCase implements UseCase<UpdateUserRequest, void> {
     cpf
   }: UpdateUserRequest): Promise<void> {
     if (!userId) {
-      throw new AppError('User not found.')
+      throw new FieldRequiredError('User id')
     }
 
     const userNameValueObject = UserName.create({ value: name })

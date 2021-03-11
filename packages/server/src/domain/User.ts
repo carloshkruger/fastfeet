@@ -14,11 +14,17 @@ interface UserProps {
 }
 
 class User extends Entity<UserProps> {
+  private static DEFAULT_IS_ADMIN_VALUE = false
+
   private constructor(props: UserProps, id?: UniqueEntityId) {
     super(props, id)
   }
 
   public static create(props: UserProps, id?: UniqueEntityId): User {
+    if (!props.isAdmin) {
+      props.isAdmin = User.DEFAULT_IS_ADMIN_VALUE
+    }
+
     return new User(props, id)
   }
 
@@ -51,7 +57,7 @@ class User extends Entity<UserProps> {
   }
 
   get isAdmin(): boolean {
-    return this.props.isAdmin || false
+    return this.props.isAdmin || User.DEFAULT_IS_ADMIN_VALUE
   }
 }
 

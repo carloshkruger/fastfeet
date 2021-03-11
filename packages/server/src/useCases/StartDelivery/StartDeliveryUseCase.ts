@@ -1,6 +1,7 @@
 import { UniqueEntityId } from '../../core/domain/UniqueEntityId'
 import { UseCase } from '../../core/domain/UseCase'
 import { AppError } from '../../core/errors/AppError'
+import { FieldRequiredError } from '../../core/errors/FieldRequiredError'
 import { DeliveryRepository } from '../../repositories/DeliveryRepository'
 import { UserRepository } from '../../repositories/UserRepository'
 import { isEmpty } from '../../shared/utils/String'
@@ -22,11 +23,11 @@ class StartDeliveryUseCase implements UseCase<StartDeliveryRequest, void> {
     deliveryId
   }: StartDeliveryRequest): Promise<void> {
     if (isEmpty(deliveryManId)) {
-      throw new AppError('Delivery man id not provided.')
+      throw new FieldRequiredError('Delivery man id')
     }
 
     if (isEmpty(deliveryId)) {
-      throw new AppError('Delivery id not provided.')
+      throw new FieldRequiredError('Delivery id')
     }
 
     const deliveryMan = await this.userRepository.findById(deliveryManId)

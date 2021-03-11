@@ -1,4 +1,5 @@
 import { UniqueEntityId } from '../../core/domain/UniqueEntityId'
+import { FieldRequiredError } from '../../core/errors/FieldRequiredError'
 import { Address } from '../../domain/Address'
 import { CEP } from '../../domain/CEP'
 import { CPF } from '../../domain/CPF'
@@ -196,7 +197,7 @@ describe('StartDeliveryUseCase', () => {
         deliveryId: delivery.id.value,
         deliveryManId: ''
       })
-    ).rejects.toThrow()
+    ).rejects.toThrow(FieldRequiredError)
 
     expect(saveSpy).not.toHaveBeenCalled()
   })
@@ -209,7 +210,7 @@ describe('StartDeliveryUseCase', () => {
         deliveryId: '',
         deliveryManId: user.id.value
       })
-    ).rejects.toThrow()
+    ).rejects.toThrow(FieldRequiredError)
 
     expect(saveSpy).not.toHaveBeenCalled()
   })

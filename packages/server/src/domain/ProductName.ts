@@ -1,5 +1,6 @@
 import { ValueObject } from '../core/domain/ValueObject'
 import { AppError } from '../core/errors/AppError'
+import { FieldRequiredError } from '../core/errors/FieldRequiredError'
 import { isEmpty } from '../shared/utils/String'
 
 interface ProductNameProps {
@@ -15,7 +16,7 @@ class ProductName extends ValueObject<ProductNameProps> {
     props.value = props.value.trim()
 
     if (isEmpty(props.value)) {
-      throw new AppError('Product name is required.')
+      throw new FieldRequiredError('Product name')
     }
 
     return new ProductName(props)

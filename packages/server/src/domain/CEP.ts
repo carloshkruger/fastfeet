@@ -1,5 +1,7 @@
 import { ValueObject } from '../core/domain/ValueObject'
+import { FieldRequiredError } from '../core/errors/FieldRequiredError'
 import { removeNonNumericCharacters } from '../shared/utils/removeNonNumericCharacters'
+import { isEmpty } from '../shared/utils/String'
 import { InvalidCEPError } from './errors/InvalidCEPError'
 
 interface CEPProps {
@@ -19,6 +21,10 @@ class CEP extends ValueObject<CEPProps> {
 
   public static create(props: CEPProps): CEP {
     const valueWithoutFormatting = props.value
+
+    if (isEmpty(valueWithoutFormatting)) {
+      throw new FieldRequiredError('CEP')
+    }
 
     props.value = removeNonNumericCharacters(props.value)
 

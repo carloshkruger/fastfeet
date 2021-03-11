@@ -9,6 +9,7 @@ import { CEP } from '../../domain/CEP'
 import { UpdateDeliveryErrors } from './UpdateDeliveryErrors'
 import { ProductName } from '../../domain/ProductName'
 import { AppError } from '../../core/errors/AppError'
+import { FieldRequiredError } from '../../core/errors/FieldRequiredError'
 
 class UpdateDeliveryUseCase implements UseCase<UpdateDeliveryRequest, void> {
   constructor(
@@ -29,11 +30,11 @@ class UpdateDeliveryUseCase implements UseCase<UpdateDeliveryRequest, void> {
     state
   }: UpdateDeliveryRequest): Promise<void> {
     if (isEmpty(deliveryId)) {
-      throw new AppError('Delivery id is required.')
+      throw new FieldRequiredError('Delivery id')
     }
 
     if (isEmpty(deliveryManId)) {
-      throw new AppError('Delivery id is required.')
+      throw new FieldRequiredError('Delivery man id')
     }
 
     const delivery = await this.deliveryRepository.findById(

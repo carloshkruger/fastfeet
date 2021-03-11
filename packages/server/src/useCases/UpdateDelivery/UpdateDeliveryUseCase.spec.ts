@@ -1,4 +1,5 @@
 import { UniqueEntityId } from '../../core/domain/UniqueEntityId'
+import { FieldRequiredError } from '../../core/errors/FieldRequiredError'
 import { Address } from '../../domain/Address'
 import { CEP } from '../../domain/CEP'
 import { CPF } from '../../domain/CPF'
@@ -67,7 +68,7 @@ describe('UpdateDeliveryUseCase', () => {
         deliveryId: '',
         deliveryManId: new UniqueEntityId().value
       })
-    ).rejects.toThrow()
+    ).rejects.toThrow(FieldRequiredError)
   })
 
   it('should throw if no delivery man id is provided', async () => {
@@ -77,7 +78,7 @@ describe('UpdateDeliveryUseCase', () => {
         deliveryId: new UniqueEntityId().value,
         deliveryManId: ''
       })
-    ).rejects.toThrow()
+    ).rejects.toThrow(FieldRequiredError)
   })
 
   it('should throw if delivery was not found', async () => {

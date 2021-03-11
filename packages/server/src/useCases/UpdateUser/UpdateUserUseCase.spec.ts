@@ -1,4 +1,5 @@
 import { UniqueEntityId } from '../../core/domain/UniqueEntityId'
+import { FieldRequiredError } from '../../core/errors/FieldRequiredError'
 import { CPF } from '../../domain/CPF'
 import { Email } from '../../domain/Email'
 import { Password } from '../../domain/Password'
@@ -94,7 +95,7 @@ describe('UpdateUserUseCase', () => {
         cpf: '122.998.660-00',
         email: 'another_valid_email@domain.com'
       })
-    ).rejects.toThrow()
+    ).rejects.toThrow(FieldRequiredError)
 
     expect(saveSpy).not.toHaveBeenCalled()
   })

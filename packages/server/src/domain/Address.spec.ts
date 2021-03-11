@@ -1,3 +1,4 @@
+import { FieldRequiredError } from '../core/errors/FieldRequiredError'
 import { Address } from './Address'
 import { CEP } from './CEP'
 
@@ -20,7 +21,7 @@ describe('Address validation', () => {
         city: validCity,
         state: validState
       })
-    ).toThrow()
+    ).toThrow(FieldRequiredError)
   })
 
   it('should not create an Address instance with invalid values (without number info)', () => {
@@ -33,7 +34,7 @@ describe('Address validation', () => {
         city: validCity,
         state: validState
       })
-    ).toThrow()
+    ).toThrow(FieldRequiredError)
   })
 
   it('should not create an Address instance with invalid values (without neighborhood info)', () => {
@@ -46,7 +47,7 @@ describe('Address validation', () => {
         city: validCity,
         state: validState
       })
-    ).toThrow()
+    ).toThrow(FieldRequiredError)
   })
 
   it('should not create an Address instance with invalid values (without postalCode info)', () => {
@@ -59,7 +60,7 @@ describe('Address validation', () => {
         city: validCity,
         state: validState
       })
-    ).toThrow()
+    ).toThrow(FieldRequiredError)
   })
 
   it('should not create an Address instance with invalid values (without city info)', () => {
@@ -72,7 +73,7 @@ describe('Address validation', () => {
         city: '',
         state: validState
       })
-    ).toThrow()
+    ).toThrow(FieldRequiredError)
   })
 
   it('should not create an Address instance with invalid values (without state info)', () => {
@@ -85,7 +86,7 @@ describe('Address validation', () => {
         city: validCity,
         state: ''
       })
-    ).toThrow()
+    ).toThrow(FieldRequiredError)
   })
 
   it('should create an Address instance with valid values', () => {

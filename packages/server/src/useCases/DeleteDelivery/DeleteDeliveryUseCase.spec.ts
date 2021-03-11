@@ -1,4 +1,5 @@
 import { UniqueEntityId } from '../../core/domain/UniqueEntityId'
+import { FieldRequiredError } from '../../core/errors/FieldRequiredError'
 import { Address } from '../../domain/Address'
 import { CEP } from '../../domain/CEP'
 import { Delivery } from '../../domain/Delivery'
@@ -23,7 +24,7 @@ describe('DeleteDeliveryUseCase', () => {
       deleteDeliveryUseCase.execute({
         deliveryId: ''
       })
-    ).rejects.toThrow()
+    ).rejects.toThrow(FieldRequiredError)
   })
 
   it('should throw if delivery was not found', async () => {
