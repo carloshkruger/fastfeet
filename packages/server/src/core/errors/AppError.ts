@@ -1,6 +1,5 @@
 class AppError extends Error {
   public readonly statusCode: number
-  public readonly customError = true
 
   constructor(message: string, statusCode: number = 400) {
     super(message)
