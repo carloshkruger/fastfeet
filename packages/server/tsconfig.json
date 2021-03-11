@@ -1,0 +1,34 @@
+{
+  "extends": "../../tsconfig.json",
+  "ts-node": {
+    "transpileOnly": true
+  },
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "target": "es5",
+    "module": "commonjs",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "baseUrl": ".",
+    "allowJs": true,
+    "paths": {
+      "@controllers/*": ["./src/controllers/*"],
+      "@core/*": ["./src/core/*"],
+      "@domain/*": ["./src/domain/*"],
+      "@infra/*": ["./src/infra/*"],
+      "@main/*": ["./src/main/*"],
+      "@presenters/*": ["./src/presenters/*"],
+      "@repositories/*": ["./src/repositories/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@useCases/*": ["./src/useCases/*"],
+    },
+    "resolveJsonModule": true,
+    "composite": true, // required on the dependency project for references to work
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "forceConsistentCasingInFileNames": true
+  }
+}

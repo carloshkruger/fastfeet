@@ -4,7 +4,7 @@ module.exports = {
   displayName: name,
   name,
   preset: 'ts-jest',
-  collectCoverage: true,
+  collectCoverage: false,
   collectCoverageFrom: [
     '<rootDir>/src/**/useCases/**/*.ts',
     '<rootDir>/src/**/domain/**/*.ts'
@@ -12,10 +12,14 @@ module.exports = {
   coverageDirectory: 'coverage',
   coverageReporters: ['text-summary', 'lcov'],
   moduleNameMapper: {
-    '^@modules/(.*)$': '<rootDir>/src/modules/$1',
-    '^@config/(.*)$': '<rootDir>/src/config/$1',
-    '^@shared/(.*)$': '<rootDir>/src/shared/$1',
+    '^@controllers/(.*)$': '<rootDir>/src/controllers/$1',
     '^@core/(.*)$': '<rootDir>/src/core/$1',
-    '^@infra/(.*)$': '<rootDir>/src/infra/$1'
+    '^@domain/(.*)$': '<rootDir>/src/domain/$1',
+    '^@infra/(.*)$': '<rootDir>/src/infra/$1',
+    '^@main/(.*)$': '<rootDir>/src/main/$1',
+    '^@presenters/(.*)$': '<rootDir>/src/presenters/$1',
+    '^@repositories/(.*)$': '<rootDir>/src/repositories/$1',
+    '^@shared/(.*)$': '<rootDir>/src/shared/$1',
+    '^@useCases/(.*)$': '<rootDir>/src/useCases/$1'
   }
 }
