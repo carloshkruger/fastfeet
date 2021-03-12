@@ -76,11 +76,13 @@ export class CreateDeliveriesTable1615559387312 implements MigrationInterface {
           },
           {
             name: 'created_at',
-            type: 'timestamp'
+            type: 'timestamp',
+            default: 'now()'
           },
           {
             name: 'updated_at',
-            type: 'timestamp'
+            type: 'timestamp',
+            default: 'now()'
           }
         ],
         foreignKeys: [
