@@ -4,6 +4,7 @@ import { AppError } from '@core/errors/AppError'
 import { Address } from '@domain/Address'
 import { CEP } from '@domain/CEP'
 import { Delivery } from '@domain/Delivery'
+import { DeliveryRecipientName } from '@domain/DeliveryRecipientName'
 import { ProductName } from '@domain/ProductName'
 import { DeliveryRepository } from '@repositories/DeliveryRepository'
 import { UserRepository } from '@repositories/UserRepository'
@@ -18,6 +19,7 @@ class CreateDeliveryUseCase
 
   async execute({
     deliveryManId,
+    recipientName,
     productName,
     address,
     postalCode,
@@ -29,6 +31,7 @@ class CreateDeliveryUseCase
   }: CreateDeliveryRequest): Promise<Delivery> {
     const delivery = Delivery.create({
       deliveryManId: new UniqueEntityId(deliveryManId),
+      recipientName: DeliveryRecipientName.create({ value: recipientName }),
       productName: ProductName.create({ value: productName }),
       address: Address.create({
         address,

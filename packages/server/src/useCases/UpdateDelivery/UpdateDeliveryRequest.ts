@@ -1,6 +1,7 @@
 interface UpdateDeliveryRequest {
   deliveryId: string
   deliveryManId: string
+  recipientName: string
   productName: string
   address: string
   postalCode: string

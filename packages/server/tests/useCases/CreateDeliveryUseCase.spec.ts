@@ -1,5 +1,4 @@
 import { UniqueEntityId } from '@core/domain/UniqueEntityId'
-import { AppError } from '@core/errors'
 import { CPF } from '@domain/CPF'
 import { Delivery } from '@domain/Delivery'
 import { Email } from '@domain/Email'
@@ -41,6 +40,7 @@ describe('CreateDeliveryUseCase', () => {
     await expect(
       createDeliveryUseCase.execute({
         deliveryManId: user.id.value,
+        recipientName: 'valid recipient name',
         productName: 'valid product name',
         address: 'valid address',
         postalCode: '89186000',
@@ -57,6 +57,7 @@ describe('CreateDeliveryUseCase', () => {
     await expect(
       createDeliveryUseCase.execute({
         deliveryManId: new UniqueEntityId().value,
+        recipientName: 'valid recipient name',
         productName: 'valid product name',
         address: 'valid address',
         postalCode: '89186000',

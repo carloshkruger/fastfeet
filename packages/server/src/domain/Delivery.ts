@@ -1,10 +1,12 @@
 import { Entity } from '@core/domain'
 import { UniqueEntityId } from '@core/domain'
 import { Address } from './Address'
+import { DeliveryRecipientName } from './DeliveryRecipientName'
 import { ProductName } from './ProductName'
 
 interface DeliveryProps {
   deliveryManId: UniqueEntityId
+  recipientName: DeliveryRecipientName
   productName: ProductName
   address: Address
   signatureImage?: string
@@ -46,6 +48,10 @@ class Delivery extends Entity<DeliveryProps> {
     this.props.deliveryManId = deliveryManId
   }
 
+  public setRecipientName(recipientName: DeliveryRecipientName): void {
+    this.props.recipientName = recipientName
+  }
+
   public setProductName(productName: ProductName): void {
     this.props.productName = productName
   }
@@ -60,6 +66,10 @@ class Delivery extends Entity<DeliveryProps> {
 
   get deliveryManId(): UniqueEntityId {
     return this.props.deliveryManId
+  }
+
+  get recipientName(): DeliveryRecipientName {
+    return this.props.recipientName
   }
 
   get productName(): ProductName {

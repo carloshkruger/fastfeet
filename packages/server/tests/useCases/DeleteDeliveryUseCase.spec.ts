@@ -3,6 +3,7 @@ import { FieldRequiredError } from '@core/errors/FieldRequiredError'
 import { Address } from '@domain/Address'
 import { CEP } from '@domain/CEP'
 import { Delivery } from '@domain/Delivery'
+import { DeliveryRecipientName } from '@domain/DeliveryRecipientName'
 import { ProductName } from '@domain/ProductName'
 import { InMemoryDeliveryRepository } from '@infra/repositories/InMemory/InMemoryDeliveryRepository'
 import { DeliveryRepository } from '@repositories/DeliveryRepository'
@@ -38,6 +39,9 @@ describe('DeleteDeliveryUseCase', () => {
   it('should delete a delivery', async () => {
     const delivery = Delivery.create({
       deliveryManId: new UniqueEntityId(),
+      recipientName: DeliveryRecipientName.create({
+        value: 'valid recipient name'
+      }),
       productName: ProductName.create({ value: 'valid product name' }),
       address: Address.create({
         address: 'valid address',

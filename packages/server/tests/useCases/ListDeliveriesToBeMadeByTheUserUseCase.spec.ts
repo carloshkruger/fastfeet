@@ -4,6 +4,7 @@ import { Address } from '@domain/Address'
 import { CEP } from '@domain/CEP'
 import { CPF } from '@domain/CPF'
 import { Delivery } from '@domain/Delivery'
+import { DeliveryRecipientName } from '@domain/DeliveryRecipientName'
 import { Email } from '@domain/Email'
 import { Password } from '@domain/Password'
 import { ProductName } from '@domain/ProductName'
@@ -43,6 +44,9 @@ describe('ListDeliveriesToBeMadeByTheUserUseCase', () => {
 
     const delivery = Delivery.create({
       deliveryManId: user.id,
+      recipientName: DeliveryRecipientName.create({
+        value: 'valid recipient name'
+      }),
       productName: ProductName.create({ value: 'valid product name' }),
       address: Address.create({
         address: 'valid address',
@@ -56,6 +60,9 @@ describe('ListDeliveriesToBeMadeByTheUserUseCase', () => {
 
     const canceledDelivery = Delivery.create({
       deliveryManId: user.id,
+      recipientName: DeliveryRecipientName.create({
+        value: 'valid recipient name'
+      }),
       productName: ProductName.create({ value: 'valid product name' }),
       address: Address.create({
         address: 'valid address',
@@ -70,6 +77,9 @@ describe('ListDeliveriesToBeMadeByTheUserUseCase', () => {
 
     const finishedDelivery = Delivery.create({
       deliveryManId: user.id,
+      recipientName: DeliveryRecipientName.create({
+        value: 'valid recipient name'
+      }),
       productName: ProductName.create({ value: 'valid product name' }),
       address: Address.create({
         address: 'valid address',
@@ -116,6 +126,9 @@ describe('ListDeliveriesToBeMadeByTheUserUseCase', () => {
 
     const delivery = Delivery.create({
       deliveryManId: user.id,
+      recipientName: DeliveryRecipientName.create({
+        value: 'valid recipient name'
+      }),
       productName: ProductName.create({ value: 'valid product name' }),
       address: Address.create({
         address: 'valid address',
@@ -129,6 +142,9 @@ describe('ListDeliveriesToBeMadeByTheUserUseCase', () => {
 
     const delivery2 = Delivery.create({
       deliveryManId: user.id,
+      recipientName: DeliveryRecipientName.create({
+        value: 'valid recipient name'
+      }),
       productName: ProductName.create({ value: 'valid product name' }),
       address: Address.create({
         address: 'valid address',
@@ -142,6 +158,9 @@ describe('ListDeliveriesToBeMadeByTheUserUseCase', () => {
 
     const delivery3 = Delivery.create({
       deliveryManId: user.id,
+      recipientName: DeliveryRecipientName.create({
+        value: 'valid recipient name'
+      }),
       productName: ProductName.create({ value: 'valid product name' }),
       address: Address.create({
         address: 'valid address',

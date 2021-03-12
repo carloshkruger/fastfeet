@@ -10,6 +10,7 @@ import { AppError } from '@core/errors/AppError'
 import { FieldRequiredError } from '@core/errors/FieldRequiredError'
 import { UpdateDeliveryRequest } from './UpdateDeliveryRequest'
 import { UpdateDeliveryErrors } from './UpdateDeliveryErrors'
+import { DeliveryRecipientName } from '@domain/DeliveryRecipientName'
 
 class UpdateDeliveryUseCase implements UseCase<UpdateDeliveryRequest, void> {
   constructor(
@@ -20,6 +21,7 @@ class UpdateDeliveryUseCase implements UseCase<UpdateDeliveryRequest, void> {
   async execute({
     deliveryId,
     deliveryManId,
+    recipientName,
     productName,
     address,
     postalCode,
@@ -64,6 +66,9 @@ class UpdateDeliveryUseCase implements UseCase<UpdateDeliveryRequest, void> {
     }
 
     delivery.setDeliveryManId(new UniqueEntityId(deliveryManId))
+    delivery.setRecipientName(
+      DeliveryRecipientName.create({ value: recipientName })
+    )
     delivery.setProductName(ProductName.create({ value: productName }))
     delivery.setAddress(
       Address.create({

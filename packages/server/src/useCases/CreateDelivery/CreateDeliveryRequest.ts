@@ -1,5 +1,6 @@
 interface CreateDeliveryRequest {
   deliveryManId: string
+  recipientName: string
   productName: string
   address: string
   postalCode: string
