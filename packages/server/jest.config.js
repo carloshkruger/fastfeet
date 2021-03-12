@@ -4,11 +4,13 @@ module.exports = {
   displayName: name,
   name,
   preset: 'ts-jest',
-  collectCoverage: false,
+  collectCoverage: true,
   collectCoverageFrom: [
-    '<rootDir>/src/**/domain/**/*.ts',
-    '<rootDir>/src/**/useCases/**/*.ts',
-    '<rootDir>/src/**/controllers/**/*.ts'
+    '<rootDir>/src/domain/**/*.ts',
+    '<rootDir>/src/useCases/**/*.ts',
+    '<rootDir>/src/controllers/**/*.ts',
+    '!<rootDir>/src/domain/errors/*.ts',
+    '!<rootDir>/src/useCases/**/*Errors.ts'
   ],
   coverageDirectory: 'coverage',
   coverageReporters: ['text-summary', 'lcov'],
