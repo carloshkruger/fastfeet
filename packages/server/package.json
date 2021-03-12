@@ -4,17 +4,22 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev:server": "ts-node-dev -r tsconfig-paths/register --inspect --ignore-watch node_modules src/index.ts",
+    "dev:server": "ts-node-dev -r tsconfig-paths/register --inspect --ignore-watch node_modules src/main/http/app.ts",
+    "typeorm": "ts-node-dev -r tsconfig-paths/register ../../node_modules/typeorm/cli.js",
     "test": "jest"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
     "jsonwebtoken": "^8.5.1",
+    "pg": "^8.5.1",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.31",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/bcrypt": "^3.0.0",
     "@types/jsonwebtoken": "^8.5.0",
+    "@types/node": "^14.14.34",
     "@types/uuid": "^8.3.0",
     "ts-node-dev": "^1.1.6",
     "tsconfig-paths": "^3.9.0"
