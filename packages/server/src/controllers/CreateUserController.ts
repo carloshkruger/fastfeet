@@ -19,9 +19,23 @@ class CreateUserController extends Controller {
     super()
   }
 
-  async handle(params: HandleParams): Promise<ControllerResponse> {
+  async handle({
+    name,
+    email,
+    cpf,
+    password,
+    passwordConfirmation,
+    isAdmin
+  }: HandleParams): Promise<ControllerResponse> {
     try {
-      const useCaseResponse = await this.createUserUseCase.execute(params)
+      const useCaseResponse = await this.createUserUseCase.execute({
+        name,
+        email,
+        cpf,
+        password,
+        passwordConfirmation,
+        isAdmin
+      })
 
       const viewModel = this.createUserPresenter.transform(useCaseResponse)
 
