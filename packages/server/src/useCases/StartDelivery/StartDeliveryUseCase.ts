@@ -53,7 +53,7 @@ class StartDeliveryUseCase implements UseCase<StartDeliveryRequest, void> {
 
     if (
       currentHour < StartDeliveryUseCase.MIN_HOUR_ALLOWED_TO_START_DELIVERY ||
-      currentHour > StartDeliveryUseCase.MAX_HOUR_ALLOWED_TO_START_DELIVERY
+      currentHour >= StartDeliveryUseCase.MAX_HOUR_ALLOWED_TO_START_DELIVERY
     ) {
       throw new StartDeliveryErrors.TimeNotAllowed()
     }
