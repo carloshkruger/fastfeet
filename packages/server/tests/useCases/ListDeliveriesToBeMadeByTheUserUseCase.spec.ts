@@ -104,10 +104,11 @@ describe('ListDeliveriesToBeMadeByTheUserUseCase', () => {
       deliveryManId: user.id.value
     })
 
-    expect(response).toHaveLength(1)
-    expect(response[0]).toBeInstanceOf(Delivery)
-    expect(response[0].isCanceled()).toBe(false)
-    expect(response[0].isFinished()).toBe(false)
+    expect(response).toHaveProperty('deliveries')
+    expect(response.deliveries).toHaveLength(1)
+    expect(response.deliveries[0]).toBeInstanceOf(Delivery)
+    expect(response.deliveries[0].isCanceled()).toBe(false)
+    expect(response.deliveries[0].isFinished()).toBe(false)
   })
 
   it('should return a list of deliveries to be made by a specific delivery man filtered by a specific neighborhood', async () => {
@@ -181,9 +182,10 @@ describe('ListDeliveriesToBeMadeByTheUserUseCase', () => {
       neighborhood: validNeighborhood
     })
 
-    expect(response).toHaveLength(2)
-    expect(response[0]).toBeInstanceOf(Delivery)
-    expect(response[1]).toBeInstanceOf(Delivery)
+    expect(response).toHaveProperty('deliveries')
+    expect(response.deliveries).toHaveLength(2)
+    expect(response.deliveries[0]).toBeInstanceOf(Delivery)
+    expect(response.deliveries[1]).toBeInstanceOf(Delivery)
   })
 
   it('should throw if delivery man id was not provided', async () => {
