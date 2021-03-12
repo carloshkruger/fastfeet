@@ -22,6 +22,10 @@ class DeliveryRecipientName extends ValueObject<DeliveryRecipientNameProps> {
 
     return new DeliveryRecipientName(props)
   }
+
+  public get value(): string {
+    return this.props.value
+  }
 }
 
 export { DeliveryRecipientName }
