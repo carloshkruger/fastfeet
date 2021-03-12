@@ -2,6 +2,7 @@ import { UniqueEntityId } from '@core/domain'
 import { Address } from '@domain/Address'
 import { CEP } from '@domain/CEP'
 import { Delivery } from '@domain/Delivery'
+import { DeliveryRecipientName } from '@domain/DeliveryRecipientName'
 import { ProductName } from '@domain/ProductName'
 
 const validAddress = Address.create({
@@ -18,6 +19,9 @@ describe('Delivery validation', () => {
     const delivery = Delivery.create({
       deliveryManId: new UniqueEntityId(),
       address: validAddress,
+      recipientName: DeliveryRecipientName.create({
+        value: 'valid recipient name'
+      }),
       productName: ProductName.create({ value: 'valid product name' })
     })
 
