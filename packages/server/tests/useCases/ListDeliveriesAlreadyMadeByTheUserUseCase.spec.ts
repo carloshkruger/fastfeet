@@ -104,10 +104,11 @@ describe('ListDeliveriesAlreadyMadeByTheUserUseCase', () => {
       deliveryManId: user.id.value
     })
 
-    expect(response).toHaveLength(1)
-    expect(response[0]).toBeInstanceOf(Delivery)
-    expect(response[0].isCanceled()).toBe(false)
-    expect(response[0].isFinished()).toBe(true)
+    expect(response).toHaveProperty('deliveries')
+    expect(response.deliveries).toHaveLength(1)
+    expect(response.deliveries[0]).toBeInstanceOf(Delivery)
+    expect(response.deliveries[0].isCanceled()).toBe(false)
+    expect(response.deliveries[0].isFinished()).toBe(true)
   })
 
   it('should throw if delivery man id was not provided', async () => {
