@@ -25,7 +25,9 @@ abstract class Controller {
   protected serverError(error: Error): ControllerResponse {
     return {
       statusCode: 500,
-      errorMessage: 'Internal server error'
+      body: {
+        error: 'Internal server error'
+      }
     }
   }
 
@@ -34,7 +36,9 @@ abstract class Controller {
       if (error instanceof AppError) {
         return {
           statusCode: error.statusCode,
-          errorMessage: error.message.trim()
+          body: {
+            error: error.message.trim()
+          }
         }
       }
 
@@ -50,7 +54,6 @@ abstract class Controller {
 interface ControllerResponse {
   statusCode: number
   body?: any
-  errorMessage?: string
 }
 
 export { Controller, ControllerResponse }
