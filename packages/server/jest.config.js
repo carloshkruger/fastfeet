@@ -6,8 +6,9 @@ module.exports = {
   preset: 'ts-jest',
   collectCoverage: false,
   collectCoverageFrom: [
+    '<rootDir>/src/**/domain/**/*.ts',
     '<rootDir>/src/**/useCases/**/*.ts',
-    '<rootDir>/src/**/domain/**/*.ts'
+    '<rootDir>/src/**/controllers/**/*.ts'
   ],
   coverageDirectory: 'coverage',
   coverageReporters: ['text-summary', 'lcov'],
