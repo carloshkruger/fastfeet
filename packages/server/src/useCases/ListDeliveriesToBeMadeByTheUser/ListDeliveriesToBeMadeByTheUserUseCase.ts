@@ -2,14 +2,18 @@ import { UniqueEntityId } from '../../core/domain/UniqueEntityId'
 import { UseCase } from '../../core/domain/UseCase'
 import { AppError } from '../../core/errors/AppError'
 import { FieldRequiredError } from '../../core/errors/FieldRequiredError'
-import { Delivery } from '../../domain/Delivery'
 import { DeliveryRepository } from '../../repositories/DeliveryRepository'
 import { UserRepository } from '../../repositories/UserRepository'
 import { isEmpty } from '../../shared/utils/String'
 import { ListDeliveriesToBeMadeByTheUserRequest } from './ListDeliveriesToBeMadeByTheUserRequest'
+import { ListDeliveriesToBeMadeByTheUserResponse } from './ListDeliveriesToBeMadeByTheUserResponse'
 
 class ListDeliveriesToBeMadeByTheUserUseCase
-  implements UseCase<ListDeliveriesToBeMadeByTheUserRequest, Delivery[]> {
+  implements
+    UseCase<
+      ListDeliveriesToBeMadeByTheUserRequest,
+      ListDeliveriesToBeMadeByTheUserResponse
+    > {
   constructor(
     private userRepository: UserRepository,
     private deliveryRepository: DeliveryRepository
@@ -18,7 +22,7 @@ class ListDeliveriesToBeMadeByTheUserUseCase
   async execute({
     deliveryManId,
     neighborhood
-  }: ListDeliveriesToBeMadeByTheUserRequest): Promise<Delivery[]> {
+  }: ListDeliveriesToBeMadeByTheUserRequest): Promise<ListDeliveriesToBeMadeByTheUserResponse> {
     if (!deliveryManId) {
       throw new FieldRequiredError('Delivery man id')
     }
@@ -47,7 +51,9 @@ class ListDeliveriesToBeMadeByTheUserUseCase
       )
     }
 
-    return filteredDeliveries
+    return {
+      deliveries: filteredDeliveries
+    }
   }
 }
 
