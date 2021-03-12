@@ -44,6 +44,18 @@ class Delivery {
   @Column('integer')
   number: number
 
+  @Column({ name: 'signature_image' })
+  signatureImage: string
+
+  @Column({ name: 'start_date', type: 'timestamp' })
+  startDate: Date
+
+  @Column({ name: 'end_date', type: 'timestamp' })
+  endDate: Date
+
+  @Column({ name: 'canceled_at', type: 'timestamp' })
+  canceledAt: Date
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date
 

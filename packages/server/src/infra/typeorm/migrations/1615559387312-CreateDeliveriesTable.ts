@@ -55,6 +55,26 @@ export class CreateDeliveriesTable1615559387312 implements MigrationInterface {
             isNullable: true
           },
           {
+            name: 'signature_image',
+            type: 'varchar',
+            isNullable: true
+          },
+          {
+            name: 'start_date',
+            type: 'timestamp',
+            isNullable: true
+          },
+          {
+            name: 'end_date',
+            type: 'timestamp',
+            isNullable: true
+          },
+          {
+            name: 'canceled_at',
+            type: 'timestamp',
+            isNullable: true
+          },
+          {
             name: 'created_at',
             type: 'timestamp'
           },
