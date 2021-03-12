@@ -45,7 +45,6 @@ describe('ListDeliveriesToBeMadeByTheUserController', () => {
     })
 
     expect(response.statusCode).toBe(500)
-    expect(response.body).toBeFalsy()
   })
 
   it('should return 500 if presenter throws', async () => {
@@ -60,6 +59,5 @@ describe('ListDeliveriesToBeMadeByTheUserController', () => {
     })
 
     expect(response.statusCode).toBe(500)
-    expect(response.body).toBeFalsy()
   })
 })

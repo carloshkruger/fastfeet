@@ -28,7 +28,6 @@ describe('ListDeliveriesAlreadyMadeByTheUserController', () => {
     })
 
     expect(response.statusCode).toBe(200)
-    expect(response.body).toHaveLength(1)
   })
 
   it('should return 500 if use case throws', async () => {
@@ -43,7 +42,6 @@ describe('ListDeliveriesAlreadyMadeByTheUserController', () => {
     })
 
     expect(response.statusCode).toBe(500)
-    expect(response.body).toBeFalsy()
   })
 
   it('should return 500 if presenter throws', async () => {
@@ -58,6 +56,5 @@ describe('ListDeliveriesAlreadyMadeByTheUserController', () => {
     })
 
     expect(response.statusCode).toBe(500)
-    expect(response.body).toBeFalsy()
   })
 })
