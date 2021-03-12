@@ -27,10 +27,6 @@ class Address extends ValueObject<AddressProps> {
       throw new FieldRequiredError('Number')
     }
 
-    if (!props.postalCode) {
-      throw new FieldRequiredError('Postal code')
-    }
-
     if (isEmpty(props.neighborhood)) {
       throw new FieldRequiredError('Neighborhood')
     }
