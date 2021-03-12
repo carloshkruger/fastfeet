@@ -12,11 +12,11 @@ class ProductName extends ValueObject<ProductNameProps> {
   }
 
   public static create(props: ProductNameProps): ProductName {
-    props.value = props.value.trim()
-
     if (isEmpty(props.value)) {
       throw new FieldRequiredError('Product name')
     }
+
+    props.value = props.value.trim()
 
     return new ProductName(props)
   }

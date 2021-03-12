@@ -12,11 +12,11 @@ class UserName extends ValueObject<UserNameProps> {
   }
 
   public static create(props: UserNameProps): UserName {
-    props.value = props.value.trim()
-
     if (isEmpty(props.value)) {
       throw new FieldRequiredError('Username')
     }
+
+    props.value = props.value.trim()
 
     return new UserName(props)
   }
