@@ -4,6 +4,7 @@ import { UpdateDeliveryUseCase } from '@useCases/UpdateDelivery/UpdateDeliveryUs
 interface HandleParams {
   deliveryId: string
   loggedUserId: string
+  recipientName: string
   productName: string
   address: string
   postalCode: string
@@ -22,6 +23,7 @@ class UpdateDeliveryController extends Controller {
   async handle({
     deliveryId,
     loggedUserId,
+    recipientName,
     productName,
     address,
     postalCode,
@@ -35,6 +37,7 @@ class UpdateDeliveryController extends Controller {
       await this.updateDeliveryUseCase.execute({
         deliveryId,
         deliveryManId: loggedUserId,
+        recipientName,
         productName,
         address,
         postalCode,

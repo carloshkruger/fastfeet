@@ -3,6 +3,7 @@ import { CreateDeliveryUseCase } from '@useCases/CreateDelivery/CreateDeliveryUs
 
 interface HandleParams {
   deliveryManId: string
+  recipientName: string
   productName: string
   address: string
   postalCode: string
@@ -20,6 +21,7 @@ class CreateDeliveryController extends Controller {
 
   async handle({
     deliveryManId,
+    recipientName,
     productName,
     address,
     postalCode,
@@ -32,6 +34,7 @@ class CreateDeliveryController extends Controller {
     try {
       await this.createDeliveryUseCase.execute({
         deliveryManId,
+        recipientName,
         productName,
         address,
         postalCode,

@@ -29,6 +29,7 @@ describe('UpdateDeliveryController', () => {
     const response = await updateDeliveryController.handle({
       deliveryId: delivery.id.value,
       loggedUserId: user.id.value,
+      recipientName: delivery.recipientName.value,
       productName: delivery.productName.value,
       address: delivery.address.address,
       city: delivery.address.city,
@@ -55,6 +56,7 @@ describe('UpdateDeliveryController', () => {
     const response = await updateDeliveryController.handle({
       deliveryId: delivery.id.value,
       loggedUserId: user.id.value,
+      recipientName: delivery.recipientName.value,
       productName: delivery.productName.value,
       address: delivery.address.address,
       city: delivery.address.city,

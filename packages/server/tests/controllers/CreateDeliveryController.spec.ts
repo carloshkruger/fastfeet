@@ -29,6 +29,7 @@ describe('CreateDeliveryController', () => {
 
     const response = await createDeliveryController.handle({
       deliveryManId: user.id.value,
+      recipientName: 'valid recipient name',
       productName: 'valid product name',
       address: 'valid address',
       city: 'valid city',
@@ -53,6 +54,7 @@ describe('CreateDeliveryController', () => {
 
     const response = await createDeliveryController.handle({
       deliveryManId: user.id.value,
+      recipientName: 'valid recipient name',
       productName: 'valid product name',
       address: 'valid address',
       city: 'valid city',
