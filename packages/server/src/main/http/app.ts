@@ -1,6 +1,7 @@
-import express, { NextFunction, Request, Response } from 'express'
+import express from 'express'
 
 import authentication from './middlewares/authentication'
+import errorHandler from './middlewares/errorHandler'
 import { router } from './routes/routes'
 
 const app = express()
@@ -8,12 +9,6 @@ const app = express()
 app.use(express.json())
 app.use(authentication)
 app.use(router)
-app.use(
-  (error: Error, request: Request, response: Response, next: NextFunction) => {
-    return response.status(500).json({
-      error: 'Internal server error'
-    })
-  }
-)
+app.use(errorHandler)
 
 export default app
