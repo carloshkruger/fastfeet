@@ -1,5 +1,10 @@
-interface AuthTokenProvider {
-  generate(userId: string): string
+interface AuthTokenProviderDecrypterResponse {
+  userId: string
 }
 
-export { AuthTokenProvider }
+interface AuthTokenProvider {
+  generate(userId: string): string
+  decrypt(token: string): AuthTokenProviderDecrypterResponse
+}
+
+export { AuthTokenProvider, AuthTokenProviderDecrypterResponse }
