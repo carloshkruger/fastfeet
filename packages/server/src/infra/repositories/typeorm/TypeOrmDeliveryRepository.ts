@@ -1,4 +1,4 @@
-import { getRepository, ILike, IsNull, Not } from 'typeorm'
+import { getRepository, ILike, IsNull, Not, Repository } from 'typeorm'
 
 import { Delivery as TypeOrmDeliveryModel } from '@infra/typeorm/models/Delivery'
 
@@ -11,10 +11,18 @@ import { Address } from '@domain/Address'
 import { CEP } from '@domain/CEP'
 
 class TypeOrmDeliveryRepository implements DeliveryRepository {
-  private repository = getRepository(TypeOrmDeliveryModel)
+  private repository: Repository<TypeOrmDeliveryModel>
+
+  private getRepository(): Repository<TypeOrmDeliveryModel> {
+    if (!this.repository) {
+      this.repository = getRepository(TypeOrmDeliveryModel)
+    }
+
+    return this.repository
+  }
 
   async findById(deliveryId: UniqueEntityId): Promise<Delivery | undefined> {
-    const model = await this.repository.findOne({
+    const model = await this.getRepository().findOne({
       where: {
         id: deliveryId.value
       }
@@ -53,7 +61,7 @@ class TypeOrmDeliveryRepository implements DeliveryRepository {
     userId: UniqueEntityId,
     date: Date
   ): Promise<Delivery[]> {
-    const models = await this.repository.find({
+    const models = await this.getRepository().find({
       where: {
         deliveryManIn: userId.value,
         startDate: date
@@ -88,7 +96,7 @@ class TypeOrmDeliveryRepository implements DeliveryRepository {
   }
 
   async save(delivery: Delivery): Promise<void> {
-    const model = this.repository.create({
+    const model = this.getRepository().create({
       id: delivery.id.value,
       deliveryManIn: delivery.deliveryManId.value,
       recipientName: delivery.recipientName.value,
@@ -106,7 +114,7 @@ class TypeOrmDeliveryRepository implements DeliveryRepository {
       signatureImage: delivery.signatureImage
     })
 
-    await this.repository.save(model)
+    await this.getRepository().save(model)
   }
 
   async listDeliveriesToBeMadeByUserId(
@@ -123,7 +131,7 @@ class TypeOrmDeliveryRepository implements DeliveryRepository {
       ;(whereOptions as any).neighborhood = ILike(`%${neighborhood}%`)
     }
 
-    const models = await this.repository.find({
+    const models = await this.getRepository().find({
       where: whereOptions
     })
 
@@ -167,7 +175,7 @@ class TypeOrmDeliveryRepository implements DeliveryRepository {
       ;(whereOptions as any).neighborhood = ILike(`%${neighborhood}%`)
     }
 
-    const models = await this.repository.find({
+    const models = await this.getRepository().find({
       where: whereOptions
     })
 
@@ -199,7 +207,7 @@ class TypeOrmDeliveryRepository implements DeliveryRepository {
   }
 
   async deleteById(deliveryId: UniqueEntityId): Promise<void> {
-    await this.repository.delete({
+    await this.getRepository().delete({
       id: deliveryId.value
     })
   }

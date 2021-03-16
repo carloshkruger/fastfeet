@@ -1,4 +1,4 @@
-import { getRepository } from 'typeorm'
+import { getRepository, Repository } from 'typeorm'
 
 import { User as TypeOrmUserModel } from '@infra/typeorm/models/User'
 
@@ -11,10 +11,18 @@ import { CPF } from '@domain/CPF'
 import { Password } from '@domain/Password'
 
 class TypeOrmUserRepository implements UserRepository {
-  private repository = getRepository(TypeOrmUserModel)
+  private repository: Repository<TypeOrmUserModel>
+
+  private getRepository(): Repository<TypeOrmUserModel> {
+    if (!this.repository) {
+      this.repository = getRepository(TypeOrmUserModel)
+    }
+
+    return this.repository
+  }
 
   async save(user: User): Promise<void> {
-    const model = this.repository.create({
+    const model = this.getRepository().create({
       id: user.id.value,
       name: user.name.value,
       password: user.password.value,
@@ -23,11 +31,11 @@ class TypeOrmUserRepository implements UserRepository {
       isAdmin: user.isAdmin
     })
 
-    await this.repository.save(model)
+    await this.getRepository().save(model)
   }
 
   async findById(userId: string): Promise<User | undefined> {
-    const model = await this.repository.findOne({
+    const model = await this.getRepository().findOne({
       where: {
         id: userId
       }
@@ -50,7 +58,7 @@ class TypeOrmUserRepository implements UserRepository {
   }
 
   async findByEmail(email: string): Promise<User | undefined> {
-    const model = await this.repository.findOne({
+    const model = await this.getRepository().findOne({
       where: {
         email
       }
@@ -73,7 +81,7 @@ class TypeOrmUserRepository implements UserRepository {
   }
 
   async findByCpf(cpf: string): Promise<User | undefined> {
-    const model = await this.repository.findOne({
+    const model = await this.getRepository().findOne({
       where: {
         cpf
       }
