@@ -6,7 +6,7 @@ import { AuthenticateUserUseCase } from '@useCases/AuthenticateUser/Authenticate
 class AuthenticateUserUseCaseFactory {
   static create(): AuthenticateUserUseCase {
     const userRepository = new TypeOrmUserRepository()
-    const encrypter = new BCryptEncrypter(12)
+    const encrypter = new BCryptEncrypter()
     const authTokenProvider = new JWTAuthTokenProvider()
 
     return new AuthenticateUserUseCase(

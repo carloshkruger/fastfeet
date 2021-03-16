@@ -5,7 +5,7 @@ import { CreateUserUseCase } from '@useCases/CreateUser/CreateUserUseCase'
 class CreateUserUseCaseFactory {
   static create(): CreateUserUseCase {
     const userRepository = new TypeOrmUserRepository()
-    const encrypter = new BCryptEncrypter(12)
+    const encrypter = new BCryptEncrypter()
 
     return new CreateUserUseCase(userRepository, encrypter)
   }

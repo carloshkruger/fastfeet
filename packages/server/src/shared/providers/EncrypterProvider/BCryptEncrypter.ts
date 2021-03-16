@@ -2,10 +2,10 @@ import { Encrypter, EncrypterCompareParams } from './Encrypter'
 import bcrypt from 'bcrypt'
 
 class BCryptEncrypter implements Encrypter {
-  constructor(private salt: number) {}
+  private static SALT = 12
 
   async hash(value: string): Promise<string> {
-    const hashedValue = await bcrypt.hash(value, this.salt)
+    const hashedValue = await bcrypt.hash(value, BCryptEncrypter.SALT)
 
     return hashedValue
   }
