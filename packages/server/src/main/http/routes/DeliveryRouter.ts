@@ -6,8 +6,11 @@ import { UpdateDeliveryControllerFactory } from '@main/factories/controllers/Upd
 import { StartDeliveryControllerFactory } from '@main/factories/controllers/StartDeliveryControllerFactory'
 import { FinalizeDeliveryControllerFactory } from '@main/factories/controllers/FinalizeDeliveryControllerFactory'
 import { DeleteDeliveryControllerFactory } from '@main/factories/controllers/DeleteDeliveryControllerFactory'
+import authorization from '../middlewares/authorization'
 
 const deliveryRouter = Router()
+
+deliveryRouter.use(authorization())
 
 deliveryRouter.post(
   '/',

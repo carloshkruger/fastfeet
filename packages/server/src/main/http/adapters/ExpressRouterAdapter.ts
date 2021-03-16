@@ -8,7 +8,8 @@ class ExpressRouterAdapter {
         const params = {
           ...(request.body || {}),
           ...(request.params || {}),
-          ...(request.query || {})
+          ...(request.query || {}),
+          loggedUserId: request?.user?.id
         }
 
         const controllerResponse = await controller.handle(params)
