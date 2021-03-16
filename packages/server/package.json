@@ -6,7 +6,7 @@
   "scripts": {
     "dev:server": "ts-node-dev -r tsconfig-paths/register --inspect --ignore-watch node_modules src/main/http/server.ts",
     "typeorm": "ts-node-dev -r tsconfig-paths/register node_modules/typeorm/cli.js",
-    "test": "jest"
+    "test": "jest --no-cache"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
