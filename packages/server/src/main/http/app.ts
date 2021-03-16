@@ -1,17 +1,17 @@
 import express from 'express'
-import cors from 'cors'
-import helmet from 'helmet'
-import hpp from 'hpp'
 
 import authentication from './middlewares/authentication'
 import errorHandler from './middlewares/errorHandler'
+import setupCors from './middlewares/cors'
+import setupHttpParameterPolution from './middlewares/httpParameterPolution'
+import setupSecurityHeaders from './middlewares/securityHeaders'
 import { router } from './routes/routes'
 
 const app = express()
 
-app.use(cors())
-app.use(helmet())
-app.use(hpp())
+setupCors(app)
+setupHttpParameterPolution(app)
+setupSecurityHeaders(app)
 app.use(express.json())
 app.use(authentication)
 app.use(router)
