@@ -114,7 +114,7 @@ class TypeOrmDeliveryRepository implements DeliveryRepository {
     neighborhood?: string
   ): Promise<Delivery[]> {
     let whereOptions = {
-      deliveryManIn: deliveryManId.value,
+      deliveryManId: deliveryManId.value,
       canceledAt: IsNull(),
       startDate: IsNull()
     }
@@ -159,7 +159,7 @@ class TypeOrmDeliveryRepository implements DeliveryRepository {
     neighborhood?: string
   ): Promise<Delivery[]> {
     let whereOptions = {
-      deliveryManIn: deliveryManId.value,
+      deliveryManId: deliveryManId.value,
       endDate: Not(IsNull())
     }
 
