@@ -1,9 +1,9 @@
-import { UniqueEntityId } from '../../core/domain/UniqueEntityId'
-import { UseCase } from '../../core/domain/UseCase'
-import { AppError } from '../../core/errors/AppError'
-import { FieldRequiredError } from '../../core/errors/FieldRequiredError'
-import { DeliveryRepository } from '../../repositories/DeliveryRepository'
-import { isEmpty } from '../../shared/utils/String'
+import { UniqueEntityId } from '@core/domain/UniqueEntityId'
+import { UseCase } from '@core/domain/UseCase'
+import { AppError } from '@core/errors/AppError'
+import { FieldRequiredError } from '@core/errors/FieldRequiredError'
+import { DeliveryRepository } from '@repositories/DeliveryRepository'
+import { isEmpty } from '@shared/utils/String'
 import { DeleteDeliveryRequest } from './DeleteDeliveryRequest'
 
 class DeleteDeliveryUseCase implements UseCase<DeleteDeliveryRequest, void> {
