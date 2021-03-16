@@ -21,7 +21,7 @@ class User extends Entity<UserProps> {
   }
 
   public static create(props: UserProps, id?: UniqueEntityId): User {
-    if (!props.isAdmin) {
+    if (typeof props.isAdmin !== 'boolean') {
       props.isAdmin = User.DEFAULT_IS_ADMIN_VALUE
     }
 

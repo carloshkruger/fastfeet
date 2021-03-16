@@ -8,7 +8,7 @@ interface HandleParams {
   cpf: string
   password: string
   passwordConfirmation: string
-  isAdmin: boolean
+  isAdmin?: boolean
 }
 
 class CreateUserController extends Controller {

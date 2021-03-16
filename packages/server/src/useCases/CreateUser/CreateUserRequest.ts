@@ -4,7 +4,7 @@ interface CreateUserRequest {
   password: string
   passwordConfirmation: string
   cpf: string
-  isAdmin: boolean
+  isAdmin?: boolean
 }
 
 export { CreateUserRequest }
