@@ -1,4 +1,5 @@
 import { Controller, ControllerResponse } from '@core/controller'
+import { CreateDeliveryPresenter } from '@presenters/CreateDeliveryPresenter'
 import { CreateDeliveryUseCase } from '@useCases/CreateDelivery/CreateDeliveryUseCase'
 
 interface HandleParams {
@@ -15,7 +16,10 @@ interface HandleParams {
 }
 
 class CreateDeliveryController extends Controller {
-  constructor(private createDeliveryUseCase: CreateDeliveryUseCase) {
+  constructor(
+    private createDeliveryUseCase: CreateDeliveryUseCase,
+    private presenter: CreateDeliveryPresenter
+  ) {
     super()
   }
 
@@ -32,7 +36,7 @@ class CreateDeliveryController extends Controller {
     state
   }: HandleParams): Promise<ControllerResponse> {
     try {
-      await this.createDeliveryUseCase.execute({
+      const useCaseResponse = await this.createDeliveryUseCase.execute({
         deliveryManId,
         recipientName,
         productName,
@@ -45,7 +49,9 @@ class CreateDeliveryController extends Controller {
         state
       })
 
-      return this.created()
+      const viewModel = this.presenter.transform(useCaseResponse)
+
+      return this.created(viewModel)
     } catch (error) {
       return this.fail(error)
     }

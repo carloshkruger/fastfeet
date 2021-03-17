@@ -37,20 +37,21 @@ describe('CreateDeliveryUseCase', () => {
       .spyOn(inMemoryUserRepository, 'findById')
       .mockImplementation(async () => user)
 
-    await expect(
-      createDeliveryUseCase.execute({
-        deliveryManId: user.id.value,
-        recipientName: 'valid recipient name',
-        productName: 'valid product name',
-        address: 'valid address',
-        postalCode: '89186000',
-        complement: '',
-        number: 9999,
-        neighborhood: 'valid neighborhood',
-        city: 'valid city',
-        state: 'valid state'
-      })
-    ).resolves.toBeInstanceOf(Delivery)
+    const response = await createDeliveryUseCase.execute({
+      deliveryManId: user.id.value,
+      recipientName: 'valid recipient name',
+      productName: 'valid product name',
+      address: 'valid address',
+      postalCode: '89186000',
+      complement: '',
+      number: 9999,
+      neighborhood: 'valid neighborhood',
+      city: 'valid city',
+      state: 'valid state'
+    })
+
+    expect(response).toHaveProperty('delivery')
+    expect(response.delivery).toBeInstanceOf(Delivery)
   })
 
   it('should not create a delivery with non existing user', async () => {

@@ -1,4 +1,5 @@
 import { CreateDeliveryController } from '@controllers/CreateDeliveryController'
+import { CreateDeliveryPresenter } from '@presenters/CreateDeliveryPresenter'
 import { UserRepository } from '@repositories/UserRepository'
 import { UserTestFactory } from '@tests/factories/domain/UserTestFactory'
 import { CreateDeliveryUseCaseTestFactory } from '@tests/factories/useCases/CreateDeliveryUseCaseTestFactory'
@@ -14,9 +15,11 @@ describe('CreateDeliveryController', () => {
 
     inMemoryUserRepository = objects.inMemoryUserRepository
     createDeliveryUseCase = objects.createDeliveryUseCase
+    const presenter = new CreateDeliveryPresenter()
 
     createDeliveryController = new CreateDeliveryController(
-      createDeliveryUseCase
+      createDeliveryUseCase,
+      presenter
     )
   })
 

@@ -9,9 +9,10 @@ import { ProductName } from '@domain/ProductName'
 import { DeliveryRepository } from '@repositories/DeliveryRepository'
 import { UserRepository } from '@repositories/UserRepository'
 import { CreateDeliveryRequest } from './CreateDeliveryRequest'
+import { CreateDeliveryResponse } from './CreateDeliveryResponse'
 
 class CreateDeliveryUseCase
-  implements UseCase<CreateDeliveryRequest, Delivery> {
+  implements UseCase<CreateDeliveryRequest, CreateDeliveryResponse> {
   constructor(
     private userRepository: UserRepository,
     private deliveryRepository: DeliveryRepository
@@ -28,7 +29,7 @@ class CreateDeliveryUseCase
     number,
     city,
     state
-  }: CreateDeliveryRequest): Promise<Delivery> {
+  }: CreateDeliveryRequest): Promise<CreateDeliveryResponse> {
     const delivery = Delivery.create({
       deliveryManId: new UniqueEntityId(deliveryManId),
       recipientName: DeliveryRecipientName.create({ value: recipientName }),
@@ -52,7 +53,9 @@ class CreateDeliveryUseCase
 
     await this.deliveryRepository.save(delivery)
 
-    return delivery
+    return {
+      delivery
+    }
   }
 }
 
