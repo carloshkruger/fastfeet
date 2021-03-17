@@ -5,10 +5,7 @@ import { Delivery as TypeOrmDeliveryModel } from '@infra/typeorm/models/Delivery
 import { DeliveryRepository } from '@repositories/DeliveryRepository'
 import { UniqueEntityId } from '@core/domain'
 import { Delivery } from '@domain/Delivery'
-import { ProductName } from '@domain/ProductName'
-import { DeliveryRecipientName } from '@domain/DeliveryRecipientName'
-import { Address } from '@domain/Address'
-import { CEP } from '@domain/CEP'
+import { DeliveryMapper } from '@infra/typeorm/mappers/DeliveryMapper'
 
 class TypeOrmDeliveryRepository implements DeliveryRepository {
   private repository: Repository<TypeOrmDeliveryModel>
@@ -32,29 +29,7 @@ class TypeOrmDeliveryRepository implements DeliveryRepository {
       return undefined
     }
 
-    return Delivery.create(
-      {
-        deliveryManId: new UniqueEntityId(model.deliveryManIn),
-        productName: ProductName.create({ value: model.productName }),
-        recipientName: DeliveryRecipientName.create({
-          value: model.recipientName
-        }),
-        address: Address.create({
-          address: model.address,
-          city: model.city,
-          neighborhood: model.neighborhood,
-          number: model.number,
-          postalCode: CEP.create({ value: model.postalCode }),
-          state: model.state,
-          complement: model.complement
-        }),
-        signatureImage: model.signatureImage,
-        canceledAt: model.canceledAt,
-        endDate: model.endDate,
-        startDate: model.startDate
-      },
-      new UniqueEntityId(model.id)
-    )
+    return DeliveryMapper.toDomain(model)
   }
 
   async findByUserIdAndDate(
@@ -68,51 +43,13 @@ class TypeOrmDeliveryRepository implements DeliveryRepository {
       }
     })
 
-    return models.map(model =>
-      Delivery.create(
-        {
-          deliveryManId: new UniqueEntityId(model.deliveryManIn),
-          productName: ProductName.create({ value: model.productName }),
-          recipientName: DeliveryRecipientName.create({
-            value: model.recipientName
-          }),
-          address: Address.create({
-            address: model.address,
-            city: model.city,
-            neighborhood: model.neighborhood,
-            number: model.number,
-            postalCode: CEP.create({ value: model.postalCode }),
-            state: model.state,
-            complement: model.complement
-          }),
-          signatureImage: model.signatureImage,
-          canceledAt: model.canceledAt,
-          endDate: model.endDate,
-          startDate: model.startDate
-        },
-        new UniqueEntityId(model.id)
-      )
-    )
+    return models.map(model => DeliveryMapper.toDomain(model))
   }
 
   async save(delivery: Delivery): Promise<void> {
-    const model = this.getRepository().create({
-      id: delivery.id.value,
-      deliveryManIn: delivery.deliveryManId.value,
-      recipientName: delivery.recipientName.value,
-      productName: delivery.productName.value,
-      address: delivery.address.address,
-      city: delivery.address.city,
-      complement: delivery.address.complement,
-      neighborhood: delivery.address.neighborhood,
-      number: delivery.address.number,
-      postalCode: delivery.address.postalCode.value,
-      state: delivery.address.state,
-      startDate: delivery.startDate,
-      endDate: delivery.endDate,
-      canceledAt: delivery.canceledAt,
-      signatureImage: delivery.signatureImage
-    })
+    const model = this.getRepository().create(
+      DeliveryMapper.toRepository(delivery)
+    )
 
     await this.getRepository().save(model)
   }
@@ -135,31 +72,7 @@ class TypeOrmDeliveryRepository implements DeliveryRepository {
       where: whereOptions
     })
 
-    return models.map(model =>
-      Delivery.create(
-        {
-          deliveryManId: new UniqueEntityId(model.deliveryManIn),
-          productName: ProductName.create({ value: model.productName }),
-          recipientName: DeliveryRecipientName.create({
-            value: model.recipientName
-          }),
-          address: Address.create({
-            address: model.address,
-            city: model.city,
-            neighborhood: model.neighborhood,
-            number: model.number,
-            postalCode: CEP.create({ value: model.postalCode }),
-            state: model.state,
-            complement: model.complement
-          }),
-          signatureImage: model.signatureImage,
-          canceledAt: model.canceledAt,
-          endDate: model.endDate,
-          startDate: model.startDate
-        },
-        new UniqueEntityId(model.id)
-      )
-    )
+    return models.map(model => DeliveryMapper.toDomain(model))
   }
 
   async listDeliveriesAlreadyMadeByUserId(
@@ -179,31 +92,7 @@ class TypeOrmDeliveryRepository implements DeliveryRepository {
       where: whereOptions
     })
 
-    return models.map(model =>
-      Delivery.create(
-        {
-          deliveryManId: new UniqueEntityId(model.deliveryManIn),
-          productName: ProductName.create({ value: model.productName }),
-          recipientName: DeliveryRecipientName.create({
-            value: model.recipientName
-          }),
-          address: Address.create({
-            address: model.address,
-            city: model.city,
-            neighborhood: model.neighborhood,
-            number: model.number,
-            postalCode: CEP.create({ value: model.postalCode }),
-            state: model.state,
-            complement: model.complement
-          }),
-          signatureImage: model.signatureImage,
-          canceledAt: model.canceledAt,
-          endDate: model.endDate,
-          startDate: model.startDate
-        },
-        new UniqueEntityId(model.id)
-      )
-    )
+    return models.map(model => DeliveryMapper.toDomain(model))
   }
 
   async deleteById(deliveryId: UniqueEntityId): Promise<void> {

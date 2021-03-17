@@ -4,11 +4,7 @@ import { User as TypeOrmUserModel } from '@infra/typeorm/models/User'
 
 import { User } from '@domain/User'
 import { UserRepository } from '@repositories/UserRepository'
-import { UniqueEntityId } from '@core/domain'
-import { UserName } from '@domain/UserName'
-import { Email } from '@domain/Email'
-import { CPF } from '@domain/CPF'
-import { Password } from '@domain/Password'
+import { UserMapper } from '@infra/typeorm/mappers/UserMapper'
 
 class TypeOrmUserRepository implements UserRepository {
   private repository: Repository<TypeOrmUserModel>
@@ -22,14 +18,7 @@ class TypeOrmUserRepository implements UserRepository {
   }
 
   async save(user: User): Promise<void> {
-    const model = this.getRepository().create({
-      id: user.id.value,
-      name: user.name.value,
-      password: user.password.value,
-      email: user.email.value,
-      cpf: user.cpf.value,
-      isAdmin: user.isAdmin
-    })
+    const model = this.getRepository().create(UserMapper.toRepository(user))
 
     await this.getRepository().save(model)
   }
@@ -45,16 +34,7 @@ class TypeOrmUserRepository implements UserRepository {
       return undefined
     }
 
-    return User.create(
-      {
-        name: UserName.create({ value: model.name }),
-        email: Email.create({ value: model.email }),
-        cpf: CPF.create({ value: model.cpf }),
-        password: Password.createWithValidatedValue(model.password),
-        isAdmin: model.isAdmin
-      },
-      new UniqueEntityId(model.id)
-    )
+    return UserMapper.toDomain(model)
   }
 
   async findByEmail(email: string): Promise<User | undefined> {
@@ -68,16 +48,7 @@ class TypeOrmUserRepository implements UserRepository {
       return undefined
     }
 
-    return User.create(
-      {
-        name: UserName.create({ value: model.name }),
-        email: Email.create({ value: model.email }),
-        cpf: CPF.create({ value: model.cpf }),
-        password: Password.createWithValidatedValue(model.password),
-        isAdmin: model.isAdmin
-      },
-      new UniqueEntityId(model.id)
-    )
+    return UserMapper.toDomain(model)
   }
 
   async findByCpf(cpf: string): Promise<User | undefined> {
@@ -91,16 +62,7 @@ class TypeOrmUserRepository implements UserRepository {
       return undefined
     }
 
-    return User.create(
-      {
-        name: UserName.create({ value: model.name }),
-        email: Email.create({ value: model.email }),
-        cpf: CPF.create({ value: model.cpf }),
-        password: Password.createWithValidatedValue(model.password),
-        isAdmin: model.isAdmin
-      },
-      new UniqueEntityId(model.id)
-    )
+    return UserMapper.toDomain(model)
   }
 }
 
