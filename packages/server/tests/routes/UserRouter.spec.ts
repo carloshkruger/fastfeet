@@ -5,6 +5,8 @@ import { User } from '@infra/typeorm/models/User'
 import { UniqueEntityId } from '@core/domain'
 import { JWTAuthTokenProvider } from '@shared/providers/AuthTokenProvider/JWTAuthTokenProvider'
 import { TypeOrmHelper } from '@infra/typeorm/TypeOrmHelper'
+import { UserTestFactory } from '@tests/factories/domain/UserTestFactory'
+import { UserMapper } from '@infra/typeorm/mappers/UserMapper'
 
 const authTokenProvider = new JWTAuthTokenProvider()
 
@@ -50,6 +52,52 @@ describe('UserRouter', () => {
           passwordConfirmation: '123123'
         })
         .expect(201)
+    })
+
+    it('should return 403 if no access token is provided', async () => {
+      await request(app)
+        .post('/users')
+        .send({
+          name: 'valid user name',
+          email: 'valid_email2@domain.com',
+          cpf: '683.311.470-65',
+          password: '123123',
+          passwordConfirmation: '123123'
+        })
+        .expect(403)
+    })
+  })
+
+  describe('PUT /users', () => {
+    it('should return 204 on success', async () => {
+      const user = UserTestFactory.create()
+
+      const repository = getRepository(User)
+
+      await repository.save(repository.create(UserMapper.toRepository(user)))
+
+      const accessToken = authTokenProvider.generate(user.id.value)
+
+      await request(app)
+        .put('/users')
+        .set('authorization', `Bearer ${accessToken}`)
+        .send({
+          name: user.name.value,
+          email: 'valid_email3@domain.com',
+          cpf: user.cpf.value
+        })
+        .expect(204)
+    })
+
+    it('should return 403 if no access token is provided', async () => {
+      await request(app)
+        .put('/users')
+        .send({
+          name: 'valid user name',
+          email: 'valid_email3@domain.com',
+          cpf: '683.311.470-65'
+        })
+        .expect(403)
     })
   })
 })
