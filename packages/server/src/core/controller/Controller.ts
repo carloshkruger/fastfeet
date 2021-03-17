@@ -10,9 +10,10 @@ abstract class Controller {
     }
   }
 
-  protected created(): ControllerResponse {
+  protected created(data: any): ControllerResponse {
     return {
-      statusCode: 201
+      statusCode: 201,
+      body: data
     }
   }
 
