@@ -39,7 +39,7 @@ class CreateUserController extends Controller {
 
       const viewModel = this.createUserPresenter.transform(useCaseResponse)
 
-      return this.ok(viewModel)
+      return this.created(viewModel)
     } catch (error) {
       return this.fail(error)
     }

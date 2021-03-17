@@ -36,10 +36,10 @@ describe('CreateUserController', () => {
     )
   })
 
-  it('should return 200 if user is successfully created', async () => {
+  it('should return 201 if user is successfully created', async () => {
     const response = await createUserController.handle(validUserInfo)
 
-    expect(response.statusCode).toBe(200)
+    expect(response.statusCode).toBe(201)
     expect(response.body).toHaveProperty('id')
     expect(response.body).not.toHaveProperty('password')
   })
