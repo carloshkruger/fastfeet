@@ -1,4 +1,4 @@
-export default [
+module.exports = [
   {
     name: 'default',
     type: process.env.FASTFEET_TYPEORM_CONNECTION,
