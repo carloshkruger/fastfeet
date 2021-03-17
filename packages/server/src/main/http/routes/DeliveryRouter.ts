@@ -17,7 +17,7 @@ deliveryRouter.post(
   ExpressRouterAdapter.adapt(CreateDeliveryControllerFactory.create())
 )
 deliveryRouter.put(
-  '/',
+  '/:deliveryId',
   ExpressRouterAdapter.adapt(UpdateDeliveryControllerFactory.create())
 )
 deliveryRouter.delete(

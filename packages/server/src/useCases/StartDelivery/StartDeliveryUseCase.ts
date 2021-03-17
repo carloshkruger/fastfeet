@@ -37,7 +37,7 @@ class StartDeliveryUseCase implements UseCase<StartDeliveryRequest, void> {
     }
 
     const delivery = await this.deliveryRepository.findById(
-      new UniqueEntityId(deliveryManId)
+      new UniqueEntityId(deliveryId)
     )
 
     if (!delivery) {
