@@ -1,4 +1,4 @@
-import { getRepository, ILike, IsNull, Not, Repository } from 'typeorm'
+import { Between, getRepository, ILike, IsNull, Not, Repository } from 'typeorm'
 
 import { Delivery as TypeOrmDeliveryModel } from '@infra/typeorm/models/Delivery'
 
@@ -32,14 +32,31 @@ class TypeOrmDeliveryRepository implements DeliveryRepository {
     return DeliveryMapper.toDomain(model)
   }
 
-  async findByUserIdAndDate(
+  async findByUserIdAndStartDeliveryDate(
     userId: UniqueEntityId,
-    date: Date
+    startDeliveryDate: Date
   ): Promise<Delivery[]> {
     const models = await this.getRepository().find({
       where: {
         deliveryManId: userId.value,
-        startDate: date
+        startDate: Between(
+          new Date(
+            startDeliveryDate.getFullYear(),
+            startDeliveryDate.getMonth(),
+            startDeliveryDate.getDate(),
+            0,
+            0,
+            0
+          ),
+          new Date(
+            startDeliveryDate.getFullYear(),
+            startDeliveryDate.getMonth(),
+            startDeliveryDate.getDate(),
+            23,
+            59,
+            59
+          )
+        )
       }
     })
 

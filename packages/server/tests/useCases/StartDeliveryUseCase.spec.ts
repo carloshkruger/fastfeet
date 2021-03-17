@@ -183,7 +183,7 @@ describe('StartDeliveryUseCase', () => {
     }
 
     jest
-      .spyOn(inMemoryDeliveryRepository, 'findByUserIdAndDate')
+      .spyOn(inMemoryDeliveryRepository, 'findByUserIdAndStartDeliveryDate')
       .mockImplementation(async () => moreDeliveriesThanAllowed)
 
     await expect(

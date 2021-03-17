@@ -58,7 +58,7 @@ class StartDeliveryUseCase implements UseCase<StartDeliveryRequest, void> {
       throw new StartDeliveryErrors.TimeNotAllowed()
     }
 
-    const deliveriesMadeByUserToday = await this.deliveryRepository.findByUserIdAndDate(
+    const deliveriesMadeByUserToday = await this.deliveryRepository.findByUserIdAndStartDeliveryDate(
       deliveryMan.id,
       currentDate
     )

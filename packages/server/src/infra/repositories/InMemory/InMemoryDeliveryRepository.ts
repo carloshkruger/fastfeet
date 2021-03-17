@@ -10,17 +10,17 @@ class InMemoryDeliveryRepository implements DeliveryRepository {
     return this.data.find(delivery => delivery.id.value === deliveryId.value)
   }
 
-  async findByUserIdAndDate(
+  async findByUserIdAndStartDeliveryDate(
     userId: UniqueEntityId,
-    date: Date
+    startDeliveryDate: Date
   ): Promise<Delivery[]> {
     return this.data.filter(
       delivery =>
         delivery.deliveryManId.value === userId.value &&
         delivery.startDate &&
-        delivery.startDate.getDate() === date.getDate() &&
-        delivery.startDate.getMonth() === date.getMonth() &&
-        delivery.startDate.getFullYear() === date.getFullYear()
+        delivery.startDate.getDate() === startDeliveryDate.getDate() &&
+        delivery.startDate.getMonth() === startDeliveryDate.getMonth() &&
+        delivery.startDate.getFullYear() === startDeliveryDate.getFullYear()
     )
   }
 
