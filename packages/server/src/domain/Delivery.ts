@@ -44,6 +44,10 @@ class Delivery extends Entity<DeliveryProps> {
     this.props.endDate = new Date()
   }
 
+  public defineCanceledAtAsNow(): void {
+    this.props.canceledAt = new Date()
+  }
+
   public setDeliveryManId(deliveryManId: UniqueEntityId): void {
     this.props.deliveryManId = deliveryManId
   }
