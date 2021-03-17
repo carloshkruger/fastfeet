@@ -1,6 +1,6 @@
 import { UniqueEntityId } from '@core/domain/UniqueEntityId'
 import { UseCase } from '@core/domain/UseCase'
-import { AppError } from '@core/errors/AppError'
+import { NotFoundError } from '@core/errors'
 import { FieldRequiredError } from '@core/errors/FieldRequiredError'
 import { DeliveryRepository } from '@repositories/DeliveryRepository'
 import { isEmpty } from '@shared/utils/String'
@@ -19,7 +19,7 @@ class DeleteDeliveryUseCase implements UseCase<DeleteDeliveryRequest, void> {
     const delivery = await this.deliveryRepository.findById(entityId)
 
     if (!delivery) {
-      throw new AppError('Delivery not found.')
+      throw new NotFoundError('Delivery not found.')
     }
 
     await this.deliveryRepository.deleteById(entityId)

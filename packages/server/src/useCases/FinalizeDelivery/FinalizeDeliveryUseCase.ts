@@ -1,6 +1,6 @@
 import { UniqueEntityId } from '@core/domain/UniqueEntityId'
 import { UseCase } from '@core/domain/UseCase'
-import { AppError } from '@core/errors/AppError'
+import { NotFoundError } from '@core/errors'
 import { FieldRequiredError } from '@core/errors/FieldRequiredError'
 import { DeliveryRepository } from '@repositories/DeliveryRepository'
 import { UserRepository } from '@repositories/UserRepository'
@@ -33,7 +33,7 @@ class FinalizeDeliveryUseCase
     const deliveryMan = await this.userRepository.findById(deliveryManId)
 
     if (!deliveryMan) {
-      throw new AppError('Delivery man was not found.')
+      throw new NotFoundError('Delivery man was not found.')
     }
 
     const delivery = await this.deliveryRepository.findById(
@@ -41,7 +41,7 @@ class FinalizeDeliveryUseCase
     )
 
     if (!delivery) {
-      throw new AppError('Delivery not found.')
+      throw new NotFoundError('Delivery not found.')
     }
 
     if (delivery.deliveryManId.value !== deliveryMan.id.value) {

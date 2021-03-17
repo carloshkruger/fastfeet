@@ -1,4 +1,6 @@
+import { FieldRequiredError, ForbiddenError, NotFoundError } from '@core/errors'
 import { AppError } from '@core/errors/AppError'
+import { ConflictError } from '@core/errors/ConflictError'
 
 abstract class Controller {
   public abstract handle(props: any): Promise<ControllerResponse>
@@ -34,16 +36,34 @@ abstract class Controller {
 
   protected fail(error: Error): ControllerResponse {
     try {
-      if (error instanceof AppError) {
-        return {
-          statusCode: error.statusCode,
-          body: {
-            error: error.message.trim()
-          }
-        }
+      if (!(error instanceof AppError)) {
+        return this.serverError(error)
       }
 
-      return this.serverError(error)
+      let statusCode = 400
+
+      if (error instanceof FieldRequiredError) {
+        statusCode = 400
+      }
+
+      if (error instanceof ForbiddenError) {
+        statusCode = 403
+      }
+
+      if (error instanceof NotFoundError) {
+        statusCode = 404
+      }
+
+      if (error instanceof ConflictError) {
+        statusCode = 409
+      }
+
+      return {
+        statusCode,
+        body: {
+          error: error.message?.trim()
+        }
+      }
     } catch {
       return this.serverError(error)
     }

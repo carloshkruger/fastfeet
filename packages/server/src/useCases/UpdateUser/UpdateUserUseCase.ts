@@ -1,5 +1,5 @@
 import { UseCase } from '@core/domain/UseCase'
-import { AppError } from '@core/errors/AppError'
+import { NotFoundError } from '@core/errors'
 import { FieldRequiredError } from '@core/errors/FieldRequiredError'
 import { CPF } from '@domain/CPF'
 import { Email } from '@domain/Email'
@@ -28,7 +28,7 @@ class UpdateUserUseCase implements UseCase<UpdateUserRequest, void> {
     const user = await this.userRepository.findById(userId)
 
     if (!user) {
-      throw new AppError('User not found.')
+      throw new NotFoundError('User not found.')
     }
 
     const userAlreadyRegisteredWithGivenEmail = await this.userRepository.findByEmail(

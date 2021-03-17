@@ -1,6 +1,6 @@
 import { UniqueEntityId } from '@core/domain/UniqueEntityId'
 import { UseCase } from '@core/domain/UseCase'
-import { AppError } from '@core/errors/AppError'
+import { NotFoundError } from '@core/errors'
 import { Address } from '@domain/Address'
 import { CEP } from '@domain/CEP'
 import { Delivery } from '@domain/Delivery'
@@ -48,7 +48,7 @@ class CreateDeliveryUseCase
     const deliveryMan = await this.userRepository.findById(deliveryManId)
 
     if (!deliveryMan) {
-      throw new AppError('Delivery man not found.')
+      throw new NotFoundError('Delivery man not found.')
     }
 
     await this.deliveryRepository.save(delivery)

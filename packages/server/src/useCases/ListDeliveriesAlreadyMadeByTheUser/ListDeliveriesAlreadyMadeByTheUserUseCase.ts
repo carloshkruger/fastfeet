@@ -1,5 +1,6 @@
 import { UniqueEntityId } from '@core/domain/UniqueEntityId'
 import { UseCase } from '@core/domain/UseCase'
+import { NotFoundError } from '@core/errors'
 import { AppError } from '@core/errors/AppError'
 import { FieldRequiredError } from '@core/errors/FieldRequiredError'
 import { DeliveryRepository } from '@repositories/DeliveryRepository'
@@ -28,7 +29,7 @@ class ListDeliveriesAlreadyMadeByTheUserUseCase
     const deliveryMan = await this.userRepository.findById(deliveryManId)
 
     if (!deliveryMan) {
-      throw new AppError('Delivery man not found.')
+      throw new NotFoundError('Delivery man not found.')
     }
 
     const deliveries = await this.deliveryRepository.listDeliveriesAlreadyMadeByUserId(

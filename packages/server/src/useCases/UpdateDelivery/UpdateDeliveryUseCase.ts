@@ -11,6 +11,7 @@ import { FieldRequiredError } from '@core/errors/FieldRequiredError'
 import { UpdateDeliveryRequest } from './UpdateDeliveryRequest'
 import { UpdateDeliveryErrors } from './UpdateDeliveryErrors'
 import { DeliveryRecipientName } from '@domain/DeliveryRecipientName'
+import { NotFoundError } from '@core/errors'
 
 class UpdateDeliveryUseCase implements UseCase<UpdateDeliveryRequest, void> {
   constructor(
@@ -44,13 +45,13 @@ class UpdateDeliveryUseCase implements UseCase<UpdateDeliveryRequest, void> {
     )
 
     if (!delivery) {
-      throw new AppError('Delivery not found.')
+      throw new NotFoundError('Delivery not found.')
     }
 
     const user = await this.userRepository.findById(deliveryManId)
 
     if (!user) {
-      throw new AppError('Delivery man not found.')
+      throw new NotFoundError('Delivery man not found.')
     }
 
     if (delivery.isFinished()) {

@@ -1,7 +1,8 @@
-import { AppError } from '../../core/errors/AppError'
+import { ForbiddenError } from '@core/errors'
+import { AppError } from '@core/errors'
 
 export namespace FinalizeDeliveryErrors {
-  export class DeliveryNotLinkedToUser extends AppError {
+  export class DeliveryNotLinkedToUser extends ForbiddenError {
     constructor() {
       super(`Delivery not linked to the user.`)
       this.name = DeliveryNotLinkedToUser.name
