@@ -1,4 +1,5 @@
 import { TypeOrmHelper } from '@infra/typeorm/TypeOrmHelper'
+import config from './config'
 
 const init = async () => {
   try {
@@ -6,7 +7,7 @@ const init = async () => {
 
     const app = (await import('./app')).default
 
-    app.listen(3333, () => console.log('server online'))
+    app.listen(config.serverPort, () => console.log('server online'))
   } catch (error) {
     console.error(error)
   }
