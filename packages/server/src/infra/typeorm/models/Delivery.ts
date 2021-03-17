@@ -15,7 +15,7 @@ class Delivery {
   id: string
 
   @Column({ name: 'delivery_man_id', type: 'uuid' })
-  deliveryManIn: string
+  deliveryManId: string
 
   @Column({ name: 'product_name' })
   productName: string

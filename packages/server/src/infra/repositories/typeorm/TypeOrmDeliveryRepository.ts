@@ -38,7 +38,7 @@ class TypeOrmDeliveryRepository implements DeliveryRepository {
   ): Promise<Delivery[]> {
     const models = await this.getRepository().find({
       where: {
-        deliveryManIn: userId.value,
+        deliveryManId: userId.value,
         startDate: date
       }
     })

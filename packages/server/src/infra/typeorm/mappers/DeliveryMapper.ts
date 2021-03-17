@@ -10,7 +10,7 @@ class DeliveryMapper {
   static toDomain(model: TypeOrmDeliveryModel): Delivery {
     return Delivery.create(
       {
-        deliveryManId: new UniqueEntityId(model.deliveryManIn),
+        deliveryManId: new UniqueEntityId(model.deliveryManId),
         productName: ProductName.create({ value: model.productName }),
         recipientName: DeliveryRecipientName.create({
           value: model.recipientName
@@ -36,7 +36,7 @@ class DeliveryMapper {
   static toRepository(delivery: Delivery): any {
     return {
       id: delivery.id.value,
-      deliveryManIn: delivery.deliveryManId.value,
+      deliveryManId: delivery.deliveryManId.value,
       recipientName: delivery.recipientName.value,
       productName: delivery.productName.value,
       address: delivery.address.address,

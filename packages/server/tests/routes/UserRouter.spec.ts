@@ -100,4 +100,51 @@ describe('UserRouter', () => {
         .expect(403)
     })
   })
+
+  describe('GET /users/deliveries-already-made', () => {
+    it('should return 200 on success', async () => {
+      const user = UserTestFactory.create()
+
+      const repository = getRepository(User)
+
+      await repository.save(repository.create(UserMapper.toRepository(user)))
+
+      const accessToken = authTokenProvider.generate(user.id.value)
+
+      await request(app)
+        .get('/users/deliveries-already-made')
+        .set('authorization', `Bearer ${accessToken}`)
+        .send()
+        .expect(200)
+    })
+
+    it('should return 403 if no access token is provided', async () => {
+      await request(app)
+        .get('/users/deliveries-already-made')
+        .send()
+        .expect(403)
+    })
+  })
+
+  describe('GET /users/deliveries-to-be-made', () => {
+    it('should return 200 on success', async () => {
+      const user = UserTestFactory.create()
+
+      const repository = getRepository(User)
+
+      await repository.save(repository.create(UserMapper.toRepository(user)))
+
+      const accessToken = authTokenProvider.generate(user.id.value)
+
+      await request(app)
+        .get('/users/deliveries-to-be-made')
+        .set('authorization', `Bearer ${accessToken}`)
+        .send()
+        .expect(200)
+    })
+
+    it('should return 403 if no access token is provided', async () => {
+      await request(app).get('/users/deliveries-to-be-made').send().expect(403)
+    })
+  })
 })
