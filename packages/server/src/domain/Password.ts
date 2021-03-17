@@ -32,6 +32,10 @@ class Password extends ValueObject<PasswordProps> {
     })
   }
 
+  get plainTextPassword(): string {
+    return this.props.value
+  }
+
   get value(): string {
     return this.props.hashedValue
   }
