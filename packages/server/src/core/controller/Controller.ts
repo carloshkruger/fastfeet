@@ -1,6 +1,7 @@
 import { FieldRequiredError, ForbiddenError, NotFoundError } from '@core/errors'
 import { AppError } from '@core/errors/AppError'
 import { ConflictError } from '@core/errors/ConflictError'
+import { Logger } from '@shared/utils/Logger'
 
 abstract class Controller {
   public abstract handle(props: any): Promise<ControllerResponse>
@@ -26,6 +27,8 @@ abstract class Controller {
   }
 
   protected serverError(error: Error): ControllerResponse {
+    Logger.error(error)
+
     return {
       statusCode: 500,
       body: {

@@ -1,4 +1,5 @@
 import { Controller } from '@core/controller'
+import { Logger } from '@shared/utils/Logger'
 import { Request, Response } from 'express'
 
 class ExpressRouterAdapter {
@@ -18,6 +19,8 @@ class ExpressRouterAdapter {
           .status(controllerResponse.statusCode)
           .json(controllerResponse.body)
       } catch (error) {
+        Logger.error(error)
+
         return response.status(500).json({
           error: 'Internal server error'
         })
