@@ -5,7 +5,6 @@ import {
   KeyboardAvoidingView,
   Platform,
   Text,
-  TouchableOpacity,
   TouchableWithoutFeedback,
   View
 } from 'react-native'
@@ -13,19 +12,24 @@ import CheckBox from '@react-native-community/checkbox'
 
 import {
   Container,
+  LogoContainter,
   Title,
   SubTitle,
   InputContainer,
   Icon,
   TextInput,
   RightIcon,
-  Button,
-  ButtonText
+  ForgotPasswordButton,
+  ForgotPasswordButtonText,
+  SignInOptionsContainer,
+  RememberMeContainer,
+  RememberMeText
 } from './styles'
 
 import logo from '../../assets/Logo.png'
 import giantOutlineLogo from '../../assets/GiantOutlineLogo.png'
 import textLogo from '../../assets/TextLogo.png'
+import PrimaryButton from '../../components/PrimaryButton'
 
 const SignIn: React.FC = () => {
   const [cpf, setCpf] = useState('')
@@ -49,94 +53,76 @@ const SignIn: React.FC = () => {
   }
 
   return (
-    <>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={{ flex: 1 }}
-      >
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <Container>
-            <Image
-              source={giantOutlineLogo}
-              style={{ position: 'absolute', top: 0 }}
-            />
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{ flex: 1 }}
+      keyboardVerticalOffset={75}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <Container>
+          <Image
+            source={giantOutlineLogo}
+            style={{ position: 'absolute', top: 0 }}
+          />
 
-            <View
-              style={{
-                paddingBottom: 80,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center'
-              }}
-            >
-              <Image source={logo} style={{ width: 40, height: 44 }} />
-              <Image source={textLogo} />
-            </View>
+          <LogoContainter>
+            <Image source={logo} style={{ width: 40, height: 44 }} />
+            <Image source={textLogo} />
+          </LogoContainter>
 
-            <Title>
-              <Text style={{ color: '#FFC042' }}>Entregador, {'\n'}</Text>
-              você é nosso maior valor
-            </Title>
+          <Title>
+            <Text style={{ color: '#FFC042' }}>Entregador, {'\n'}</Text>
+            você é nosso maior valor
+          </Title>
 
-            <SubTitle>
-              Faça seu login para {'\n'}começar suas entregas.
-            </SubTitle>
+          <SubTitle>Faça seu login para {'\n'}começar suas entregas.</SubTitle>
 
-            <View>
-              <InputContainer isFocused={false} isErrored={false}>
-                <Icon name="user" size={20} />
-                <TextInput
-                  placeholder="CPF"
-                  keyboardType="numeric"
-                  onChangeText={setCpf}
-                />
-              </InputContainer>
-              <InputContainer isFocused={false} isErrored={false}>
-                <Icon name="lock" size={20} />
-                <TextInput
-                  placeholder="Senha"
-                  onChangeText={setPassword}
-                  textContentType="password"
-                  secureTextEntry={secureTextEntryOnPasswordField}
-                />
-                <RightIcon
-                  name={seePasswordActivated ? 'eye-off' : 'eye'}
-                  size={20}
-                  onPress={changeSeePassword}
-                />
-              </InputContainer>
-            </View>
+          <View>
+            <InputContainer isFocused={false} isErrored={false}>
+              <Icon name="user" size={20} />
+              <TextInput
+                placeholder="CPF"
+                keyboardType="numeric"
+                onChangeText={setCpf}
+              />
+            </InputContainer>
+            <InputContainer isFocused={false} isErrored={false}>
+              <Icon name="lock" size={20} />
+              <TextInput
+                placeholder="Senha"
+                onChangeText={setPassword}
+                textContentType="password"
+                secureTextEntry={secureTextEntryOnPasswordField}
+              />
+              <RightIcon
+                name={seePasswordActivated ? 'eye-off' : 'eye'}
+                size={20}
+                onPress={changeSeePassword}
+              />
+            </InputContainer>
+          </View>
 
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                paddingTop: 8,
-                paddingBottom: 8
-              }}
-            >
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <CheckBox
-                  value={rememberMeActivated}
-                  tintColors={{ true: '#FFC042', false: '#d5ccff' }}
-                  onChange={changeRememberMe}
-                />
-                <Text style={{ color: '#FFF' }}>Lembrar-me</Text>
-              </View>
+          <SignInOptionsContainer>
+            <RememberMeContainer>
+              <CheckBox
+                value={rememberMeActivated}
+                tintColors={{ true: '#FFC042', false: '#d5ccff' }}
+                onChange={changeRememberMe}
+              />
+              <RememberMeText>Lembrar-me</RememberMeText>
+            </RememberMeContainer>
 
-              <TouchableOpacity>
-                <Text style={{ color: '#FFF' }}>Esqueci minha senha</Text>
-              </TouchableOpacity>
-            </View>
+            <ForgotPasswordButton>
+              <ForgotPasswordButtonText>
+                Esqueci minha senha
+              </ForgotPasswordButtonText>
+            </ForgotPasswordButton>
+          </SignInOptionsContainer>
 
-            <Button>
-              <ButtonText>Entrar</ButtonText>
-            </Button>
-          </Container>
-        </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
-    </>
+          <PrimaryButton name="Entrar" onPress={() => console.log('aqyu')} />
+        </Container>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   )
 }
 

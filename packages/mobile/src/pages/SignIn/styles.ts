@@ -1,12 +1,19 @@
 import styled, { css } from 'styled-components/native'
 import FeatherIcon from 'react-native-vector-icons/Feather'
-import { RectButton } from 'react-native-gesture-handler'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 export const Container = styled.View`
   background-color: #4c33cc;
   flex: 1;
   padding: 24px;
   justify-content: center;
+`
+
+export const LogoContainter = styled.View`
+  padding-bottom: 80px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 `
 
 export const Title = styled.Text`
@@ -22,6 +29,29 @@ export const SubTitle = styled.Text`
   line-height: 25px;
   padding-top: 16px;
   padding-bottom: 48px;
+`
+
+export const SignInOptionsContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 8px;
+  padding-bottom: 8px;
+`
+
+export const RememberMeContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+`
+
+export const RememberMeText = styled.Text`
+  color: #fff;
+`
+
+export const ForgotPasswordButton = styled(TouchableOpacity)``
+
+export const ForgotPasswordButtonText = styled.Text`
+  color: #fff;
 `
 
 interface ContainerProps {
@@ -64,19 +94,4 @@ export const Icon = styled(FeatherIcon)`
 
 export const RightIcon = styled(FeatherIcon)`
   margin-left: 16px;
-`
-
-export const Button = styled(RectButton)`
-  width: 100%;
-  height: 60px;
-  background: #ffc042;
-  border-radius: 10px;
-  margin-top: 8px;
-  justify-content: center;
-  align-items: center;
-`
-
-export const ButtonText = styled.Text`
-  color: #312e38;
-  font-size: 16px;
 `
