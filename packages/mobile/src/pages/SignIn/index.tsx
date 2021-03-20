@@ -10,9 +10,10 @@ import {
 } from 'react-native'
 import CheckBox from '@react-native-community/checkbox'
 
+import PrimaryButton from '../../components/PrimaryButton'
+
 import {
   Container,
-  LogoContainter,
   Title,
   SubTitle,
   InputContainer,
@@ -26,10 +27,8 @@ import {
   RememberMeText
 } from './styles'
 
-import logo from '../../assets/Logo.png'
 import giantOutlineLogo from '../../assets/GiantOutlineLogo.png'
-import textLogo from '../../assets/TextLogo.png'
-import PrimaryButton from '../../components/PrimaryButton'
+import LogosOnTop from '../../components/LogosOnTop'
 
 const SignIn: React.FC = () => {
   const [cpf, setCpf] = useState('')
@@ -65,10 +64,7 @@ const SignIn: React.FC = () => {
             style={{ position: 'absolute', top: 0 }}
           />
 
-          <LogoContainter>
-            <Image source={logo} style={{ width: 40, height: 44 }} />
-            <Image source={textLogo} />
-          </LogoContainter>
+          <LogosOnTop />
 
           <Title>
             <Text style={{ color: '#FFC042' }}>Entregador, {'\n'}</Text>

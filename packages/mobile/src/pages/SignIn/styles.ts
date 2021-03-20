@@ -9,13 +9,6 @@ export const Container = styled.View`
   justify-content: center;
 `
 
-export const LogoContainter = styled.View`
-  padding-bottom: 80px;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-`
-
 export const Title = styled.Text`
   font-size: 48px;
   line-height: 48px;
