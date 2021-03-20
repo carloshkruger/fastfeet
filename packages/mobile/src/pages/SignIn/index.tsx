@@ -29,6 +29,7 @@ import {
 
 import giantOutlineLogo from '../../assets/GiantOutlineLogo.png'
 import LogosOnTop from '../../components/LogosOnTop'
+import { useNavigation } from '@react-navigation/core'
 
 const SignIn: React.FC = () => {
   const [cpf, setCpf] = useState('')
@@ -42,6 +43,8 @@ const SignIn: React.FC = () => {
   const [rememberMeActivated, setRememberMeActivated] = useState(false)
   const [seePasswordActivated, setSeePasswordActivated] = useState(false)
 
+  const { navigate } = useNavigation()
+
   function changeRememberMe() {
     setRememberMeActivated(!rememberMeActivated)
   }
@@ -49,6 +52,10 @@ const SignIn: React.FC = () => {
   function changeSeePassword() {
     setSeePasswordActivated(!seePasswordActivated)
     setSecureTextEntryOnPasswordField(seePasswordActivated)
+  }
+
+  function navigateToForgotPasswordPage() {
+    navigate('ForgotPassword')
   }
 
   return (
@@ -108,7 +115,7 @@ const SignIn: React.FC = () => {
               <RememberMeText>Lembrar-me</RememberMeText>
             </RememberMeContainer>
 
-            <ForgotPasswordButton>
+            <ForgotPasswordButton onPress={navigateToForgotPasswordPage}>
               <ForgotPasswordButtonText>
                 Esqueci minha senha
               </ForgotPasswordButtonText>

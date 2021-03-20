@@ -1,6 +1,8 @@
+import 'react-native-gesture-handler'
+
 import React from 'react'
 import { StatusBar, View } from 'react-native'
-import SignIn from './src/pages/SignIn'
+import AppRoutes from './src/routes'
 
 const App = () => {
   return (
@@ -10,7 +12,7 @@ const App = () => {
         backgroundColor="#4c33cc"
         translucent
       />
-      <SignIn />
+      <AppRoutes />
     </View>
   )
 }
