@@ -3,6 +3,7 @@ import 'react-native-gesture-handler'
 import React from 'react'
 import { StatusBar, View } from 'react-native'
 import AppRoutes from './src/routes'
+import AppProvider from './src/hooks'
 
 const App = () => {
   return (
@@ -12,7 +13,9 @@ const App = () => {
         backgroundColor="#4c33cc"
         translucent
       />
-      <AppRoutes />
+      <AppProvider>
+        <AppRoutes />
+      </AppProvider>
     </View>
   )
 }

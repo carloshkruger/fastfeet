@@ -30,6 +30,8 @@ import {
 import giantOutlineLogo from '../../assets/GiantOutlineLogo.png'
 import LogosOnTop from '../../components/LogosOnTop'
 import { useNavigation } from '@react-navigation/core'
+import { handleApiError } from '../../utils/handleApiError'
+import { useAuth } from '../../hooks/Auth'
 
 const SignIn: React.FC = () => {
   const [cpf, setCpf] = useState('')
@@ -44,6 +46,7 @@ const SignIn: React.FC = () => {
   const [seePasswordActivated, setSeePasswordActivated] = useState(false)
 
   const { navigate } = useNavigation()
+  const { signIn } = useAuth()
 
   function changeRememberMe() {
     setRememberMeActivated(!rememberMeActivated)
@@ -56,6 +59,17 @@ const SignIn: React.FC = () => {
 
   function navigateToForgotPasswordPage() {
     navigate('ForgotPassword')
+  }
+
+  async function handleSubmit() {
+    try {
+      await signIn({
+        cpf,
+        password
+      })
+    } catch (error) {
+      handleApiError(error)
+    }
   }
 
   return (
@@ -122,7 +136,7 @@ const SignIn: React.FC = () => {
             </ForgotPasswordButton>
           </SignInOptionsContainer>
 
-          <PrimaryButton name="Entrar" onPress={() => console.log('aqyu')} />
+          <PrimaryButton name="Entrar" onPress={handleSubmit} />
         </Container>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
