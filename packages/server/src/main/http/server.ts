@@ -4,7 +4,6 @@ import { Logger } from '@shared/utils/Logger'
 
 const init = async () => {
   try {
-    throw new Error('asd')
     await TypeOrmHelper.connect()
 
     const app = (await import('./app')).default

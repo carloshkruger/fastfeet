@@ -1,4 +1,5 @@
 import { UseCase } from '@core/domain/UseCase'
+import { CPF } from '@domain/CPF'
 import { UserRepository } from '@repositories/UserRepository'
 import { AuthTokenProvider } from '@shared/providers/AuthTokenProvider/AuthTokenProvider'
 import { Encrypter } from '@shared/providers/EncrypterProvider/Encrypter'
@@ -19,11 +20,13 @@ class AuthenticateUserUseCase
     cpf,
     password
   }: AuthenticateUserRequest): Promise<AuthenticateUserResponse> {
+    const cpfValueObject = CPF.create({ value: cpf })
+
     if (isEmpty(cpf) || isEmpty(password)) {
       throw new AuthenticateUserErrors.IncorrectCredentials()
     }
 
-    const user = await this.userRepository.findByCpf(cpf)
+    const user = await this.userRepository.findByCpf(cpfValueObject.value)
 
     if (!user) {
       throw new AuthenticateUserErrors.IncorrectCredentials()
