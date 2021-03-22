@@ -10,6 +10,7 @@ module.exports = {
     '<rootDir>/src/useCases/**/*.ts',
     '<rootDir>/src/controllers/**/*.ts',
     '<rootDir>/src/infra/repositories/typeorm/*.ts',
+    '<rootDir>/src/main/http/routes/*.ts',
     '!<rootDir>/src/domain/errors/*.ts',
     '!<rootDir>/src/useCases/**/*Errors.ts'
   ],
