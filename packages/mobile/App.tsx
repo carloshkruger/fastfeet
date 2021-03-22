@@ -11,7 +11,7 @@ const App = () => {
       <StatusBar
         barStyle="light-content"
         backgroundColor="#4c33cc"
-        translucent
+        translucent={false}
       />
       <AppProvider>
         <AppRoutes />

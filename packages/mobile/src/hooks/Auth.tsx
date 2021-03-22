@@ -30,6 +30,7 @@ interface AuthContextData {
   signIn(credentias: SignInCredentials): Promise<void>
   signOut(): void
   updateUser(user: User): Promise<void>
+  userIsLoggedIn(): boolean
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData)
@@ -97,9 +98,18 @@ const AuthProvider: React.FC = ({ children }) => {
     [data.accessToken]
   )
 
+  const userIsLoggedIn = useCallback(() => !!data.user, [data.user])
+
   return (
     <AuthContext.Provider
-      value={{ user: data.user, loading, signIn, signOut, updateUser }}
+      value={{
+        user: data.user,
+        loading,
+        signIn,
+        signOut,
+        updateUser,
+        userIsLoggedIn
+      }}
     >
       {children}
     </AuthContext.Provider>

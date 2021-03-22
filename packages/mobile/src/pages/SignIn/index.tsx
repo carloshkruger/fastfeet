@@ -8,9 +8,14 @@ import {
   TouchableWithoutFeedback,
   View
 } from 'react-native'
+import { useNavigation } from '@react-navigation/core'
 import CheckBox from '@react-native-community/checkbox'
 
 import PrimaryButton from '../../components/PrimaryButton'
+import giantOutlineLogo from '../../assets/GiantOutlineLogo.png'
+import LogosOnTop from '../../components/LogosOnTop'
+import { useAuth } from '../../hooks/Auth'
+import { handleApiError } from '../../utils/handleApiError'
 
 import {
   Container,
@@ -26,12 +31,6 @@ import {
   RememberMeContainer,
   RememberMeText
 } from './styles'
-
-import giantOutlineLogo from '../../assets/GiantOutlineLogo.png'
-import LogosOnTop from '../../components/LogosOnTop'
-import { useNavigation } from '@react-navigation/core'
-import { handleApiError } from '../../utils/handleApiError'
-import { useAuth } from '../../hooks/Auth'
 
 const SignIn: React.FC = () => {
   const [cpf, setCpf] = useState('')

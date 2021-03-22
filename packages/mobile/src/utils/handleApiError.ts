@@ -2,11 +2,7 @@ import { AxiosError } from 'axios'
 import { Alert } from 'react-native'
 
 export const handleApiError = (error: AxiosError) => {
-  const apiError = error?.response?.data?.error
+  const errorMessage = error?.response?.data?.error || error.message
 
-  if (apiError) {
-    Alert.alert('Erro', apiError)
-  } else {
-    Alert.alert('Erro', error.message)
-  }
+  Alert.alert('Error', errorMessage)
 }
