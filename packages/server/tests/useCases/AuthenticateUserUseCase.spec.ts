@@ -1,3 +1,4 @@
+import { FieldRequiredError } from '@core/errors'
 import { CPF } from '@domain/CPF'
 import { Email } from '@domain/Email'
 import { Password } from '@domain/Password'
@@ -64,7 +65,7 @@ describe('AuthenticateUserUseCase', () => {
         cpf: '',
         password: validPassword
       })
-    ).rejects.toThrow(new AuthenticateUserErrors.IncorrectCredentials())
+    ).rejects.toThrow(new FieldRequiredError('CPF'))
   })
 
   it('should not be possible to authenticate without a password', async () => {
