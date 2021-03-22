@@ -6,7 +6,9 @@ import { UpdateDeliveryControllerFactory } from '@main/factories/controllers/Upd
 import { StartDeliveryControllerFactory } from '@main/factories/controllers/StartDeliveryControllerFactory'
 import { FinalizeDeliveryControllerFactory } from '@main/factories/controllers/FinalizeDeliveryControllerFactory'
 import { DeleteDeliveryControllerFactory } from '@main/factories/controllers/DeleteDeliveryControllerFactory'
+
 import authorization from '../middlewares/authorization'
+import { FindAllNeighborhoodsThatTheUserHasAlreadyDeliveredControllerFactory } from '@main/factories/controllers/FindAllNeighborhoodsThatTheUserHasAlreadyDeliveredControllerFactory'
 
 const deliveryRouter = Router()
 
@@ -31,6 +33,12 @@ deliveryRouter.post(
 deliveryRouter.post(
   '/:deliveryId/finalize',
   ExpressRouterAdapter.adapt(FinalizeDeliveryControllerFactory.create())
+)
+deliveryRouter.get(
+  '/neighborhoods',
+  ExpressRouterAdapter.adapt(
+    FindAllNeighborhoodsThatTheUserHasAlreadyDeliveredControllerFactory.create()
+  )
 )
 
 export { deliveryRouter }

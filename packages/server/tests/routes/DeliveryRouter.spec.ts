@@ -191,4 +191,20 @@ describe('DeliveryRouter', () => {
         .expect(403)
     })
   })
+
+  describe('GET deliveries/neighborhoods', () => {
+    it('should return 200 on success', async () => {
+      await request(app)
+        .get(`/deliveries/neighborhoods`)
+        .set('authorization', `Bearer ${accessToken}`)
+        .send({
+          neighborhood: delivery.address.neighborhood
+        })
+        .expect(200)
+    })
+
+    it('should return 403 if no access token is provided', async () => {
+      await request(app).get(`/deliveries/neighborhoods`).send().expect(403)
+    })
+  })
 })
