@@ -21,6 +21,8 @@ class ListDeliveriesToBeMadeByTheUserPresenter extends Presenter<Response[]> {
       deliveryId: delivery.id.value,
       recipientName: delivery.recipientName.value,
       productName: delivery.productName.value,
+      deliveryInitialized: delivery.isInitialized(),
+      deliveryFinished: delivery.isFinished(),
       address: {
         address: delivery.address.address,
         city: delivery.address.city,
