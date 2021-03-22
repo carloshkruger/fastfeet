@@ -1,7 +1,9 @@
 import { UniqueEntityId } from '../../../core/domain/UniqueEntityId'
 import { Delivery } from '../../../domain/Delivery'
-import { DeliveryRepository } from '../../../repositories/DeliveryRepository'
-import { isEmpty } from '../../../shared/utils/String'
+import {
+  DeliveryRepository,
+  FindAllNeighborhoodsLinkedToDeliveryManProps
+} from '../../../repositories/DeliveryRepository'
 
 class InMemoryDeliveryRepository implements DeliveryRepository {
   private data: Delivery[] = []
@@ -55,6 +57,20 @@ class InMemoryDeliveryRepository implements DeliveryRepository {
       .filter(delivery => delivery.isFinished())
 
     return deliveries
+  }
+
+  async findAllNeighborhoodsLinkedToDeliveryMan({
+    deliveryManId,
+    neighborhood
+  }: FindAllNeighborhoodsLinkedToDeliveryManProps): Promise<string[]> {
+    return this.data
+      .filter(delivery => delivery.deliveryManId.value === deliveryManId)
+      .filter(
+        delivery =>
+          delivery.address.neighborhood.trim().toLowerCase() ===
+          neighborhood.trim().toLowerCase()
+      )
+      .map(delivery => delivery.address.neighborhood)
   }
 
   async deleteById(deliveryId: UniqueEntityId): Promise<void> {

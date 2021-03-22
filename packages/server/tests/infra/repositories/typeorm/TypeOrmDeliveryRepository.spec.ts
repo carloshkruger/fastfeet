@@ -311,4 +311,38 @@ describe('TypeOrmUserRepository', () => {
       ).resolves.not.toThrow()
     })
   })
+
+  describe('findAllNeighborhoodsLinkedToDeliveryMan()', () => {
+    it('should return a neighborhood list', async () => {
+      const user = UserTestFactory.create()
+      const delivery = DeliveryTestFactory.createWithGivenUser(user)
+
+      const userRepository = getRepository(User)
+      await userRepository.save(UserMapper.toRepository(user))
+
+      const deliveryRepository = getRepository(TypeOrmDeliveryModel)
+      await deliveryRepository.save(DeliveryMapper.toRepository(delivery))
+
+      const response = await typeormDeliveryRepository.findAllNeighborhoodsLinkedToDeliveryMan(
+        {
+          deliveryManId: user.id.value,
+          neighborhood: delivery.address.neighborhood
+        }
+      )
+
+      expect(response).toHaveLength(1)
+      expect(response[0]).toBe(delivery.address.neighborhood)
+    })
+
+    it('should return an empry list if no register was found', async () => {
+      const response = await typeormDeliveryRepository.findAllNeighborhoodsLinkedToDeliveryMan(
+        {
+          deliveryManId: new UniqueEntityId().value,
+          neighborhood: ''
+        }
+      )
+
+      expect(response).toHaveLength(0)
+    })
+  })
 })

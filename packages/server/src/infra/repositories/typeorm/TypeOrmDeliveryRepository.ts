@@ -2,7 +2,10 @@ import { Between, getRepository, ILike, IsNull, Not, Repository } from 'typeorm'
 
 import { Delivery as TypeOrmDeliveryModel } from '@infra/typeorm/models/Delivery'
 
-import { DeliveryRepository } from '@repositories/DeliveryRepository'
+import {
+  DeliveryRepository,
+  FindAllNeighborhoodsLinkedToDeliveryManProps
+} from '@repositories/DeliveryRepository'
 import { UniqueEntityId } from '@core/domain'
 import { Delivery } from '@domain/Delivery'
 import { DeliveryMapper } from '@infra/typeorm/mappers/DeliveryMapper'
@@ -110,6 +113,23 @@ class TypeOrmDeliveryRepository implements DeliveryRepository {
     })
 
     return models.map(model => DeliveryMapper.toDomain(model))
+  }
+
+  async findAllNeighborhoodsLinkedToDeliveryMan({
+    deliveryManId,
+    neighborhood
+  }: FindAllNeighborhoodsLinkedToDeliveryManProps): Promise<string[]> {
+    const result = await this.getRepository()
+      .createQueryBuilder('deliveries')
+      .select('neighborhood')
+      .where('deliveries.delivery_man_id = :deliveryManId', { deliveryManId })
+      .andWhere('deliveries.neighborhood ILIKE :neighborhood', {
+        neighborhood: `%${neighborhood}%`
+      })
+      .groupBy('neighborhood')
+      .getRawMany()
+
+    return result.map(item => item.neighborhood)
   }
 
   async deleteById(deliveryId: UniqueEntityId): Promise<void> {
