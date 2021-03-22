@@ -26,7 +26,8 @@ describe('ListDeliveriesToBeMadeByTheUserController', () => {
       })
 
     const response = await listDeliveriesToBeMadeByTheUserController.handle({
-      loggedUserId: new UniqueEntityId().value
+      loggedUserId: new UniqueEntityId().value,
+      neighborhood: ''
     })
 
     expect(response.statusCode).toBe(200)
@@ -41,7 +42,8 @@ describe('ListDeliveriesToBeMadeByTheUserController', () => {
       })
 
     const response = await listDeliveriesToBeMadeByTheUserController.handle({
-      loggedUserId: new UniqueEntityId().value
+      loggedUserId: new UniqueEntityId().value,
+      neighborhood: ''
     })
 
     expect(response.statusCode).toBe(500)
@@ -55,7 +57,8 @@ describe('ListDeliveriesToBeMadeByTheUserController', () => {
       })
 
     const response = await listDeliveriesToBeMadeByTheUserController.handle({
-      loggedUserId: new UniqueEntityId().value
+      loggedUserId: new UniqueEntityId().value,
+      neighborhood: ''
     })
 
     expect(response.statusCode).toBe(500)

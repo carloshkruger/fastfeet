@@ -4,6 +4,7 @@ import { ListDeliveriesToBeMadeByTheUserUseCase } from '@useCases/ListDeliveries
 
 interface HandleParams {
   loggedUserId: string
+  neighborhood: string
 }
 
 class ListDeliveriesToBeMadeByTheUserController extends Controller {
@@ -14,10 +15,14 @@ class ListDeliveriesToBeMadeByTheUserController extends Controller {
     super()
   }
 
-  async handle({ loggedUserId }: HandleParams): Promise<ControllerResponse> {
+  async handle({
+    loggedUserId,
+    neighborhood
+  }: HandleParams): Promise<ControllerResponse> {
     try {
       const useCaseResponse = await this.useCase.execute({
-        deliveryManId: loggedUserId
+        deliveryManId: loggedUserId,
+        neighborhood
       })
 
       const viewModel = this.presenter.transform(useCaseResponse)
