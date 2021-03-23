@@ -7,12 +7,46 @@ import { NavigationContainer } from '@react-navigation/native'
 import { useAuth } from '../hooks/Auth'
 import { ActivityIndicator, View } from 'react-native'
 import Deliveries from '../pages/Deliveries'
+import DeliveryDetails from '../pages/DeliveryDetails'
 
-const { Navigator, Screen } = createStackNavigator()
-const {
-  Navigator: BottomTabNavigator,
-  Screen: BottomTabScreen
-} = createBottomTabNavigator()
+const Stack = createStackNavigator()
+const Tab = createBottomTabNavigator()
+
+function DeliveryRoutes() {
+  return (
+    <Tab.Navigator
+      tabBarOptions={{
+        keyboardHidesTabBar: true,
+        style: {
+          height: 60
+        },
+        tabStyle: {
+          justifyContent: 'center',
+          borderTopColor: '#FFC042',
+          borderTopWidth: 2
+        },
+        labelStyle: {
+          fontSize: 16
+        },
+        activeBackgroundColor: '#fff',
+        activeTintColor: '#4C33CC',
+        inactiveBackgroundColor: '#F7F5FA',
+        inactiveTintColor: '#6F6C80'
+      }}
+    >
+      <Tab.Screen
+        options={{ title: 'Pendentes' }}
+        name="PendingDeliveries"
+        component={Deliveries}
+      />
+      <Tab.Screen
+        options={{ title: 'Feitas' }}
+        name="FinishedDeliveries"
+        component={Deliveries}
+      />
+    </Tab.Navigator>
+  )
+}
 
 const AppRoutes: React.FC = () => {
   const { loading, userIsLoggedIn } = useAuth()
@@ -28,55 +62,28 @@ const AppRoutes: React.FC = () => {
   if (userIsLoggedIn()) {
     return (
       <NavigationContainer>
-        <BottomTabNavigator
-          tabBarOptions={{
-            keyboardHidesTabBar: true,
-            style: {
-              height: 60
-            },
-            tabStyle: {
-              justifyContent: 'center',
-              borderTopColor: '#FFC042',
-              borderTopWidth: 2
-            },
-            labelStyle: {
-              fontSize: 16
-            },
-            activeBackgroundColor: '#fff',
-            activeTintColor: '#4C33CC',
-            inactiveBackgroundColor: '#F7F5FA',
-            inactiveTintColor: '#6F6C80'
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false
           }}
         >
-          <BottomTabScreen
-            options={{
-              title: 'Pendentes'
-            }}
-            name="PendingDeliveries"
-            component={Deliveries}
-          />
-          <BottomTabScreen
-            options={{
-              title: 'Feitos'
-            }}
-            name="FinishedDeliveries"
-            component={Deliveries}
-          />
-        </BottomTabNavigator>
+          <Stack.Screen name="Delivery" component={DeliveryRoutes} />
+          <Stack.Screen name="DeliveryDetails" component={DeliveryDetails} />
+        </Stack.Navigator>
       </NavigationContainer>
     )
   }
 
   return (
     <NavigationContainer>
-      <Navigator
+      <Stack.Navigator
         screenOptions={{
           headerShown: false
         }}
       >
-        <Screen name="SignIn" component={SignIn} />
-        <Screen name="ForgotPassword" component={ForgotPassword} />
-      </Navigator>
+        <Stack.Screen name="SignIn" component={SignIn} />
+        <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+      </Stack.Navigator>
     </NavigationContainer>
   )
 }

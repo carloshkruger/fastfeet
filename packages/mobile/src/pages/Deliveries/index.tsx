@@ -98,6 +98,8 @@ const Deliveries: React.FC = () => {
       setSearchingDeliveries(true)
       setDeliveries([])
 
+      console.log(routeName)
+
       const apiRouteName =
         routeName === 'PendingDeliveries'
           ? 'deliveries-to-be-made'

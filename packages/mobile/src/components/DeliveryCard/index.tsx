@@ -19,6 +19,7 @@ import {
 } from './styles'
 
 import Package from '../../assets/Package.png'
+import { useNavigation } from '@react-navigation/core'
 
 interface DeliveryCardProps {
   delivery: Delivery
@@ -34,6 +35,14 @@ const STEP_FINISHED_COLOR = '#00DA6D'
 const STEP_NOT_FINISHED_COLOR = '#dad7e0'
 
 const DeliveryCard: React.FC<DeliveryCardProps> = ({ delivery }) => {
+  const { navigate } = useNavigation()
+
+  function goToDeliveryDetailsPage() {
+    navigate('DeliveryDetails', {
+      deliveryId: delivery.deliveryId
+    })
+  }
+
   const progressBarPercentage = delivery.deliveryFinished
     ? PROGRESS_BAR_PERCENTAGE.finished
     : delivery.deliveryInitialized
@@ -83,7 +92,7 @@ const DeliveryCard: React.FC<DeliveryCardProps> = ({ delivery }) => {
         </ProgressContainer>
       </CardBody>
 
-      <DetailButton>
+      <DetailButton onPress={goToDeliveryDetailsPage}>
         <DetailButtonText>Detalhes</DetailButtonText>
         <FeatherIcon name="arrow-right" size={20} />
       </DetailButton>
