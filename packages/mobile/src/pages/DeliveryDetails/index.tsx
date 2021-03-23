@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Text, View } from 'react-native'
+import { Alert, Text, View } from 'react-native'
 import { useNavigation, useRoute } from '@react-navigation/core'
 
 import api from '../../utils/Api'
@@ -59,13 +59,32 @@ const DeliveryDetails: React.FC = () => {
   const deliveryId = (params as Params).deliveryId
 
   useEffect(() => {
+    getDeliveryDetails()
+  }, [deliveryId])
+
+  function getDeliveryDetails() {
     api
       .get(`/deliveries/${deliveryId}`)
       .then(response => setDelivery(response.data))
       .catch(error => handleApiError(error))
-  }, [deliveryId])
+  }
 
-  function handleInitializeDelivery() {}
+  function handleInitializeDelivery() {
+    Alert.alert('Inicializar entrega?', '', [
+      {
+        text: 'Não'
+      },
+      {
+        text: 'Sim',
+        onPress: () => {
+          api
+            .post(`deliveries/${deliveryId}/start`)
+            .then(() => getDeliveryDetails())
+            .catch(error => handleApiError(error))
+        }
+      }
+    ])
+  }
 
   function handleFinilizeDelivery() {}
 
