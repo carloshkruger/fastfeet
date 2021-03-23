@@ -81,7 +81,7 @@ class TypeOrmDeliveryRepository implements DeliveryRepository {
     let whereOptions = {
       deliveryManId: deliveryManId.value,
       canceledAt: IsNull(),
-      startDate: IsNull()
+      endDate: IsNull()
     }
 
     if (!!neighborhood) {

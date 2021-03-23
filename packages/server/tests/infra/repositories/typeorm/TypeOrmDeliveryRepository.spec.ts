@@ -149,13 +149,14 @@ describe('TypeOrmUserRepository', () => {
       expect(response3).toHaveLength(0)
     })
 
-    it('should not return the deliveries already started or canceled', async () => {
+    it('should not return the deliveries already finilized or canceled', async () => {
       const user = UserTestFactory.create()
 
-      const deliveryAlreadyStarted = DeliveryTestFactory.createWithGivenUser(
+      const deliveryAlreadyFinilized = DeliveryTestFactory.createWithGivenUser(
         user
       )
-      deliveryAlreadyStarted.defineStartDateAsNow()
+      deliveryAlreadyFinilized.defineStartDateAsNow()
+      deliveryAlreadyFinilized.defineEndDateAsNow()
 
       const deliveryCanceled = DeliveryTestFactory.createWithGivenUser(user)
       deliveryCanceled.defineCanceledAtAsNow()
@@ -167,7 +168,7 @@ describe('TypeOrmUserRepository', () => {
 
       const deliveryRepository = getRepository(TypeOrmDeliveryModel)
       await deliveryRepository.save(
-        DeliveryMapper.toRepository(deliveryAlreadyStarted)
+        DeliveryMapper.toRepository(deliveryAlreadyFinilized)
       )
       await deliveryRepository.save(
         DeliveryMapper.toRepository(deliveryCanceled)
