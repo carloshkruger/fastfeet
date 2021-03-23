@@ -70,7 +70,7 @@ const DeliveryDetails: React.FC = () => {
   }
 
   function handleInitializeDelivery() {
-    Alert.alert('Inicializar entrega?', '', [
+    Alert.alert('Iniciar entrega?', '', [
       {
         text: 'Não'
       },
@@ -79,7 +79,10 @@ const DeliveryDetails: React.FC = () => {
         onPress: () => {
           api
             .post(`deliveries/${deliveryId}/start`)
-            .then(() => getDeliveryDetails())
+            .then(() => {
+              Alert.alert('Pacote retirado.', 'Só falta entregar :)')
+              getDeliveryDetails()
+            })
             .catch(error => handleApiError(error))
         }
       }
