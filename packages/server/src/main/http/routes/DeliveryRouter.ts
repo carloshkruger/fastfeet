@@ -1,14 +1,15 @@
 import { Router } from 'express'
 
+import authorization from '../middlewares/authorization'
+
 import { ExpressRouterAdapter } from '../adapters/ExpressRouterAdapter'
 import { CreateDeliveryControllerFactory } from '@main/factories/controllers/CreateDeliveryControllerFactory'
 import { UpdateDeliveryControllerFactory } from '@main/factories/controllers/UpdateDeliveryControllerFactory'
 import { StartDeliveryControllerFactory } from '@main/factories/controllers/StartDeliveryControllerFactory'
 import { FinalizeDeliveryControllerFactory } from '@main/factories/controllers/FinalizeDeliveryControllerFactory'
 import { DeleteDeliveryControllerFactory } from '@main/factories/controllers/DeleteDeliveryControllerFactory'
-
-import authorization from '../middlewares/authorization'
 import { FindAllNeighborhoodsThatTheUserHasAlreadyDeliveredControllerFactory } from '@main/factories/controllers/FindAllNeighborhoodsThatTheUserHasAlreadyDeliveredControllerFactory'
+import { FindDeliveryDetailsControllerFactory } from '@main/factories/controllers/FindDeliveryDetailsControllerFactory'
 
 const deliveryRouter = Router()
 
@@ -18,6 +19,7 @@ deliveryRouter.post(
   '/',
   ExpressRouterAdapter.adapt(CreateDeliveryControllerFactory.create())
 )
+
 deliveryRouter.put(
   '/:deliveryId',
   ExpressRouterAdapter.adapt(UpdateDeliveryControllerFactory.create())
@@ -39,6 +41,10 @@ deliveryRouter.get(
   ExpressRouterAdapter.adapt(
     FindAllNeighborhoodsThatTheUserHasAlreadyDeliveredControllerFactory.create()
   )
+)
+deliveryRouter.get(
+  '/:deliveryId',
+  ExpressRouterAdapter.adapt(FindDeliveryDetailsControllerFactory.create())
 )
 
 export { deliveryRouter }

@@ -24,6 +24,22 @@ class Delivery extends Entity<DeliveryProps> {
     return new Delivery(props, id)
   }
 
+  public getStatusDescription(): string {
+    if (this.isFinished()) {
+      return 'Finalizado'
+    }
+
+    if (this.isInitialized()) {
+      return 'Inicializado'
+    }
+
+    if (this.isCanceled()) {
+      return 'Cancelado'
+    }
+
+    return 'Aguardando'
+  }
+
   public isFinished(): boolean {
     return !!this.endDate
   }

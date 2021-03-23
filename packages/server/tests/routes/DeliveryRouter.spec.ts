@@ -207,4 +207,21 @@ describe('DeliveryRouter', () => {
       await request(app).get(`/deliveries/neighborhoods`).send().expect(403)
     })
   })
+
+  describe('GET deliveries/:deliveryId', () => {
+    it('should return 200 on success', async () => {
+      await request(app)
+        .get(`/deliveries/${delivery.id.value}`)
+        .set('authorization', `Bearer ${accessToken}`)
+        .send()
+        .expect(200)
+        .then(response => {
+          expect(response.body).toHaveProperty('id')
+        })
+    })
+
+    it('should return 403 if no access token is provided', async () => {
+      await request(app).get(`/deliveries/neighborhoods`).send().expect(403)
+    })
+  })
 })
