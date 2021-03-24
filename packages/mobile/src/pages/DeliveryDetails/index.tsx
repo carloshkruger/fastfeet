@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Alert, Text, View } from 'react-native'
-import { useNavigation, useRoute } from '@react-navigation/core'
+import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/core'
 
 import api from '../../utils/Api'
 import { handleApiError } from '../../utils/handleApiError'
@@ -59,9 +59,9 @@ const DeliveryDetails: React.FC = () => {
 
   const deliveryId = (params as Params).deliveryId
 
-  useEffect(() => {
+  useFocusEffect(() => {
     getDeliveryDetails()
-  }, [deliveryId])
+  })
 
   function getDeliveryDetails() {
     api

@@ -56,6 +56,17 @@ export const LocationText = styled.Text`
   font-size: 15px;
 `
 
+export const SearchBarContainer = styled.View`
+  align-items: center;
+  justify-content: center;
+`
+
+export const SearchBarSubContainer = styled.View`
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+`
+
 export const InputContainer = styled.View`
   width: 100%;
   height: 60px;
@@ -101,4 +112,14 @@ export const SearchResultListItem = styled.View`
   padding: 16px;
   border-top-color: #dad7e0;
   border-top-width: 1px;
+`
+export const LoadingText = styled.Text`
+  font-size: 18px;
+  text-align: center;
+  padding-top: 16px;
+`
+
+export const NoDeliveryFoundText = styled.Text`
+  fontsize: 18px;
+  text-align: center;
 `
