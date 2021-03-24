@@ -1,15 +1,20 @@
 import React from 'react'
-
-import { Container, Title } from './styles'
-
-import LogosOnTop from '../../components/LogosOnTop'
 import { Image, Text, TouchableOpacity, View } from 'react-native'
-
-import giantOutlineLogo from '../../assets/GiantOutlineLogo.png'
-import { SubTitle } from '../SignIn/styles'
 import { useNavigation } from '@react-navigation/core'
 
+import LogosOnTop from '../../components/LogosOnTop'
+
+import giantOutlineLogo from '../../assets/GiantOutlineLogo.png'
 import longArrowLeft from '../../assets/LongArrowLeft.png'
+
+import {
+  BottomActionsContainer,
+  Container,
+  GoBackText,
+  HighlightedTitle,
+  Title,
+  SubTitle
+} from './styles'
 
 const ForgotPassword: React.FC = () => {
   const { goBack } = useNavigation()
@@ -29,7 +34,7 @@ const ForgotPassword: React.FC = () => {
 
       <View style={{ width: '70%' }}>
         <Title>
-          <Text style={{ color: '#FFC042' }}>Esqueceu </Text>
+          <HighlightedTitle>Esqueceu </HighlightedTitle>
           sua senha?
         </Title>
 
@@ -45,24 +50,15 @@ const ForgotPassword: React.FC = () => {
         Rua Guilherme Gemballa,{'\n'}260 Jardim América,{'\n'}SC 89 168-000
       </SubTitle>
 
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          paddingTop: 64
-        }}
-      >
+      <BottomActionsContainer>
         <TouchableOpacity onPress={goToLoginPage}>
           <Image source={longArrowLeft} style={{ margin: 8 }} />
         </TouchableOpacity>
 
         <TouchableOpacity onPress={goToLoginPage}>
-          <Text style={{ color: '#fff', fontSize: 16 }}>
-            Voltar para o login
-          </Text>
+          <GoBackText>Voltar para o login</GoBackText>
         </TouchableOpacity>
-      </View>
+      </BottomActionsContainer>
     </Container>
   )
 }

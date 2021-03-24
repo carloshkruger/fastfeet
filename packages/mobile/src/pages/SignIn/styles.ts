@@ -16,6 +16,10 @@ export const Title = styled.Text`
   color: #fff;
 `
 
+export const HighlightedTitle = styled.Text`
+  color: #ffc042;
+`
+
 export const SubTitle = styled.Text`
   color: #d5ccff;
   font-size: 15px;
@@ -47,12 +51,7 @@ export const ForgotPasswordButtonText = styled.Text`
   color: #fff;
 `
 
-interface ContainerProps {
-  isFocused: boolean
-  isErrored: boolean
-}
-
-export const InputContainer = styled.View<ContainerProps>`
+export const InputContainer = styled.View`
   width: 100%;
   height: 60px;
   padding: 0 16px;
@@ -63,16 +62,6 @@ export const InputContainer = styled.View<ContainerProps>`
   border-color: #f7f5fa;
   flex-direction: row;
   align-items: center;
-  ${props =>
-    props.isErrored &&
-    css`
-      border-color: #c53030;
-    `}
-  ${props =>
-    props.isFocused &&
-    css`
-      border-color: #ff9000;
-    `}
 `
 
 export const TextInput = styled.TextInput`

@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import {
+  Alert,
   Image,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  Text,
   TouchableWithoutFeedback,
+  TextInput as RNTextInput,
   View
 } from 'react-native'
 import { useNavigation } from '@react-navigation/core'
@@ -29,10 +30,13 @@ import {
   ForgotPasswordButtonText,
   SignInOptionsContainer,
   RememberMeContainer,
-  RememberMeText
+  RememberMeText,
+  HighlightedTitle
 } from './styles'
 
 const SignIn: React.FC = () => {
+  const passwordInputRef = useRef<RNTextInput>(null)
+
   const [cpf, setCpf] = useState('')
   const [password, setPassword] = useState('')
 
@@ -62,6 +66,16 @@ const SignIn: React.FC = () => {
 
   async function handleSubmit() {
     try {
+      if (!cpf) {
+        Alert.alert('', 'CPF é obrigatório.')
+        return
+      }
+
+      if (!password) {
+        Alert.alert('', 'Senha é obrigatório.')
+        return
+      }
+
       await signIn({
         cpf,
         password
@@ -75,7 +89,6 @@ const SignIn: React.FC = () => {
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{ flex: 1 }}
-      keyboardVerticalOffset={75}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <Container>
@@ -87,28 +100,33 @@ const SignIn: React.FC = () => {
           <LogosOnTop />
 
           <Title>
-            <Text style={{ color: '#FFC042' }}>Entregador, {'\n'}</Text>
+            <HighlightedTitle>Entregador, {'\n'}</HighlightedTitle>
             você é nosso maior valor
           </Title>
 
           <SubTitle>Faça seu login para {'\n'}começar suas entregas.</SubTitle>
 
           <View>
-            <InputContainer isFocused={false} isErrored={false}>
+            <InputContainer>
               <Icon name="user" size={20} />
               <TextInput
                 placeholder="CPF"
                 keyboardType="numeric"
                 onChangeText={setCpf}
+                maxLength={11}
+                onSubmitEditing={() => passwordInputRef?.current?.focus()}
               />
             </InputContainer>
-            <InputContainer isFocused={false} isErrored={false}>
+            <InputContainer>
               <Icon name="lock" size={20} />
               <TextInput
+                ref={passwordInputRef}
                 placeholder="Senha"
                 onChangeText={setPassword}
                 textContentType="password"
                 secureTextEntry={secureTextEntryOnPasswordField}
+                autoCapitalize="none"
+                autoCorrect={false}
               />
               <RightIcon
                 name={seePasswordActivated ? 'eye-off' : 'eye'}

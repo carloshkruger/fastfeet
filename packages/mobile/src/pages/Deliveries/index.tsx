@@ -155,17 +155,18 @@ const Deliveries: React.FC = () => {
             </InputContainer>
 
             <SearchResultListContainer>
-              {searchResultList.length &&
-                searchResultList.map(item => (
-                  <TouchableOpacity
-                    key={item}
-                    onPress={() => getDeliveries(item)}
-                  >
-                    <SearchResultListItem>
-                      <Text>{item}</Text>
-                    </SearchResultListItem>
-                  </TouchableOpacity>
-                ))}
+              {searchResultList.length
+                ? searchResultList.map(item => (
+                    <TouchableOpacity
+                      key={item}
+                      onPress={() => getDeliveries(item)}
+                    >
+                      <SearchResultListItem>
+                        <Text>{item}</Text>
+                      </SearchResultListItem>
+                    </TouchableOpacity>
+                  ))
+                : null}
             </SearchResultListContainer>
           </SearchBarSubContainer>
         </SearchBarContainer>

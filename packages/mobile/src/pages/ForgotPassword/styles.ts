@@ -13,10 +13,26 @@ export const Title = styled.Text`
   font-family: 'Roboto-BoldItalic';
   color: #fff;
 `
+export const HighlightedTitle = styled.Text`
+  color: #ffc042;
+`
+
 export const SubTitle = styled.Text`
   color: #d5ccff;
   font-size: 15px;
   line-height: 25px;
   padding-top: 16px;
   padding-bottom: 48px;
+`
+
+export const BottomActionsContainer = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 64px;
+`
+
+export const GoBackText = styled.Text`
+  color: #fff;
+  font-size: 16px;
 `

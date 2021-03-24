@@ -120,6 +120,6 @@ export const LoadingText = styled.Text`
 `
 
 export const NoDeliveryFoundText = styled.Text`
-  fontsize: 18px;
+  font-size: 18px;
   text-align: center;
 `
