@@ -1,5 +1,6 @@
 import { Router } from 'express'
 
+import upload from '../middlewares/upload'
 import authorization from '../middlewares/authorization'
 
 import { ExpressRouterAdapter } from '../adapters/ExpressRouterAdapter'
@@ -19,7 +20,6 @@ deliveryRouter.post(
   '/',
   ExpressRouterAdapter.adapt(CreateDeliveryControllerFactory.create())
 )
-
 deliveryRouter.put(
   '/:deliveryId',
   ExpressRouterAdapter.adapt(UpdateDeliveryControllerFactory.create())
@@ -34,6 +34,7 @@ deliveryRouter.post(
 )
 deliveryRouter.post(
   '/:deliveryId/finalize',
+  upload.single('image'),
   ExpressRouterAdapter.adapt(FinalizeDeliveryControllerFactory.create())
 )
 deliveryRouter.get(

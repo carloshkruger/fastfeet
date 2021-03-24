@@ -1,3 +1,5 @@
 ormconfig.json
 .env
 errors.log
+tmp/**
+!tmp/.gitkeep

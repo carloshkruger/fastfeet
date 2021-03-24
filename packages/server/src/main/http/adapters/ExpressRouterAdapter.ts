@@ -10,6 +10,7 @@ class ExpressRouterAdapter {
           ...(request.body || {}),
           ...(request.params || {}),
           ...(request.query || {}),
+          file: request.file,
           loggedUserId: request?.user?.id
         }
 

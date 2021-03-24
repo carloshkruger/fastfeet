@@ -17,6 +17,7 @@ module.exports = {
   coverageDirectory: 'coverage',
   coverageReporters: ['text-summary', 'lcov'],
   moduleNameMapper: {
+    '^@config/(.*)$': '<rootDir>/src/config/$1',
     '^@controllers/(.*)$': '<rootDir>/src/controllers/$1',
     '^@core/(.*)$': '<rootDir>/src/core/$1',
     '^@domain/(.*)$': '<rootDir>/src/domain/$1',

@@ -1,13 +1,13 @@
 import { TypeOrmDeliveryRepository } from '@infra/repositories/typeorm/TypeOrmDeliveryRepository'
 import { TypeOrmUserRepository } from '@infra/repositories/typeorm/TypeOrmUserRepository'
-import { FakeStorageProvider } from '@shared/providers/StorageProvider/FakeStorageProvider'
+import DiskStorageProvider from '@shared/providers/StorageProvider/DiskStorageProvider'
 import { FinalizeDeliveryUseCase } from '@useCases/FinalizeDelivery/FinalizeDeliveryUseCase'
 
 class FinalizeDeliveryUseCaseFactory {
   static create(): FinalizeDeliveryUseCase {
     const userRepository = new TypeOrmUserRepository()
     const deliveryRepository = new TypeOrmDeliveryRepository()
-    const storageProvider = new FakeStorageProvider()
+    const storageProvider = new DiskStorageProvider()
 
     return new FinalizeDeliveryUseCase(
       userRepository,

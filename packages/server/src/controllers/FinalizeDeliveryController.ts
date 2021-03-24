@@ -4,7 +4,9 @@ import { FinalizeDeliveryUseCase } from '@useCases/FinalizeDelivery/FinalizeDeli
 interface HandleParams {
   deliveryId: string
   loggedUserId: string
-  signatureImage: string
+  file: {
+    filename: string
+  }
 }
 
 class FinalizeDeliveryController extends Controller {
@@ -15,13 +17,13 @@ class FinalizeDeliveryController extends Controller {
   async handle({
     deliveryId,
     loggedUserId,
-    signatureImage
+    file
   }: HandleParams): Promise<ControllerResponse> {
     try {
       await this.finalizeDeliveryUseCase.execute({
         deliveryId,
         deliveryManId: loggedUserId,
-        signatureImage
+        signatureImage: file.filename
       })
 
       return this.noContent()
