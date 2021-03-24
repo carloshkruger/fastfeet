@@ -1,6 +1,5 @@
 import styled from 'styled-components/native'
 import FeatherIcon from 'react-native-vector-icons/Feather'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 
 export const Container = styled.View`
   flex: 1;
@@ -81,4 +80,13 @@ export const CardInfoValue = styled.Text`
   font-size: 15px;
   line-height: 25px;
   color: #6f6c80;
+`
+
+export const ButtonContainer = styled.View`
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-bottom: 32px;
+  bottom: 0;
+  position: absolute;
+  width: 100%;
 `

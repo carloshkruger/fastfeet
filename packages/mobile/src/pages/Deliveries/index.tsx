@@ -126,7 +126,7 @@ const Deliveries: React.FC = () => {
           <HeaderUserInfo>
             <WelcomeContainer>
               <WelcomeText>Bem vindo,</WelcomeText>
-              <UserNameText>{user.name}</UserNameText>
+              <UserNameText>{user?.name}</UserNameText>
             </WelcomeContainer>
             <TouchableOpacity onPress={signOut}>
               <Image source={ExitApp} />
@@ -183,21 +183,22 @@ const Deliveries: React.FC = () => {
         </View>
       </View>
 
-      {deliveries.length ? (
+      {searchingDeliveries ? (
+        <Text style={{ fontSize: 18, textAlign: 'center', paddingTop: 16 }}>
+          Carregando...
+        </Text>
+      ) : (
         <FlatList
+          ListEmptyComponent={
+            <Text style={{ fontSize: 18, textAlign: 'center' }}>
+              Nenhum resultado encontrado
+            </Text>
+          }
           style={{ marginTop: 16 }}
           data={deliveries}
           keyExtractor={item => item.deliveryId}
           renderItem={({ item }) => <DeliveryCard delivery={item} />}
         />
-      ) : searchingDeliveries ? (
-        <Text style={{ fontSize: 18, textAlign: 'center', paddingTop: 16 }}>
-          Carregando...
-        </Text>
-      ) : (
-        <Text style={{ fontSize: 18, textAlign: 'center', paddingTop: 16 }}>
-          Nenhum resultado encontrado
-        </Text>
       )}
     </Container>
   )

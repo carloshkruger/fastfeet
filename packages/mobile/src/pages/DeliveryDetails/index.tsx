@@ -20,7 +20,8 @@ import {
   CardInfoGroup,
   CardInfoContainer,
   CardInfoTitle,
-  CardInfoValue
+  CardInfoValue,
+  ButtonContainer
 } from './styles'
 
 interface DeliveryDetails {
@@ -37,7 +38,7 @@ interface DeliveryDetails {
   isInitialized: boolean
   isFinished: boolean
   statusDescription: string
-  postDate: string
+  createdAt: string
   initializedDate: string
   finishedDate: string
 }
@@ -53,7 +54,7 @@ const DeliveryDetails: React.FC = () => {
     undefined
   )
 
-  const { goBack } = useNavigation()
+  const { goBack, navigate } = useNavigation()
   const { params } = useRoute()
 
   const deliveryId = (params as Params).deliveryId
@@ -89,7 +90,11 @@ const DeliveryDetails: React.FC = () => {
     ])
   }
 
-  function handleFinilizeDelivery() {}
+  function handleFinilizeDelivery() {
+    navigate('ConfirmDelivery', {
+      deliveryId
+    })
+  }
 
   function formatDate(date: string): string {
     return date || FALLBACK_TO_EMPTY_DATE
@@ -151,7 +156,7 @@ const DeliveryDetails: React.FC = () => {
 
             <CardInfoContainer style={{ flex: 1 }}>
               <CardInfoTitle>POSTADO EM</CardInfoTitle>
-              <CardInfoValue>{formatDate(delivery.postDate)}</CardInfoValue>
+              <CardInfoValue>{formatDate(delivery.createdAt)}</CardInfoValue>
             </CardInfoContainer>
           </CardInfoGroup>
 
@@ -171,16 +176,7 @@ const DeliveryDetails: React.FC = () => {
         </Card>
       </CardsContainer>
 
-      <View
-        style={{
-          paddingLeft: 24,
-          paddingRight: 24,
-          paddingBottom: 32,
-          bottom: 0,
-          position: 'absolute',
-          width: '100%'
-        }}
-      >
+      <ButtonContainer>
         {delivery.isFinished ? null : delivery.isInitialized ? (
           <PrimaryButton
             name="Confirmar entrega"
@@ -192,7 +188,7 @@ const DeliveryDetails: React.FC = () => {
             onPress={handleInitializeDelivery}
           />
         )}
-      </View>
+      </ButtonContainer>
     </Container>
   )
 }

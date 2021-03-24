@@ -8,6 +8,7 @@ import { useAuth } from '../hooks/Auth'
 import { ActivityIndicator, View } from 'react-native'
 import Deliveries from '../pages/Deliveries'
 import DeliveryDetails from '../pages/DeliveryDetails'
+import ConfirmDelivery from '../pages/ConfirmDelivery'
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -69,6 +70,7 @@ const AppRoutes: React.FC = () => {
         >
           <Stack.Screen name="Delivery" component={DeliveryRoutes} />
           <Stack.Screen name="DeliveryDetails" component={DeliveryDetails} />
+          <Stack.Screen name="ConfirmDelivery" component={ConfirmDelivery} />
         </Stack.Navigator>
       </NavigationContainer>
     )

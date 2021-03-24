@@ -82,5 +82,7 @@
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>We need your permission to use your camera</string>
 </dict>
 </plist>
