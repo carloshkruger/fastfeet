@@ -7,7 +7,7 @@ import ForgotPassword from '../pages/ForgotPassword'
 
 const Stack = createStackNavigator()
 
-export const AuthRoutes: React.FC = () => {
+const AuthRoutes: React.FC = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -21,3 +21,5 @@ export const AuthRoutes: React.FC = () => {
     </NavigationContainer>
   )
 }
+
+export { AuthRoutes }

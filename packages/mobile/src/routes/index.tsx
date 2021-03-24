@@ -1,10 +1,10 @@
 import React from 'react'
 import { ActivityIndicator, View } from 'react-native'
 
-import { useAuth } from '../hooks/Auth'
-
 import { DeliveryRoutes } from './DeliveryRoutes'
 import { AuthRoutes } from './AuthRoutes'
+
+import { useAuth } from '../hooks/Auth'
 
 const AppRoutes: React.FC = () => {
   const { loading, userIsLoggedIn } = useAuth()

@@ -46,7 +46,7 @@ function DeliveryBottomTabRoutes() {
   )
 }
 
-export const DeliveryRoutes: React.FC = () => {
+const DeliveryRoutes: React.FC = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -61,3 +61,5 @@ export const DeliveryRoutes: React.FC = () => {
     </NavigationContainer>
   )
 }
+
+export { DeliveryRoutes }
