@@ -1,15 +1,10 @@
 import React from 'react'
 import { ActivityIndicator, View } from 'react-native'
-import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
 
 import { useAuth } from '../hooks/Auth'
 
-import SignIn from '../pages/SignIn'
-import ForgotPassword from '../pages/ForgotPassword'
 import { DeliveryRoutes } from './DeliveryRoutes'
-
-const Stack = createStackNavigator()
+import { AuthRoutes } from './AuthRoutes'
 
 const AppRoutes: React.FC = () => {
   const { loading, userIsLoggedIn } = useAuth()
@@ -26,18 +21,7 @@ const AppRoutes: React.FC = () => {
     return <DeliveryRoutes />
   }
 
-  return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false
-        }}
-      >
-        <Stack.Screen name="SignIn" component={SignIn} />
-        <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  )
+  return <AuthRoutes />
 }
 
 export default AppRoutes
