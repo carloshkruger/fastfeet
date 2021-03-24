@@ -1,5 +1,6 @@
 import { getRepository, Repository } from 'typeorm'
 import request from 'supertest'
+import path from 'path'
 
 import { UserMapper } from '@infra/typeorm/mappers/UserMapper'
 import { User as TypeOrmUserModel } from '@infra/typeorm/models/User'
@@ -181,6 +182,25 @@ describe('DeliveryRouter', () => {
         .post(`/deliveries/${delivery.id.value}/finalize`)
         .set('authorization', `Bearer ${accessToken}`)
         .send()
+        .expect(204)
+    })
+
+    it('should return 204 on success (sending image)', async () => {
+      delivery.defineStartDateAsNow()
+
+      await deliveryRepository.save(DeliveryMapper.toRepository(delivery))
+
+      const testImage = path.resolve(
+        __dirname,
+        '..',
+        'assets',
+        'test_image.png'
+      )
+
+      await request(app)
+        .post(`/deliveries/${delivery.id.value}/finalize`)
+        .set('authorization', `Bearer ${accessToken}`)
+        .attach('image', testImage)
         .expect(204)
     })
 

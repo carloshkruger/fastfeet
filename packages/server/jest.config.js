@@ -4,6 +4,7 @@ module.exports = {
   displayName: name,
   name,
   preset: 'ts-jest',
+  globalTeardown: './jest.teardown.ts',
   collectCoverage: true,
   collectCoverageFrom: [
     '<rootDir>/src/domain/**/*.ts',
