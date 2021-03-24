@@ -25,6 +25,7 @@ class DeliveryMapper {
           complement: model.complement
         }),
         signatureImage: model.signatureImage,
+        createdAt: model.createdAt,
         canceledAt: model.canceledAt,
         endDate: model.endDate,
         startDate: model.startDate
@@ -46,6 +47,7 @@ class DeliveryMapper {
       number: delivery.address.number,
       postalCode: delivery.address.postalCode.value,
       state: delivery.address.state,
+      createdAt: delivery.createdAt,
       startDate: delivery.startDate,
       endDate: delivery.endDate,
       canceledAt: delivery.canceledAt,

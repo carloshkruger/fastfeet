@@ -22,12 +22,14 @@ describe('Delivery validation', () => {
       recipientName: DeliveryRecipientName.create({
         value: 'valid recipient name'
       }),
-      productName: ProductName.create({ value: 'valid product name' })
+      productName: ProductName.create({ value: 'valid product name' }),
+      createdAt: new Date()
     })
 
     expect(delivery).toBeInstanceOf(Delivery)
     expect(delivery.productName).toBeInstanceOf(ProductName)
     expect(delivery.address).toBeInstanceOf(Address)
+    expect(delivery.createdAt).toBeInstanceOf(Date)
     expect(delivery.startDate).toBeFalsy()
     expect(delivery.endDate).toBeFalsy()
     expect(delivery.canceledAt).toBeFalsy()
@@ -40,7 +42,8 @@ describe('Delivery validation', () => {
       recipientName: DeliveryRecipientName.create({
         value: 'valid recipient name'
       }),
-      productName: ProductName.create({ value: 'valid product name' })
+      productName: ProductName.create({ value: 'valid product name' }),
+      createdAt: new Date()
     })
 
     expect(delivery.getStatusDescription()).toBe('Aguardando')
@@ -51,7 +54,8 @@ describe('Delivery validation', () => {
       recipientName: DeliveryRecipientName.create({
         value: 'valid recipient name'
       }),
-      productName: ProductName.create({ value: 'valid product name' })
+      productName: ProductName.create({ value: 'valid product name' }),
+      createdAt: new Date()
     })
     delivery2.defineStartDateAsNow()
 
@@ -63,7 +67,8 @@ describe('Delivery validation', () => {
       recipientName: DeliveryRecipientName.create({
         value: 'valid recipient name'
       }),
-      productName: ProductName.create({ value: 'valid product name' })
+      productName: ProductName.create({ value: 'valid product name' }),
+      createdAt: new Date()
     })
     delivery3.defineStartDateAsNow()
     delivery3.defineEndDateAsNow()
@@ -76,7 +81,8 @@ describe('Delivery validation', () => {
       recipientName: DeliveryRecipientName.create({
         value: 'valid recipient name'
       }),
-      productName: ProductName.create({ value: 'valid product name' })
+      productName: ProductName.create({ value: 'valid product name' }),
+      createdAt: new Date()
     })
     delivery4.defineCanceledAtAsNow()
 

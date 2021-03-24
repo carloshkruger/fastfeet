@@ -1,20 +1,13 @@
 import { UniqueEntityId } from '@core/domain/UniqueEntityId'
 import { FieldRequiredError } from '@core/errors/FieldRequiredError'
-import { Address } from '@domain/Address'
-import { CEP } from '@domain/CEP'
-import { CPF } from '@domain/CPF'
 import { Delivery } from '@domain/Delivery'
-import { DeliveryRecipientName } from '@domain/DeliveryRecipientName'
-import { Email } from '@domain/Email'
-import { Password } from '@domain/Password'
-import { ProductName } from '@domain/ProductName'
-import { User } from '@domain/User'
-import { UserName } from '@domain/UserName'
 import { InMemoryDeliveryRepository } from '@infra/repositories/InMemory/InMemoryDeliveryRepository'
 import { InMemoryUserRepository } from '@infra/repositories/InMemory/InMemoryUserRepository'
 import { DeliveryRepository } from '@repositories/DeliveryRepository'
 import { UserRepository } from '@repositories/UserRepository'
 import { getRandomIntegerInRange } from '@shared/utils/getRandomIntegerInRange'
+import { DeliveryTestFactory } from '@tests/factories/domain/DeliveryTestFactory'
+import { UserTestFactory } from '@tests/factories/domain/UserTestFactory'
 import { StartDeliveryErrors } from '@useCases/StartDelivery/StartDeliveryErrors'
 import { StartDeliveryUseCase } from '@useCases/StartDelivery/StartDeliveryUseCase'
 
@@ -24,28 +17,8 @@ let startDeliveryUseCase: StartDeliveryUseCase
 
 let allowedHourToStartTheDelivery: number
 
-const user = User.create({
-  name: UserName.create({ value: 'valid name' }),
-  email: Email.create({ value: 'valid_email@domain.com' }),
-  password: Password.create({ value: 'valid_password', hashedValue: '' }),
-  cpf: CPF.create({ value: '39782449008' })
-})
-
-const delivery = Delivery.create({
-  deliveryManId: user.id,
-  recipientName: DeliveryRecipientName.create({
-    value: 'valid recipient name'
-  }),
-  productName: ProductName.create({ value: 'valid product name' }),
-  address: Address.create({
-    address: 'valid address',
-    postalCode: CEP.create({ value: '89186000' }),
-    number: 9999,
-    neighborhood: 'valid neighborhood',
-    city: 'valid city',
-    state: 'valid state'
-  })
-})
+const user = UserTestFactory.create()
+const delivery = DeliveryTestFactory.createWithGivenUser(user)
 
 describe('StartDeliveryUseCase', () => {
   beforeEach(() => {
@@ -121,21 +94,7 @@ describe('StartDeliveryUseCase', () => {
       .spyOn(inMemoryUserRepository, 'findById')
       .mockImplementation(async () => user)
 
-    const deliveryNotLinkedToTheUser = Delivery.create({
-      deliveryManId: new UniqueEntityId(),
-      recipientName: DeliveryRecipientName.create({
-        value: 'valid recipient name'
-      }),
-      productName: ProductName.create({ value: 'valid product name' }),
-      address: Address.create({
-        address: 'valid address',
-        postalCode: CEP.create({ value: '89186000' }),
-        number: 9999,
-        neighborhood: 'valid neighborhood',
-        city: 'valid city',
-        state: 'valid state'
-      })
-    })
+    const deliveryNotLinkedToTheUser = DeliveryTestFactory.create()
 
     jest
       .spyOn(inMemoryDeliveryRepository, 'findById')

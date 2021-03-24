@@ -9,6 +9,7 @@ interface DeliveryProps {
   recipientName: DeliveryRecipientName
   productName: ProductName
   address: Address
+  createdAt: Date
   signatureImage?: string
   canceledAt?: Date
   startDate?: Date
@@ -102,6 +103,10 @@ class Delivery extends Entity<DeliveryProps> {
 
   get signatureImage(): string | undefined {
     return this.props.signatureImage
+  }
+
+  get createdAt(): Date {
+    return this.props.createdAt
   }
 
   get canceledAt(): Date | undefined {

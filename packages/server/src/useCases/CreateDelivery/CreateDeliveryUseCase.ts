@@ -42,7 +42,8 @@ class CreateDeliveryUseCase
         complement,
         city,
         state
-      })
+      }),
+      createdAt: new Date()
     })
 
     const deliveryMan = await this.userRepository.findById(deliveryManId)

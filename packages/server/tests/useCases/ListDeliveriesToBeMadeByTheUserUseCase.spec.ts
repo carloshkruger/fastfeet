@@ -14,6 +14,7 @@ import { InMemoryDeliveryRepository } from '@infra/repositories/InMemory/InMemor
 import { InMemoryUserRepository } from '@infra/repositories/InMemory/InMemoryUserRepository'
 import { DeliveryRepository } from '@repositories/DeliveryRepository'
 import { UserRepository } from '@repositories/UserRepository'
+import { DeliveryTestFactory } from '@tests/factories/domain/DeliveryTestFactory'
 import { ListDeliveriesToBeMadeByTheUserUseCase } from '@useCases/ListDeliveriesToBeMadeByTheUser/ListDeliveriesToBeMadeByTheUserUseCase'
 
 let inMemoryUserRepository: UserRepository
@@ -42,21 +43,7 @@ describe('ListDeliveriesToBeMadeByTheUserUseCase', () => {
       .spyOn(inMemoryUserRepository, 'findById')
       .mockImplementation(async () => user)
 
-    const delivery = Delivery.create({
-      deliveryManId: user.id,
-      recipientName: DeliveryRecipientName.create({
-        value: 'valid recipient name'
-      }),
-      productName: ProductName.create({ value: 'valid product name' }),
-      address: Address.create({
-        address: 'valid address',
-        postalCode: CEP.create({ value: '89186000' }),
-        number: 9999,
-        neighborhood: 'valid neighborhood',
-        city: 'valid city',
-        state: 'valid state'
-      })
-    })
+    const delivery = DeliveryTestFactory.createWithGivenUser(user)
 
     const canceledDelivery = Delivery.create({
       deliveryManId: user.id,
@@ -72,25 +59,13 @@ describe('ListDeliveriesToBeMadeByTheUserUseCase', () => {
         city: 'valid city',
         state: 'valid state'
       }),
+      createdAt: new Date(),
       canceledAt: new Date()
     })
 
-    const finishedDelivery = Delivery.create({
-      deliveryManId: user.id,
-      recipientName: DeliveryRecipientName.create({
-        value: 'valid recipient name'
-      }),
-      productName: ProductName.create({ value: 'valid product name' }),
-      address: Address.create({
-        address: 'valid address',
-        postalCode: CEP.create({ value: '89186000' }),
-        number: 9999,
-        neighborhood: 'valid neighborhood',
-        city: 'valid city',
-        state: 'valid state'
-      }),
-      endDate: new Date()
-    })
+    const finishedDelivery = DeliveryTestFactory.createWithGivenUser(user)
+    finishedDelivery.defineStartDateAsNow()
+    finishedDelivery.defineEndDateAsNow()
 
     jest
       .spyOn(inMemoryDeliveryRepository, 'listDeliveriesToBeMadeByUserId')
@@ -138,7 +113,8 @@ describe('ListDeliveriesToBeMadeByTheUserUseCase', () => {
         neighborhood: validNeighborhood,
         city: 'valid city',
         state: 'valid state'
-      })
+      }),
+      createdAt: new Date()
     })
 
     const delivery2 = Delivery.create({
@@ -154,7 +130,8 @@ describe('ListDeliveriesToBeMadeByTheUserUseCase', () => {
         neighborhood: validNeighborhood,
         city: 'valid city',
         state: 'valid state'
-      })
+      }),
+      createdAt: new Date()
     })
 
     const delivery3 = Delivery.create({
@@ -170,7 +147,8 @@ describe('ListDeliveriesToBeMadeByTheUserUseCase', () => {
         neighborhood: 'valid neighborhood 3',
         city: 'valid city',
         state: 'valid state'
-      })
+      }),
+      createdAt: new Date()
     })
 
     jest

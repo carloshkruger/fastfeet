@@ -21,7 +21,8 @@ class DeliveryTestFactory {
         neighborhood: 'valid neighborhood',
         city: 'valid city',
         state: 'valid state'
-      })
+      }),
+      createdAt: new Date()
     })
   }
 
@@ -39,7 +40,8 @@ class DeliveryTestFactory {
         neighborhood: 'valid neighborhood',
         city: 'valid city',
         state: 'valid state'
-      })
+      }),
+      createdAt: new Date()
     })
   }
 }

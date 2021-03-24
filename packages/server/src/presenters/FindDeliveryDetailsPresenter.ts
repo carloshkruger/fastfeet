@@ -14,7 +14,7 @@ interface FindDeliveryDetailsPresenterResponse {
   isInitialized: boolean
   isFinished: boolean
   statusDescription: string
-  postDate: string
+  createdAt: string
   initializedDate: string
   finishedDate: string
 }
@@ -38,7 +38,7 @@ class FindDeliveryDetailsPresenter {
       isFinished: delivery.isFinished(),
       initializedDate: delivery.startDate?.toLocaleDateString('pt-BR') || '',
       finishedDate: delivery.endDate?.toLocaleDateString('pt-BR') || '',
-      postDate: '',
+      createdAt: delivery.createdAt.toLocaleDateString('pt-BR'),
       statusDescription: delivery.getStatusDescription()
     }
   }
