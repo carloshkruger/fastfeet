@@ -52,6 +52,10 @@ class FinalizeDeliveryUseCase
       throw new FinalizeDeliveryErrors.DeliveryNotInitialized()
     }
 
+    if (delivery.isFinished()) {
+      throw new FinalizeDeliveryErrors.DeliveryAlreadyFinished()
+    }
+
     delivery.defineEndDateAsNow()
 
     const hasSignatureImage = !isEmpty(signatureImage)

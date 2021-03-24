@@ -1,4 +1,5 @@
 import { Controller, ControllerResponse } from '@core/controller'
+import { removeTempFile } from '@shared/utils/removeTempFile'
 import { FinalizeDeliveryUseCase } from '@useCases/FinalizeDelivery/FinalizeDeliveryUseCase'
 
 interface HandleParams {
@@ -23,11 +24,13 @@ class FinalizeDeliveryController extends Controller {
       await this.finalizeDeliveryUseCase.execute({
         deliveryId,
         deliveryManId: loggedUserId,
-        signatureImage: file.filename
+        signatureImage: file?.filename
       })
 
       return this.noContent()
     } catch (error) {
+      await removeTempFile(file?.filename)
+
       return this.fail(error)
     }
   }

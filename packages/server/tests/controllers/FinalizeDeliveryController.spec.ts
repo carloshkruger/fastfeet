@@ -21,7 +21,9 @@ describe('FinalizeDeliveryController', () => {
     const response = await finalizeDeliveryController.handle({
       deliveryId: delivery.id.value,
       loggedUserId: user.id.value,
-      signatureImage: ''
+      file: {
+        filename: ''
+      }
     })
 
     expect(response.statusCode).toBe(204)
@@ -37,7 +39,25 @@ describe('FinalizeDeliveryController', () => {
     const response = await finalizeDeliveryController.handle({
       deliveryId: delivery.id.value,
       loggedUserId: user.id.value,
-      signatureImage: ''
+      file: {
+        filename: ''
+      }
+    })
+
+    expect(response.statusCode).toBe(500)
+  })
+
+  it('should remove tmp file if use case throws', async () => {
+    jest
+      .spyOn(finalizeDeliveryUseCase, 'execute')
+      .mockImplementation(async () => {
+        throw new Error()
+      })
+
+    const response = await finalizeDeliveryController.handle({
+      deliveryId: delivery.id.value,
+      loggedUserId: user.id.value,
+      file: (null as unknown) as { filename: '' }
     })
 
     expect(response.statusCode).toBe(500)

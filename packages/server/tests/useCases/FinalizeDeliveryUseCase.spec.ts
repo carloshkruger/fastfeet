@@ -31,22 +31,7 @@ const user = User.create({
   cpf: CPF.create({ value: '39782449008' })
 })
 
-const delivery = Delivery.create({
-  deliveryManId: user.id,
-  recipientName: DeliveryRecipientName.create({
-    value: 'valid recipient name'
-  }),
-  productName: ProductName.create({ value: 'valid product name' }),
-  address: Address.create({
-    address: 'valid address',
-    postalCode: CEP.create({ value: '89186000' }),
-    number: 9999,
-    neighborhood: 'valid neighborhood',
-    city: 'valid city',
-    state: 'valid state'
-  }),
-  startDate: new Date()
-})
+let delivery: Delivery
 
 describe('FinalizeDeliveryUseCase', () => {
   beforeEach(() => {
@@ -58,6 +43,23 @@ describe('FinalizeDeliveryUseCase', () => {
       inMemoryDeliveryRepository,
       fakeStorageProvider
     )
+
+    delivery = Delivery.create({
+      deliveryManId: user.id,
+      recipientName: DeliveryRecipientName.create({
+        value: 'valid recipient name'
+      }),
+      productName: ProductName.create({ value: 'valid product name' }),
+      address: Address.create({
+        address: 'valid address',
+        postalCode: CEP.create({ value: '89186000' }),
+        number: 9999,
+        neighborhood: 'valid neighborhood',
+        city: 'valid city',
+        state: 'valid state'
+      }),
+      startDate: new Date()
+    })
   })
 
   it('should throw if no delivery man id is provided', async () => {
@@ -255,6 +257,32 @@ describe('FinalizeDeliveryUseCase', () => {
     expect(paramPassedToSaveMethod.id.value).toBe(delivery.id.value)
     expect(paramPassedToSaveMethod.endDate).toBeInstanceOf(Date)
     expect(paramPassedToSaveMethod.signatureImage).toBe(signatureImage)
+  })
+
+  it('should throw if try to finalize a delivery already finished', async () => {
+    jest
+      .spyOn(inMemoryUserRepository, 'findById')
+      .mockImplementation(async () => user)
+
+    delivery.defineEndDateAsNow()
+
+    jest
+      .spyOn(inMemoryDeliveryRepository, 'findById')
+      .mockImplementation(async () => delivery)
+
+    const saveSpy = jest.spyOn(inMemoryDeliveryRepository, 'save')
+    const saveFileSpy = jest.spyOn(fakeStorageProvider, 'saveFile')
+
+    await expect(
+      finalizeDeliveryUseCase.execute({
+        deliveryId: delivery.id.value,
+        deliveryManId: user.id.value,
+        signatureImage: ''
+      })
+    ).rejects.toThrow(new FinalizeDeliveryErrors.DeliveryAlreadyFinished())
+
+    expect(saveSpy).not.toHaveBeenCalled()
+    expect(saveFileSpy).not.toHaveBeenCalled()
   })
 
   it('should throw if DeliveryRepository throws', async () => {

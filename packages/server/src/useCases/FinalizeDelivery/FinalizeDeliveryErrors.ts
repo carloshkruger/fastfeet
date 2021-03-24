@@ -1,4 +1,4 @@
-import { ForbiddenError } from '@core/errors'
+import { ConflictError, ForbiddenError } from '@core/errors'
 import { AppError } from '@core/errors'
 
 export namespace FinalizeDeliveryErrors {
@@ -13,6 +13,13 @@ export namespace FinalizeDeliveryErrors {
     constructor() {
       super(`Delivery not initialized.`)
       this.name = DeliveryNotInitialized.name
+    }
+  }
+
+  export class DeliveryAlreadyFinished extends ConflictError {
+    constructor() {
+      super(`Delivery already finished.`)
+      this.name = DeliveryAlreadyFinished.name
     }
   }
 }
