@@ -1,7 +1,9 @@
 import styled from 'styled-components/native'
 
+import colors from '../../constants/colors'
+
 export const Container = styled.View`
-  background-color: #4c33cc;
+  background-color: ${colors.primary};
   flex: 1;
   padding: 24px;
   padding-top: 72px;
@@ -11,14 +13,14 @@ export const Title = styled.Text`
   font-size: 48px;
   line-height: 48px;
   font-family: 'Roboto-BoldItalic';
-  color: #fff;
+  color: ${colors.textPrimary};
 `
 export const HighlightedTitle = styled.Text`
-  color: #ffc042;
+  color: ${colors.secondary};
 `
 
 export const SubTitle = styled.Text`
-  color: #d5ccff;
+  color: ${colors.textSecondary};
   font-size: 15px;
   line-height: 25px;
   padding-top: 16px;
@@ -33,6 +35,6 @@ export const BottomActionsContainer = styled.View`
 `
 
 export const GoBackText = styled.Text`
-  color: #fff;
+  color: ${colors.textPrimary};
   font-size: 16px;
 `

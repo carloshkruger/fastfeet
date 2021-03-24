@@ -17,6 +17,7 @@ import giantOutlineLogo from '../../assets/GiantOutlineLogo.png'
 import LogosOnTop from '../../components/LogosOnTop'
 import { useAuth } from '../../hooks/Auth'
 import { handleApiError } from '../../utils/handleApiError'
+import colors from '../../constants/colors'
 
 import {
   Container,
@@ -140,7 +141,7 @@ const SignIn: React.FC = () => {
             <RememberMeContainer>
               <CheckBox
                 value={rememberMeActivated}
-                tintColors={{ true: '#FFC042', false: '#d5ccff' }}
+                tintColors={{ true: colors.secondary, false: '#d5ccff' }}
                 onChange={changeRememberMe}
               />
               <RememberMeText>Lembrar-me</RememberMeText>

@@ -1,13 +1,14 @@
 import styled from 'styled-components/native'
 import FeatherIcon from 'react-native-vector-icons/Feather'
+import colors from '../../constants/colors'
 
 export const Container = styled.View`
   flex: 1;
-  background-color: #f7f5fa;
+  background-color: ${colors.background};
 `
 
 export const Header = styled.View`
-  background-color: #4c33cc;
+  background-color: ${colors.primary};
   height: 120px;
   align-items: center;
   justify-content: center;
@@ -26,7 +27,7 @@ export const BackButtonIcon = styled(FeatherIcon)`
 `
 
 export const HeaderTitle = styled.Text`
-  color: #fff;
+  color: ${colors.textPrimary};
   font-size: 28px;
   line-height: 28px;
   padding-bottom: 40px;
@@ -73,6 +74,6 @@ export const SendPhotoButtonContainer = styled.View`
 `
 
 export const TakePictureText = styled.Text`
-  color: #6f6c80;
+  color: ${colors.textSecondary};
   font-size: 12px;
 `

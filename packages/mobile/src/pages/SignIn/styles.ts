@@ -1,9 +1,11 @@
-import styled, { css } from 'styled-components/native'
+import styled from 'styled-components/native'
 import FeatherIcon from 'react-native-vector-icons/Feather'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
+import colors from '../../constants/colors'
+
 export const Container = styled.View`
-  background-color: #4c33cc;
+  background-color: ${colors.primary};
   flex: 1;
   padding: 24px;
   justify-content: center;
@@ -13,15 +15,15 @@ export const Title = styled.Text`
   font-size: 48px;
   line-height: 48px;
   font-family: 'Roboto-BoldItalic';
-  color: #fff;
+  color: ${colors.textPrimary};
 `
 
 export const HighlightedTitle = styled.Text`
-  color: #ffc042;
+  color: ${colors.secondary};
 `
 
 export const SubTitle = styled.Text`
-  color: #d5ccff;
+  color: ${colors.textSecondary};
   font-size: 15px;
   line-height: 25px;
   padding-top: 16px;
@@ -42,13 +44,13 @@ export const RememberMeContainer = styled.View`
 `
 
 export const RememberMeText = styled.Text`
-  color: #fff;
+  color: ${colors.textPrimary};
 `
 
 export const ForgotPasswordButton = styled(TouchableOpacity)``
 
 export const ForgotPasswordButtonText = styled.Text`
-  color: #fff;
+  color: ${colors.textPrimary};
 `
 
 export const InputContainer = styled.View`

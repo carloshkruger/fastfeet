@@ -1,13 +1,14 @@
 import styled from 'styled-components/native'
 import FeatherIcon from 'react-native-vector-icons/Feather'
+import colors from '../../constants/colors'
 
 export const Container = styled.View`
   flex: 1;
-  background-color: #f5f3f8;
+  background-color: ${colors.background};
 `
 
 export const Header = styled.View`
-  background-color: #4c33cc;
+  background-color: ${colors.primary};
   padding: 24px;
   padding-bottom: 80px;
 `
@@ -24,13 +25,13 @@ export const WelcomeContainer = styled.View``
 export const WelcomeText = styled.Text`
   font-size: 16px;
   line-height: 20px;
-  color: #d4ccff;
+  color: ${colors.textSecondary};
 `
 
 export const UserNameText = styled.Text`
   font-size: 16px;
   line-height: 20px;
-  color: #d4ccff;
+  color: ${colors.textSecondary};
 `
 
 export const TitleContainer = styled.View`
@@ -43,7 +44,7 @@ export const TitleContainer = styled.View`
 export const TitleText = styled.Text`
   font-size: 32px;
   line-height: 36px;
-  color: #fff;
+  color: ${colors.textPrimary};
 `
 
 export const LocationContainer = styled.View`
@@ -52,7 +53,7 @@ export const LocationContainer = styled.View`
 
 export const LocationText = styled.Text`
   padding-left: 8px;
-  color: #d4ccff;
+  color: ${colors.textSecondary};
   font-size: 15px;
 `
 

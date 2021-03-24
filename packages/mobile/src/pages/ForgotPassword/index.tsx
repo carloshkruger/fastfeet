@@ -3,6 +3,7 @@ import { Image, Text, TouchableOpacity, View } from 'react-native'
 import { useNavigation } from '@react-navigation/core'
 
 import LogosOnTop from '../../components/LogosOnTop'
+import colors from '../../constants/colors'
 
 import giantOutlineLogo from '../../assets/GiantOutlineLogo.png'
 import longArrowLeft from '../../assets/LongArrowLeft.png'
@@ -44,7 +45,7 @@ const ForgotPassword: React.FC = () => {
         </SubTitle>
       </View>
 
-      <Text style={{ color: '#fff' }}>ENDEREÇO</Text>
+      <Text style={{ color: colors.textPrimary }}>ENDEREÇO</Text>
 
       <SubTitle>
         Rua Guilherme Gemballa,{'\n'}260 Jardim América,{'\n'}SC 89 168-000

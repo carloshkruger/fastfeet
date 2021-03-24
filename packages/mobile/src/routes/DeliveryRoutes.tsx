@@ -6,6 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import DeliveryDetails from '../pages/DeliveryDetails'
 import ConfirmDelivery from '../pages/ConfirmDelivery'
 import Deliveries from '../pages/Deliveries'
+import colors from '../constants/colors'
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -20,14 +21,14 @@ function DeliveryBottomTabRoutes() {
         },
         tabStyle: {
           justifyContent: 'center',
-          borderTopColor: '#FFC042',
+          borderTopColor: colors.secondary,
           borderTopWidth: 2
         },
         labelStyle: {
           fontSize: 16
         },
         activeBackgroundColor: '#fff',
-        activeTintColor: '#4C33CC',
+        activeTintColor: colors.primary,
         inactiveBackgroundColor: '#F7F5FA',
         inactiveTintColor: '#6F6C80'
       }}
