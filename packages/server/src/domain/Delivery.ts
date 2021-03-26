@@ -27,11 +27,11 @@ class Delivery extends Entity<DeliveryProps> {
 
   public getStatusDescription(): string {
     if (this.isFinished()) {
-      return 'Finalizado'
+      return 'Entregue'
     }
 
     if (this.isInitialized()) {
-      return 'Inicializado'
+      return 'Retirado'
     }
 
     if (this.isCanceled()) {
