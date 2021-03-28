@@ -26,9 +26,6 @@ interface DeliveryCardProps {
   delivery: Delivery
 }
 
-const STEP_FINISHED_COLOR = '#00DA6D'
-const STEP_NOT_FINISHED_COLOR = '#dad7e0'
-
 const DeliveryCard: React.FC<DeliveryCardProps> = ({ delivery }) => {
   const { navigate } = useNavigation()
 
