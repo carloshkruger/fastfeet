@@ -1,5 +1,6 @@
 import React from 'react'
 import { Image, View } from 'react-native'
+import { useNavigation } from '@react-navigation/core'
 import FeatherIcon from 'react-native-vector-icons/Feather'
 
 import { Delivery } from '../../models/Delivery'
@@ -20,7 +21,6 @@ import {
 } from './styles'
 
 import Package from '../../assets/Package.png'
-import { useNavigation } from '@react-navigation/core'
 
 interface DeliveryCardProps {
   delivery: Delivery
