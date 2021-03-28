@@ -1,21 +1,22 @@
 import React from 'react'
-import { Image } from 'react-native'
+import { Image, View } from 'react-native'
 import FeatherIcon from 'react-native-vector-icons/Feather'
 
 import { Delivery } from '../../models/Delivery'
 
 import {
   CardBody,
+  Circle,
   Container,
   DetailButton,
   DetailButtonText,
   ProductNameContainer,
   ProductNameText,
-  ProgressBar,
-  ProgressBarContainer,
-  ProgressContainer,
-  ProgressText,
-  ProgressTextContainer
+  ProgressItem,
+  ProgressItemText,
+  BodyContainer,
+  ProgressBarLineContainer,
+  ProgressBarLineItem
 } from './styles'
 
 import Package from '../../assets/Package.png'
@@ -23,12 +24,6 @@ import { useNavigation } from '@react-navigation/core'
 
 interface DeliveryCardProps {
   delivery: Delivery
-}
-
-const PROGRESS_BAR_PERCENTAGE = {
-  finished: '100%',
-  initialized: '50%',
-  waiting: '10%'
 }
 
 const STEP_FINISHED_COLOR = '#00DA6D'
@@ -43,12 +38,6 @@ const DeliveryCard: React.FC<DeliveryCardProps> = ({ delivery }) => {
     })
   }
 
-  const progressBarPercentage = delivery.deliveryFinished
-    ? PROGRESS_BAR_PERCENTAGE.finished
-    : delivery.deliveryInitialized
-    ? PROGRESS_BAR_PERCENTAGE.initialized
-    : PROGRESS_BAR_PERCENTAGE.waiting
-
   return (
     <Container>
       <CardBody>
@@ -57,39 +46,31 @@ const DeliveryCard: React.FC<DeliveryCardProps> = ({ delivery }) => {
           <ProductNameText>{delivery.productName}</ProductNameText>
         </ProductNameContainer>
 
-        <ProgressContainer>
-          <ProgressBarContainer>
-            <ProgressBar style={{ width: progressBarPercentage }} />
-          </ProgressBarContainer>
+        <BodyContainer>
+          <ProgressBarLineContainer>
+            <ProgressBarLineItem active={delivery.deliveryInitialized} />
+            <ProgressBarLineItem active={delivery.deliveryFinished} />
+          </ProgressBarLineContainer>
 
-          <ProgressTextContainer>
-            <ProgressText
-              style={{ textAlign: 'left', color: STEP_FINISHED_COLOR }}
-            >
-              AGUARDANDO
-            </ProgressText>
-            <ProgressText
-              style={{
-                textAlign: 'center',
-                color: delivery.deliveryInitialized
-                  ? STEP_FINISHED_COLOR
-                  : STEP_NOT_FINISHED_COLOR
-              }}
-            >
-              RETIRADO
-            </ProgressText>
-            <ProgressText
-              style={{
-                textAlign: 'right',
-                color: delivery.deliveryFinished
-                  ? STEP_FINISHED_COLOR
-                  : STEP_NOT_FINISHED_COLOR
-              }}
-            >
-              ENTREGE
-            </ProgressText>
-          </ProgressTextContainer>
-        </ProgressContainer>
+          <View style={{ flexDirection: 'row' }}>
+            <ProgressItem align="flex-start">
+              <Circle active={true} />
+              <ProgressItemText active={true}>AGUARDANDO</ProgressItemText>
+            </ProgressItem>
+            <ProgressItem align="center">
+              <Circle active={delivery.deliveryInitialized} />
+              <ProgressItemText active={delivery.deliveryInitialized}>
+                RETIRADO
+              </ProgressItemText>
+            </ProgressItem>
+            <ProgressItem align="flex-end">
+              <Circle active={delivery.deliveryFinished} />
+              <ProgressItemText active={delivery.deliveryFinished}>
+                ENTREGUE
+              </ProgressItemText>
+            </ProgressItem>
+          </View>
+        </BodyContainer>
       </CardBody>
 
       <DetailButton onPress={goToDeliveryDetailsPage}>

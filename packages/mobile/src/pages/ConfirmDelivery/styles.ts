@@ -74,6 +74,6 @@ export const SendPhotoButtonContainer = styled.View`
 `
 
 export const TakePictureText = styled.Text`
-  color: ${colors.textSecondary};
+  color: ${colors.textTertiary};
   font-size: 12px;
 `

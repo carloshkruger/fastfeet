@@ -4,6 +4,7 @@ export default {
 
   textPrimary: '#fff',
   textSecondary: '#d5ccff',
+  textTertiary: '#6f6c80',
 
   background: '#f5f3f8'
 }

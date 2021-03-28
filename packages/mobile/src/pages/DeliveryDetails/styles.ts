@@ -51,7 +51,7 @@ export const CardTitleContainer = styled.View`
 `
 
 export const CardTitleIcon = styled(FeatherIcon)`
-  color: ${colors.primary};
+  color: ${colors.secondary};
   margin-right: 8px;
 `
 
@@ -80,7 +80,7 @@ export const CardInfoTitle = styled.Text`
 export const CardInfoValue = styled.Text`
   font-size: 15px;
   line-height: 25px;
-  color: #6f6c80;
+  color: ${colors.textTertiary};
 `
 
 export const ButtonContainer = styled.View`
