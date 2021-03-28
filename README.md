@@ -7,10 +7,24 @@ Backend da aplicação foi desenvolvido utilizando arquitetura limpa.
 
 # Layout
 
-<img alt="Login Screen" src="./screenshots/login_screenshot.png" />
-<img alt="Delivery List Screen" src="./screenshots/delivery_list_screenshot.png" />
-<img alt="Delivery Details Screen" src="./screenshots/delivery_details_screenshot.png" />
-<img alt="Delivery Confirmation Screen" src="./screenshots/confirm_delivery_screenshot.png" />
+<table>
+    <tr>
+        <td>
+            <img alt="Login Screen" src="./screenshots/login_screenshot.png" />
+        </td>
+        <td>
+            <img alt="Delivery List Screen" src="./screenshots/delivery_list_screenshot.png" />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <img alt="Delivery Details Screen" src="./screenshots/delivery_details_screenshot.png" />
+        </td>
+        <td>
+            <img alt="Delivery Confirmation Screen" src="./screenshots/confirm_delivery_screenshot.png" />
+        </td>
+    </tr>
+</table>
 
 # Funcionalidades
 
