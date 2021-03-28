@@ -39,20 +39,20 @@ Backend da aplicação foi desenvolvido utilizando arquitetura limpa.
 
 ## Mobile
 
-- [React Native]
-- [TypeScript]
-- [StyledComponents]
-- [Axios]
+- React Native
+- TypeScript
+- StyledComponents
+- Axios
 
 ## Server
 
-- [Node.js]
-- [TypeScript]
-- [Express]
-- [TypeORM]
-- [BCrypt]
-- [JWT]
-- [Multer]
+- Node.js
+- TypeScript
+- Express
+- TypeORM
+- BCrypt
+- JWT
+- Multer
 
 # Licença
 
