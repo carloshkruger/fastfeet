@@ -47,17 +47,11 @@ abstract class Controller {
 
       if (error instanceof FieldRequiredError) {
         statusCode = 400
-      }
-
-      if (error instanceof ForbiddenError) {
+      } else if (error instanceof ForbiddenError) {
         statusCode = 403
-      }
-
-      if (error instanceof NotFoundError) {
+      } else if (error instanceof NotFoundError) {
         statusCode = 404
-      }
-
-      if (error instanceof ConflictError) {
+      } else if (error instanceof ConflictError) {
         statusCode = 409
       }
 
