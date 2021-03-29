@@ -1,4 +1,6 @@
-# FastFeet
+<h1 align="center">
+    <img alt="Login Screen" src="./screenshots/logo.png" />
+</h1>
 
 # Sobre o projeto
 
