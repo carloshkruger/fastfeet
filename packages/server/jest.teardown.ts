@@ -6,5 +6,7 @@ module.exports = async function testTeardown() {
 }
 
 const cleanTestUploadsFolder = () => {
-  fs.rmSync(path.resolve(__dirname, 'tmp', 'tests'), { recursive: true })
+  try {
+    fs.rmSync(path.resolve(__dirname, 'tmp', 'tests'), { recursive: true })
+  } catch {}
 }
