@@ -59,7 +59,7 @@ describe('Delivery validation', () => {
     })
     delivery2.defineStartDateAsNow()
 
-    expect(delivery2.getStatusDescription()).toBe('Inicializado')
+    expect(delivery2.getStatusDescription()).toBe('Retirado')
 
     const delivery3 = Delivery.create({
       deliveryManId: new UniqueEntityId(),
@@ -73,7 +73,7 @@ describe('Delivery validation', () => {
     delivery3.defineStartDateAsNow()
     delivery3.defineEndDateAsNow()
 
-    expect(delivery3.getStatusDescription()).toBe('Finalizado')
+    expect(delivery3.getStatusDescription()).toBe('Entregue')
 
     const delivery4 = Delivery.create({
       deliveryManId: new UniqueEntityId(),

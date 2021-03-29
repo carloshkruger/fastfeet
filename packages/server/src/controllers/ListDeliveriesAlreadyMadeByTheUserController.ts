@@ -1,10 +1,10 @@
-import { Controller, ControllerResponse } from '@core/controller'
+import {
+  Controller,
+  ControllerRequest,
+  ControllerResponse
+} from '@core/controller'
 import { ListDeliveriesAlreadyMadeByTheUserPresenter } from '@presenters/ListDeliveriesAlreadyMadeByTheUserPresenter'
 import { ListDeliveriesAlreadyMadeByTheUserUseCase } from '@useCases/ListDeliveriesAlreadyMadeByTheUser/ListDeliveriesAlreadyMadeByTheUserUseCase'
-
-interface HandleParams {
-  loggedUserId: string
-}
 
 class ListDeliveriesAlreadyMadeByTheUserController extends Controller {
   constructor(
@@ -14,8 +14,10 @@ class ListDeliveriesAlreadyMadeByTheUserController extends Controller {
     super()
   }
 
-  async handle({ loggedUserId }: HandleParams): Promise<ControllerResponse> {
+  async handle(request: ControllerRequest): Promise<ControllerResponse> {
     try {
+      const { loggedUserId = '' } = request
+
       const useCaseResponse = await this.useCase.execute({
         deliveryManId: loggedUserId
       })

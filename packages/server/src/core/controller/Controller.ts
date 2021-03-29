@@ -4,7 +4,7 @@ import { ConflictError } from '@core/errors/ConflictError'
 import { Logger } from '@shared/utils/Logger'
 
 abstract class Controller {
-  public abstract handle(props: any): Promise<ControllerResponse>
+  public abstract handle(props: ControllerRequest): Promise<ControllerResponse>
 
   protected ok(data: any): ControllerResponse {
     return {
@@ -67,9 +67,23 @@ abstract class Controller {
   }
 }
 
+interface RequestData {
+  [key: string]: any
+}
+
+interface RequestFile {
+  filename: string
+}
+
+interface ControllerRequest {
+  data: RequestData
+  files?: RequestFile[]
+  loggedUserId?: string
+}
+
 interface ControllerResponse {
   statusCode: number
   body?: any
 }
 
-export { Controller, ControllerResponse }
+export { Controller, ControllerRequest, ControllerResponse }

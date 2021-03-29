@@ -25,11 +25,30 @@ describe('StartDeliveryController', () => {
       .mockImplementation(async () => undefined)
 
     const response = await startDeliveryController.handle({
-      deliveryId: delivery.id.value,
+      data: {
+        deliveryId: delivery.id.value
+      },
       loggedUserId: user.id.value
     })
 
     expect(response.statusCode).toBe(204)
+  })
+
+  it('should call use case with empty string for deliveryManId if loggedUserId is not informed', async () => {
+    const delivery = DeliveryTestFactory.create()
+
+    const spy = jest.spyOn(startDeliveryUseCase, 'execute')
+
+    await startDeliveryController.handle({
+      data: {
+        deliveryId: delivery.id.value
+      }
+    })
+
+    expect(spy).toHaveBeenCalledWith({
+      deliveryId: delivery.id.value,
+      deliveryManId: ''
+    })
   })
 
   it('should return 500 if use case throws', async () => {
@@ -41,7 +60,9 @@ describe('StartDeliveryController', () => {
     })
 
     const response = await startDeliveryController.handle({
-      deliveryId: delivery.id.value,
+      data: {
+        deliveryId: delivery.id.value
+      },
       loggedUserId: user.id.value
     })
 

@@ -1,10 +1,10 @@
-import { Controller, ControllerResponse } from '@core/controller'
+import {
+  Controller,
+  ControllerRequest,
+  ControllerResponse
+} from '@core/controller'
 import { FindDeliveryDetailsPresenter } from '@presenters/FindDeliveryDetailsPresenter'
 import { FindDeliveryDetailsUseCase } from '@useCases/FindDeliveryDetails/FindDeliveryDetailsUseCase'
-
-interface HandleParams {
-  deliveryId: string
-}
 
 class FindDeliveryDetailsController extends Controller {
   constructor(
@@ -14,8 +14,10 @@ class FindDeliveryDetailsController extends Controller {
     super()
   }
 
-  async handle({ deliveryId }: HandleParams): Promise<ControllerResponse> {
+  async handle(request: ControllerRequest): Promise<ControllerResponse> {
     try {
+      const { deliveryId } = request.data
+
       const useCaseResponse = await this.useCase.execute({ deliveryId })
 
       const viewModel = this.presenter.transform(useCaseResponse)

@@ -27,11 +27,25 @@ describe('ListDeliveriesToBeMadeByTheUserController', () => {
 
     const response = await listDeliveriesToBeMadeByTheUserController.handle({
       loggedUserId: new UniqueEntityId().value,
-      neighborhood: ''
+      data: {
+        neighborhood: ''
+      }
     })
 
     expect(response.statusCode).toBe(200)
     expect(response.body).toHaveLength(1)
+  })
+
+  it('should call use case with empty string for deliveryManId if loggedUserId is not informed', async () => {
+    const spy = jest.spyOn(listDeliveriesToBeMadeByTheUserUseCase, 'execute')
+
+    await listDeliveriesToBeMadeByTheUserController.handle({
+      data: {}
+    })
+
+    expect(spy).toHaveBeenCalledWith({
+      deliveryManId: ''
+    })
   })
 
   it('should return 500 if use case throws', async () => {
@@ -43,7 +57,9 @@ describe('ListDeliveriesToBeMadeByTheUserController', () => {
 
     const response = await listDeliveriesToBeMadeByTheUserController.handle({
       loggedUserId: new UniqueEntityId().value,
-      neighborhood: ''
+      data: {
+        neighborhood: ''
+      }
     })
 
     expect(response.statusCode).toBe(500)
@@ -58,7 +74,9 @@ describe('ListDeliveriesToBeMadeByTheUserController', () => {
 
     const response = await listDeliveriesToBeMadeByTheUserController.handle({
       loggedUserId: new UniqueEntityId().value,
-      neighborhood: ''
+      data: {
+        neighborhood: ''
+      }
     })
 
     expect(response.statusCode).toBe(500)

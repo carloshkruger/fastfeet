@@ -22,11 +22,31 @@ describe('FindAllNeighborhoodsThatTheUserHasAlreadyDeliveredController', () => {
     const response = await findAllNeighborhoodsThatTheUserHasAlreadyDeliveredController.handle(
       {
         loggedUserId: new UniqueEntityId().value,
-        neighborhood: ''
+        data: {
+          neighborhood: ''
+        }
       }
     )
 
     expect(response.statusCode).toBe(200)
+  })
+
+  it('should call use case with empty string for userId if loggedUserId is not informed', async () => {
+    const spy = jest.spyOn(
+      findAllNeighborhoodsThatTheUserHasAlreadyDeliveredUseCase,
+      'execute'
+    )
+
+    await findAllNeighborhoodsThatTheUserHasAlreadyDeliveredController.handle({
+      data: {
+        neighborhood: ''
+      }
+    })
+
+    expect(spy).toHaveBeenCalledWith({
+      neighborhood: '',
+      userId: ''
+    })
   })
 
   it('should return 500 if useCase throws', async () => {
@@ -42,7 +62,9 @@ describe('FindAllNeighborhoodsThatTheUserHasAlreadyDeliveredController', () => {
     const response = await findAllNeighborhoodsThatTheUserHasAlreadyDeliveredController.handle(
       {
         loggedUserId: new UniqueEntityId().value,
-        neighborhood: ''
+        data: {
+          neighborhood: ''
+        }
       }
     )
 

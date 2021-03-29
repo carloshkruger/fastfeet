@@ -1,11 +1,10 @@
-import { Controller, ControllerResponse } from '@core/controller'
+import {
+  Controller,
+  ControllerRequest,
+  ControllerResponse
+} from '@core/controller'
 import { ListDeliveriesToBeMadeByTheUserPresenter } from '@presenters/ListDeliveriesToBeMadeByTheUserPresenter'
 import { ListDeliveriesToBeMadeByTheUserUseCase } from '@useCases/ListDeliveriesToBeMadeByTheUser/ListDeliveriesToBeMadeByTheUserUseCase'
-
-interface HandleParams {
-  loggedUserId: string
-  neighborhood: string
-}
 
 class ListDeliveriesToBeMadeByTheUserController extends Controller {
   constructor(
@@ -15,11 +14,11 @@ class ListDeliveriesToBeMadeByTheUserController extends Controller {
     super()
   }
 
-  async handle({
-    loggedUserId,
-    neighborhood
-  }: HandleParams): Promise<ControllerResponse> {
+  async handle(request: ControllerRequest): Promise<ControllerResponse> {
     try {
+      const { neighborhood } = request.data
+      const { loggedUserId = '' } = request
+
       const useCaseResponse = await this.useCase.execute({
         deliveryManId: loggedUserId,
         neighborhood

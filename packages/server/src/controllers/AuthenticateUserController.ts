@@ -1,11 +1,10 @@
-import { Controller, ControllerResponse } from '@core/controller'
+import {
+  Controller,
+  ControllerRequest,
+  ControllerResponse
+} from '@core/controller'
 import { AuthenticateUserPresenter } from '@presenters/AuthenticateUserPresenter'
 import { AuthenticateUserUseCase } from '@useCases/AuthenticateUser/AuthenticateUserUseCase'
-
-interface HandleParams {
-  cpf: string
-  password: string
-}
 
 class AuthenticateUserController extends Controller {
   constructor(
@@ -15,8 +14,10 @@ class AuthenticateUserController extends Controller {
     super()
   }
 
-  async handle({ cpf, password }: HandleParams): Promise<ControllerResponse> {
+  async handle(request: ControllerRequest): Promise<ControllerResponse> {
     try {
+      const { cpf, password } = request.data
+
       const useCaseResponse = await this.authenticateUserUseCase.execute({
         cpf,
         password

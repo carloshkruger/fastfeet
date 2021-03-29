@@ -1,42 +1,34 @@
-import { Controller, ControllerResponse } from '@core/controller'
+import {
+  Controller,
+  ControllerRequest,
+  ControllerResponse
+} from '@core/controller'
 import { UpdateDeliveryUseCase } from '@useCases/UpdateDelivery/UpdateDeliveryUseCase'
-
-interface HandleParams {
-  deliveryId: string
-  loggedUserId: string
-  recipientName: string
-  productName: string
-  address: string
-  postalCode: string
-  neighborhood: string
-  complement: string
-  number: number
-  city: string
-  state: string
-}
 
 class UpdateDeliveryController extends Controller {
   constructor(private updateDeliveryUseCase: UpdateDeliveryUseCase) {
     super()
   }
 
-  async handle({
-    deliveryId,
-    loggedUserId,
-    recipientName,
-    productName,
-    address,
-    postalCode,
-    neighborhood,
-    complement,
-    number,
-    city,
-    state
-  }: HandleParams): Promise<ControllerResponse> {
+  async handle(request: ControllerRequest): Promise<ControllerResponse> {
     try {
+      const {
+        deliveryId,
+        deliveryManId,
+        recipientName,
+        productName,
+        address,
+        postalCode,
+        neighborhood,
+        complement,
+        number,
+        city,
+        state
+      } = request.data
+
       await this.updateDeliveryUseCase.execute({
         deliveryId,
-        deliveryManId: loggedUserId,
+        deliveryManId,
         recipientName,
         productName,
         address,

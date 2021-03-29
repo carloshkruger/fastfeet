@@ -28,7 +28,9 @@ describe('DeleteDeliveryController', () => {
       .mockImplementation(async () => delivery)
 
     const response = await deleteDeliveryController.handle({
-      deliveryId: delivery.id.value
+      data: {
+        deliveryId: delivery.id.value
+      }
     })
 
     expect(response.statusCode).toBe(204)
@@ -44,7 +46,9 @@ describe('DeleteDeliveryController', () => {
       })
 
     const response = await deleteDeliveryController.handle({
-      deliveryId: delivery.id.value
+      data: {
+        deliveryId: delivery.id.value
+      }
     })
 
     expect(response.statusCode).toBe(500)

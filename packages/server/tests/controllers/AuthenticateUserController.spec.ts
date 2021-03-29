@@ -48,9 +48,9 @@ describe('AuthenticateUserController', () => {
         }
       })
 
-    const response = await authenticateUserController.handle(
-      validAuthenticationInfo
-    )
+    const response = await authenticateUserController.handle({
+      data: validAuthenticationInfo
+    })
 
     expect(response.statusCode).toBe(200)
     expect(response.body).toHaveProperty('accessToken')
@@ -62,7 +62,9 @@ describe('AuthenticateUserController', () => {
   it('should call use case with correct values', async () => {
     const useCaseSpy = jest.spyOn(authenticateUserUseCase, 'execute')
 
-    await authenticateUserController.handle(validAuthenticationInfo)
+    await authenticateUserController.handle({
+      data: validAuthenticationInfo
+    })
 
     expect(useCaseSpy).toHaveBeenCalledWith(validAuthenticationInfo)
   })
@@ -83,9 +85,9 @@ describe('AuthenticateUserController', () => {
         throw new Error()
       })
 
-    const response = await authenticateUserController.handle(
-      validAuthenticationInfo
-    )
+    const response = await authenticateUserController.handle({
+      data: validAuthenticationInfo
+    })
 
     expect(response.statusCode).toBe(500)
   })

@@ -1,19 +1,10 @@
-import { Controller, ControllerResponse } from '@core/controller'
+import {
+  Controller,
+  ControllerRequest,
+  ControllerResponse
+} from '@core/controller'
 import { CreateDeliveryPresenter } from '@presenters/CreateDeliveryPresenter'
 import { CreateDeliveryUseCase } from '@useCases/CreateDelivery/CreateDeliveryUseCase'
-
-interface HandleParams {
-  deliveryManId: string
-  recipientName: string
-  productName: string
-  address: string
-  postalCode: string
-  neighborhood: string
-  complement: string
-  number: number
-  city: string
-  state: string
-}
 
 class CreateDeliveryController extends Controller {
   constructor(
@@ -23,19 +14,21 @@ class CreateDeliveryController extends Controller {
     super()
   }
 
-  async handle({
-    deliveryManId,
-    recipientName,
-    productName,
-    address,
-    postalCode,
-    neighborhood,
-    complement,
-    number,
-    city,
-    state
-  }: HandleParams): Promise<ControllerResponse> {
+  async handle(request: ControllerRequest): Promise<ControllerResponse> {
     try {
+      const {
+        deliveryManId,
+        recipientName,
+        productName,
+        address,
+        postalCode,
+        neighborhood,
+        complement,
+        number,
+        city,
+        state
+      } = request.data
+
       const useCaseResponse = await this.createDeliveryUseCase.execute({
         deliveryManId,
         recipientName,

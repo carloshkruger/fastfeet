@@ -1,10 +1,9 @@
-import { Controller, ControllerResponse } from '@core/controller'
+import {
+  Controller,
+  ControllerRequest,
+  ControllerResponse
+} from '@core/controller'
 import { FindAllNeighborhoodsThatTheUserHasAlreadyDeliveredUseCase } from '@useCases/FindAllNeighborhoodsThatTheUserHasAlreadyDelivered/FindAllNeighborhoodsThatTheUserHasAlreadyDeliveredUseCase'
-
-interface HandleParams {
-  loggedUserId: string
-  neighborhood: string
-}
 
 class FindAllNeighborhoodsThatTheUserHasAlreadyDeliveredController extends Controller {
   constructor(
@@ -13,11 +12,11 @@ class FindAllNeighborhoodsThatTheUserHasAlreadyDeliveredController extends Contr
     super()
   }
 
-  async handle({
-    loggedUserId,
-    neighborhood
-  }: HandleParams): Promise<ControllerResponse> {
+  async handle(request: ControllerRequest): Promise<ControllerResponse> {
     try {
+      const { neighborhood } = request.data
+      const { loggedUserId = '' } = request
+
       const useCaseResponse = await this.useCase.execute({
         neighborhood,
         userId: loggedUserId

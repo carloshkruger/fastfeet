@@ -1,35 +1,32 @@
-import { Controller, ControllerResponse } from '@core/controller'
+import {
+  Controller,
+  ControllerRequest,
+  ControllerResponse
+} from '@core/controller'
 import { removeTempFile } from '@shared/utils/removeTempFile'
 import { FinalizeDeliveryUseCase } from '@useCases/FinalizeDelivery/FinalizeDeliveryUseCase'
-
-interface HandleParams {
-  deliveryId: string
-  loggedUserId: string
-  file: {
-    filename: string
-  }
-}
 
 class FinalizeDeliveryController extends Controller {
   constructor(private finalizeDeliveryUseCase: FinalizeDeliveryUseCase) {
     super()
   }
 
-  async handle({
-    deliveryId,
-    loggedUserId,
-    file
-  }: HandleParams): Promise<ControllerResponse> {
+  async handle(request: ControllerRequest): Promise<ControllerResponse> {
+    const fileName = request.files ? request.files[0]?.filename : ''
+
     try {
+      const { deliveryId } = request.data
+      const { loggedUserId = '' } = request
+
       await this.finalizeDeliveryUseCase.execute({
         deliveryId,
         deliveryManId: loggedUserId,
-        signatureImage: file?.filename
+        signatureImage: fileName
       })
 
       return this.noContent()
     } catch (error) {
-      await removeTempFile(file?.filename)
+      await removeTempFile(fileName)
 
       return this.fail(error)
     }

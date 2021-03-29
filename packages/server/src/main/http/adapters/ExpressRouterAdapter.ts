@@ -6,15 +6,17 @@ class ExpressRouterAdapter {
   static adapt(controller: Controller) {
     return async (request: Request, response: Response): Promise<Response> => {
       try {
-        const params = {
+        const data = {
           ...(request.body || {}),
           ...(request.params || {}),
-          ...(request.query || {}),
-          file: request.file,
-          loggedUserId: request?.user?.id
+          ...(request.query || {})
         }
 
-        const controllerResponse = await controller.handle(params)
+        const controllerResponse = await controller.handle({
+          data,
+          files: request.file ? [request.file] : [],
+          loggedUserId: request?.user?.id
+        })
 
         return response
           .status(controllerResponse.statusCode)

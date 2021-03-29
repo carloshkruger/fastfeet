@@ -13,8 +13,7 @@ const user = UserTestFactory.create()
 const validUserInfo = {
   name: 'valid name',
   email: 'validemail@domain.com',
-  cpf: '06864032906',
-  loggedUserId: user.id.value
+  cpf: '06864032906'
 }
 
 describe('UpdateUserController', () => {
@@ -29,7 +28,10 @@ describe('UpdateUserController', () => {
       .spyOn(inMemoryUserRepository, 'findById')
       .mockImplementation(async () => user)
 
-    const response = await updateUserController.handle(validUserInfo)
+    const response = await updateUserController.handle({
+      data: validUserInfo,
+      loggedUserId: user.id.value
+    })
 
     expect(response.statusCode).toBe(204)
   })
@@ -39,7 +41,9 @@ describe('UpdateUserController', () => {
       throw new Error()
     })
 
-    const response = await updateUserController.handle(validUserInfo)
+    const response = await updateUserController.handle({
+      data: validUserInfo
+    })
 
     expect(response.statusCode).toBe(500)
   })

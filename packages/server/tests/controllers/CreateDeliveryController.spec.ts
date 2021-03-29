@@ -31,16 +31,18 @@ describe('CreateDeliveryController', () => {
       .mockImplementation(async () => user)
 
     const response = await createDeliveryController.handle({
-      deliveryManId: user.id.value,
-      recipientName: 'valid recipient name',
-      productName: 'valid product name',
-      address: 'valid address',
-      city: 'valid city',
-      state: 'valid state',
-      neighborhood: 'valid neighborhood',
-      complement: 'valid complement',
-      number: 999,
-      postalCode: '89186000'
+      data: {
+        deliveryManId: user.id.value,
+        recipientName: 'valid recipient name',
+        productName: 'valid product name',
+        address: 'valid address',
+        city: 'valid city',
+        state: 'valid state',
+        neighborhood: 'valid neighborhood',
+        complement: 'valid complement',
+        number: 999,
+        postalCode: '89186000'
+      }
     })
 
     expect(response.statusCode).toBe(201)
@@ -56,16 +58,18 @@ describe('CreateDeliveryController', () => {
       })
 
     const response = await createDeliveryController.handle({
-      deliveryManId: user.id.value,
-      recipientName: 'valid recipient name',
-      productName: 'valid product name',
-      address: 'valid address',
-      city: 'valid city',
-      state: 'valid state',
-      neighborhood: 'valid neighborhood',
-      complement: 'valid complement',
-      number: 999,
-      postalCode: '89186000'
+      data: {
+        deliveryManId: user.id.value,
+        recipientName: 'valid recipient name',
+        productName: 'valid product name',
+        address: 'valid address',
+        city: 'valid city',
+        state: 'valid state',
+        neighborhood: 'valid neighborhood',
+        complement: 'valid complement',
+        number: 999,
+        postalCode: '89186000'
+      }
     })
 
     expect(response.statusCode).toBe(500)

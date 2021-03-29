@@ -27,17 +27,19 @@ describe('UpdateDeliveryController', () => {
       .mockImplementation(async () => undefined)
 
     const response = await updateDeliveryController.handle({
-      deliveryId: delivery.id.value,
-      loggedUserId: user.id.value,
-      recipientName: delivery.recipientName.value,
-      productName: delivery.productName.value,
-      address: delivery.address.address,
-      city: delivery.address.city,
-      complement: delivery.address.complement,
-      neighborhood: delivery.address.neighborhood,
-      number: delivery.address.number,
-      postalCode: delivery.address.postalCode.value,
-      state: delivery.address.state
+      data: {
+        deliveryId: delivery.id.value,
+        loggedUserId: user.id.value,
+        recipientName: delivery.recipientName.value,
+        productName: delivery.productName.value,
+        address: delivery.address.address,
+        city: delivery.address.city,
+        complement: delivery.address.complement,
+        neighborhood: delivery.address.neighborhood,
+        number: delivery.address.number,
+        postalCode: delivery.address.postalCode.value,
+        state: delivery.address.state
+      }
     })
 
     expect(response.statusCode).toBe(204)
@@ -54,17 +56,19 @@ describe('UpdateDeliveryController', () => {
       })
 
     const response = await updateDeliveryController.handle({
-      deliveryId: delivery.id.value,
-      loggedUserId: user.id.value,
-      recipientName: delivery.recipientName.value,
-      productName: delivery.productName.value,
-      address: delivery.address.address,
-      city: delivery.address.city,
-      complement: delivery.address.complement,
-      neighborhood: delivery.address.neighborhood,
-      number: delivery.address.number,
-      postalCode: delivery.address.postalCode.value,
-      state: delivery.address.state
+      data: {
+        deliveryId: delivery.id.value,
+        loggedUserId: user.id.value,
+        recipientName: delivery.recipientName.value,
+        productName: delivery.productName.value,
+        address: delivery.address.address,
+        city: delivery.address.city,
+        complement: delivery.address.complement,
+        neighborhood: delivery.address.neighborhood,
+        number: delivery.address.number,
+        postalCode: delivery.address.postalCode.value,
+        state: delivery.address.state
+      }
     })
 
     expect(response.statusCode).toBe(500)

@@ -1,21 +1,20 @@
-import { Controller, ControllerResponse } from '@core/controller'
+import {
+  Controller,
+  ControllerRequest,
+  ControllerResponse
+} from '@core/controller'
 import { StartDeliveryUseCase } from '@useCases/StartDelivery/StartDeliveryUseCase'
-
-interface HandleParams {
-  deliveryId: string
-  loggedUserId: string
-}
 
 class StartDeliveryController extends Controller {
   constructor(private startDeliveryUseCase: StartDeliveryUseCase) {
     super()
   }
 
-  async handle({
-    deliveryId,
-    loggedUserId
-  }: HandleParams): Promise<ControllerResponse> {
+  async handle(request: ControllerRequest): Promise<ControllerResponse> {
     try {
+      const { deliveryId } = request.data
+      const { loggedUserId = '' } = request
+
       await this.startDeliveryUseCase.execute({
         deliveryId,
         deliveryManId: loggedUserId

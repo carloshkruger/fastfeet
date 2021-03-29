@@ -1,25 +1,20 @@
-import { Controller, ControllerResponse } from '@core/controller'
+import {
+  Controller,
+  ControllerRequest,
+  ControllerResponse
+} from '@core/controller'
 import { UpdateUserUseCase } from '@useCases/UpdateUser/UpdateUserUseCase'
-
-interface HandleParams {
-  name: string
-  email: string
-  cpf: string
-  loggedUserId: string
-}
 
 class UpdateUserController extends Controller {
   constructor(private updateUserUseCase: UpdateUserUseCase) {
     super()
   }
 
-  async handle({
-    name,
-    email,
-    cpf,
-    loggedUserId
-  }: HandleParams): Promise<ControllerResponse> {
+  async handle(request: ControllerRequest): Promise<ControllerResponse> {
     try {
+      const { name, email, cpf } = request.data
+      const { loggedUserId = '' } = request
+
       await this.updateUserUseCase.execute({
         name,
         email,

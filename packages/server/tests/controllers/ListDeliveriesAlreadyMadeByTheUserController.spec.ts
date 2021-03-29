@@ -24,10 +24,23 @@ describe('ListDeliveriesAlreadyMadeByTheUserController', () => {
       }))
 
     const response = await listDeliveriesAlreadyMadeByTheUserController.handle({
-      loggedUserId: new UniqueEntityId().value
+      loggedUserId: new UniqueEntityId().value,
+      data: {}
     })
 
     expect(response.statusCode).toBe(200)
+  })
+
+  it('should call use case with empty string for deliveryManId if loggedUserId is not informed', async () => {
+    const spy = jest.spyOn(listDeliveriesAlreadyMadeByTheUserUseCase, 'execute')
+
+    await listDeliveriesAlreadyMadeByTheUserController.handle({
+      data: {}
+    })
+
+    expect(spy).toHaveBeenCalledWith({
+      deliveryManId: ''
+    })
   })
 
   it('should return 500 if use case throws', async () => {
@@ -38,7 +51,8 @@ describe('ListDeliveriesAlreadyMadeByTheUserController', () => {
       })
 
     const response = await listDeliveriesAlreadyMadeByTheUserController.handle({
-      loggedUserId: new UniqueEntityId().value
+      loggedUserId: new UniqueEntityId().value,
+      data: {}
     })
 
     expect(response.statusCode).toBe(500)
@@ -52,7 +66,8 @@ describe('ListDeliveriesAlreadyMadeByTheUserController', () => {
       })
 
     const response = await listDeliveriesAlreadyMadeByTheUserController.handle({
-      loggedUserId: new UniqueEntityId().value
+      loggedUserId: new UniqueEntityId().value,
+      data: {}
     })
 
     expect(response.statusCode).toBe(500)

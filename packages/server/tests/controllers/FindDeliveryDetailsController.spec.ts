@@ -29,7 +29,9 @@ describe('FindDeliveryDetailsController', () => {
       .mockImplementation(async () => ({ delivery }))
 
     const response = await findDeliveryDetailsController.handle({
-      deliveryId: delivery.id.value
+      data: {
+        deliveryId: delivery.id.value
+      }
     })
 
     expect(response.statusCode).toBe(200)
@@ -45,7 +47,9 @@ describe('FindDeliveryDetailsController', () => {
       })
 
     const response = await findDeliveryDetailsController.handle({
-      deliveryId: delivery.id.value
+      data: {
+        deliveryId: delivery.id.value
+      }
     })
 
     expect(response.statusCode).toBe(500)
@@ -65,7 +69,9 @@ describe('FindDeliveryDetailsController', () => {
       })
 
     const response = await findDeliveryDetailsController.handle({
-      deliveryId: delivery.id.value
+      data: {
+        deliveryId: delivery.id.value
+      }
     })
 
     expect(response.statusCode).toBe(500)

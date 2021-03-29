@@ -1,17 +1,19 @@
-import { Controller, ControllerResponse } from '@core/controller'
+import {
+  Controller,
+  ControllerRequest,
+  ControllerResponse
+} from '@core/controller'
 import { DeleteDeliveryUseCase } from '@useCases/DeleteDelivery/DeleteDeliveryUseCase'
-
-interface HandleParams {
-  deliveryId: string
-}
 
 class DeleteDeliveryController extends Controller {
   constructor(private deleteDeliveryUseCase: DeleteDeliveryUseCase) {
     super()
   }
 
-  async handle({ deliveryId }: HandleParams): Promise<ControllerResponse> {
+  async handle(request: ControllerRequest): Promise<ControllerResponse> {
     try {
+      const { deliveryId } = request.data
+
       await this.deleteDeliveryUseCase.execute({ deliveryId })
 
       return this.noContent()
