@@ -1,4 +1,3 @@
-import { Presenter } from '@core/presenter'
 import { AuthenticateUserResponse } from '@useCases/AuthenticateUser/AuthenticateUserResponse'
 
 interface AuthenticateUserPresenterResponse {
@@ -9,7 +8,7 @@ interface AuthenticateUserPresenterResponse {
   }
 }
 
-class AuthenticateUserPresenter extends Presenter<AuthenticateUserPresenterResponse> {
+class AuthenticateUserPresenter {
   transform(
     authenticateUserResponse: AuthenticateUserResponse
   ): AuthenticateUserPresenterResponse {

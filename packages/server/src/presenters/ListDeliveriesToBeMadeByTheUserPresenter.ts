@@ -1,4 +1,3 @@
-import { Presenter } from '@core/presenter'
 import { ListDeliveriesToBeMadeByTheUserResponse } from '@useCases/ListDeliveriesToBeMadeByTheUser/ListDeliveriesToBeMadeByTheUserResponse'
 
 interface Response {
@@ -15,7 +14,7 @@ interface Response {
   }
 }
 
-class ListDeliveriesToBeMadeByTheUserPresenter extends Presenter<Response[]> {
+class ListDeliveriesToBeMadeByTheUserPresenter {
   transform(data: ListDeliveriesToBeMadeByTheUserResponse): Response[] {
     return data.deliveries.map(delivery => ({
       deliveryId: delivery.id.value,

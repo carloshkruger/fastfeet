@@ -1,11 +1,10 @@
-import { Presenter } from '@core/presenter'
 import { CreateDeliveryResponse } from '@useCases/CreateDelivery/CreateDeliveryResponse'
 
 interface CreateDeliveryPresenterResponse {
   id: string
 }
 
-class CreateDeliveryPresenter extends Presenter<CreateDeliveryPresenterResponse> {
+class CreateDeliveryPresenter {
   transform({
     delivery
   }: CreateDeliveryResponse): CreateDeliveryPresenterResponse {

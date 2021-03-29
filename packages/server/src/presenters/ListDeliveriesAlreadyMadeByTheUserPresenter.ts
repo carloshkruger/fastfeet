@@ -1,4 +1,3 @@
-import { Presenter } from '@core/presenter'
 import { ListDeliveriesAlreadyMadeByTheUserResponse } from '@useCases/ListDeliveriesAlreadyMadeByTheUser/ListDeliveriesAlreadyMadeByTheUserResponse'
 
 interface Response {
@@ -15,9 +14,7 @@ interface Response {
   }
 }
 
-class ListDeliveriesAlreadyMadeByTheUserPresenter extends Presenter<
-  Response[]
-> {
+class ListDeliveriesAlreadyMadeByTheUserPresenter {
   transform(data: ListDeliveriesAlreadyMadeByTheUserResponse): Response[] {
     return data.deliveries.map(delivery => ({
       deliveryId: delivery.id.value,
