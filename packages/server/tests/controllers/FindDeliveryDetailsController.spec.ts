@@ -37,7 +37,7 @@ describe('FindDeliveryDetailsController', () => {
     expect(response.statusCode).toBe(200)
   })
 
-  it('should return 500 if use case throws', async () => {
+  it('should throw if use case throws', async () => {
     const delivery = DeliveryTestFactory.create()
 
     jest
@@ -46,16 +46,16 @@ describe('FindDeliveryDetailsController', () => {
         throw new Error()
       })
 
-    const response = await findDeliveryDetailsController.handle({
-      data: {
-        deliveryId: delivery.id.value
-      }
-    })
-
-    expect(response.statusCode).toBe(500)
+    await expect(
+      findDeliveryDetailsController.handle({
+        data: {
+          deliveryId: delivery.id.value
+        }
+      })
+    ).rejects.toThrow()
   })
 
-  it('should return 500 if presenter throws', async () => {
+  it('should throws if presenter throws', async () => {
     const delivery = DeliveryTestFactory.create()
 
     jest
@@ -68,12 +68,12 @@ describe('FindDeliveryDetailsController', () => {
         throw new Error()
       })
 
-    const response = await findDeliveryDetailsController.handle({
-      data: {
-        deliveryId: delivery.id.value
-      }
-    })
-
-    expect(response.statusCode).toBe(500)
+    await expect(
+      findDeliveryDetailsController.handle({
+        data: {
+          deliveryId: delivery.id.value
+        }
+      })
+    ).rejects.toThrow()
   })
 })

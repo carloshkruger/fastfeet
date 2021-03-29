@@ -35,6 +35,10 @@ describe('StartDeliveryController', () => {
   })
 
   it('should call use case with empty string for deliveryManId if loggedUserId is not informed', async () => {
+    jest
+      .spyOn(startDeliveryUseCase, 'execute')
+      .mockImplementation(async () => undefined)
+
     const delivery = DeliveryTestFactory.create()
 
     const spy = jest.spyOn(startDeliveryUseCase, 'execute')
@@ -51,7 +55,7 @@ describe('StartDeliveryController', () => {
     })
   })
 
-  it('should return 500 if use case throws', async () => {
+  it('should throw if use case throws', async () => {
     const delivery = DeliveryTestFactory.create()
     const user = UserTestFactory.create()
 
@@ -59,13 +63,13 @@ describe('StartDeliveryController', () => {
       throw new Error()
     })
 
-    const response = await startDeliveryController.handle({
-      data: {
-        deliveryId: delivery.id.value
-      },
-      loggedUserId: user.id.value
-    })
-
-    expect(response.statusCode).toBe(500)
+    await expect(
+      startDeliveryController.handle({
+        data: {
+          deliveryId: delivery.id.value
+        },
+        loggedUserId: user.id.value
+      })
+    ).rejects.toThrow()
   })
 })

@@ -27,8 +27,6 @@ abstract class Controller {
   }
 
   protected serverError(error: Error): ControllerResponse {
-    Logger.error(error)
-
     return {
       statusCode: 500,
       body: {
@@ -37,7 +35,7 @@ abstract class Controller {
     }
   }
 
-  protected fail(error: Error): ControllerResponse {
+  public fail(error: Error): ControllerResponse {
     try {
       if (!(error instanceof AppError)) {
         return this.serverError(error)

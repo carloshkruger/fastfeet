@@ -45,7 +45,7 @@ describe('UpdateDeliveryController', () => {
     expect(response.statusCode).toBe(204)
   })
 
-  it('should return 500 if use case throws', async () => {
+  it('should throw if use case throws', async () => {
     const delivery = DeliveryTestFactory.create()
     const user = UserTestFactory.create()
 
@@ -55,22 +55,22 @@ describe('UpdateDeliveryController', () => {
         throw new Error()
       })
 
-    const response = await updateDeliveryController.handle({
-      data: {
-        deliveryId: delivery.id.value,
-        loggedUserId: user.id.value,
-        recipientName: delivery.recipientName.value,
-        productName: delivery.productName.value,
-        address: delivery.address.address,
-        city: delivery.address.city,
-        complement: delivery.address.complement,
-        neighborhood: delivery.address.neighborhood,
-        number: delivery.address.number,
-        postalCode: delivery.address.postalCode.value,
-        state: delivery.address.state
-      }
-    })
-
-    expect(response.statusCode).toBe(500)
+    await expect(
+      updateDeliveryController.handle({
+        data: {
+          deliveryId: delivery.id.value,
+          loggedUserId: user.id.value,
+          recipientName: delivery.recipientName.value,
+          productName: delivery.productName.value,
+          address: delivery.address.address,
+          city: delivery.address.city,
+          complement: delivery.address.complement,
+          neighborhood: delivery.address.neighborhood,
+          number: delivery.address.number,
+          postalCode: delivery.address.postalCode.value,
+          state: delivery.address.state
+        }
+      })
+    ).rejects.toThrow()
   })
 })

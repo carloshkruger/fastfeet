@@ -36,7 +36,7 @@ describe('DeleteDeliveryController', () => {
     expect(response.statusCode).toBe(204)
   })
 
-  it('should return 500 if UseCase throws', async () => {
+  it('should throw if UseCase throws', async () => {
     const delivery = DeliveryTestFactory.create()
 
     jest
@@ -45,12 +45,12 @@ describe('DeleteDeliveryController', () => {
         throw new Error()
       })
 
-    const response = await deleteDeliveryController.handle({
-      data: {
-        deliveryId: delivery.id.value
-      }
-    })
-
-    expect(response.statusCode).toBe(500)
+    await expect(
+      deleteDeliveryController.handle({
+        data: {
+          deliveryId: delivery.id.value
+        }
+      })
+    ).rejects.toThrow()
   })
 })

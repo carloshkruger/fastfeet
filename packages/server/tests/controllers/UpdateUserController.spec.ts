@@ -36,15 +36,15 @@ describe('UpdateUserController', () => {
     expect(response.statusCode).toBe(204)
   })
 
-  it('should return 500 if UseCase throws', async () => {
+  it('should throw if UseCase throws', async () => {
     jest.spyOn(updateUserUseCase, 'execute').mockImplementation(() => {
       throw new Error()
     })
 
-    const response = await updateUserController.handle({
-      data: validUserInfo
-    })
-
-    expect(response.statusCode).toBe(500)
+    await expect(
+      updateUserController.handle({
+        data: validUserInfo
+      })
+    ).rejects.toThrow()
   })
 })

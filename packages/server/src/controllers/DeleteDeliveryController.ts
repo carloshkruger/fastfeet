@@ -11,15 +11,11 @@ class DeleteDeliveryController extends Controller {
   }
 
   async handle(request: ControllerRequest): Promise<ControllerResponse> {
-    try {
-      const { deliveryId } = request.data
+    const { deliveryId } = request.data
 
-      await this.deleteDeliveryUseCase.execute({ deliveryId })
+    await this.deleteDeliveryUseCase.execute({ deliveryId })
 
-      return this.noContent()
-    } catch (error) {
-      return this.fail(error)
-    }
+    return this.noContent()
   }
 }
 

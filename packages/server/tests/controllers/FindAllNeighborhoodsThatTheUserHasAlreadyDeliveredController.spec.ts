@@ -32,6 +32,13 @@ describe('FindAllNeighborhoodsThatTheUserHasAlreadyDeliveredController', () => {
   })
 
   it('should call use case with empty string for userId if loggedUserId is not informed', async () => {
+    jest
+      .spyOn(
+        findAllNeighborhoodsThatTheUserHasAlreadyDeliveredUseCase,
+        'execute'
+      )
+      .mockImplementation(async () => ({ neighborhoods: [] }))
+
     const spy = jest.spyOn(
       findAllNeighborhoodsThatTheUserHasAlreadyDeliveredUseCase,
       'execute'
@@ -49,7 +56,7 @@ describe('FindAllNeighborhoodsThatTheUserHasAlreadyDeliveredController', () => {
     })
   })
 
-  it('should return 500 if useCase throws', async () => {
+  it('should throws if useCase throws', async () => {
     jest
       .spyOn(
         findAllNeighborhoodsThatTheUserHasAlreadyDeliveredUseCase,
@@ -59,15 +66,13 @@ describe('FindAllNeighborhoodsThatTheUserHasAlreadyDeliveredController', () => {
         throw new Error()
       })
 
-    const response = await findAllNeighborhoodsThatTheUserHasAlreadyDeliveredController.handle(
-      {
+    await expect(
+      findAllNeighborhoodsThatTheUserHasAlreadyDeliveredController.handle({
         loggedUserId: new UniqueEntityId().value,
         data: {
           neighborhood: ''
         }
-      }
-    )
-
-    expect(response.statusCode).toBe(500)
+      })
+    ).rejects.toThrow()
   })
 })

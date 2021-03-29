@@ -11,21 +11,17 @@ class UpdateUserController extends Controller {
   }
 
   async handle(request: ControllerRequest): Promise<ControllerResponse> {
-    try {
-      const { name, email, cpf } = request.data
-      const { loggedUserId = '' } = request
+    const { name, email, cpf } = request.data
+    const { loggedUserId = '' } = request
 
-      await this.updateUserUseCase.execute({
-        name,
-        email,
-        cpf,
-        userId: loggedUserId
-      })
+    await this.updateUserUseCase.execute({
+      name,
+      email,
+      cpf,
+      userId: loggedUserId
+    })
 
-      return this.noContent()
-    } catch (error) {
-      return this.fail(error)
-    }
+    return this.noContent()
   }
 }
 

@@ -13,19 +13,15 @@ class FindAllNeighborhoodsThatTheUserHasAlreadyDeliveredController extends Contr
   }
 
   async handle(request: ControllerRequest): Promise<ControllerResponse> {
-    try {
-      const { neighborhood } = request.data
-      const { loggedUserId = '' } = request
+    const { neighborhood } = request.data
+    const { loggedUserId = '' } = request
 
-      const useCaseResponse = await this.useCase.execute({
-        neighborhood,
-        userId: loggedUserId
-      })
+    const useCaseResponse = await this.useCase.execute({
+      neighborhood,
+      userId: loggedUserId
+    })
 
-      return this.ok(useCaseResponse)
-    } catch (error) {
-      return this.fail(error)
-    }
+    return this.ok(useCaseResponse)
   }
 }
 

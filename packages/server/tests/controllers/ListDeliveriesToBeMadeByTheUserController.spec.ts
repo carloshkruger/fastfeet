@@ -48,37 +48,37 @@ describe('ListDeliveriesToBeMadeByTheUserController', () => {
     })
   })
 
-  it('should return 500 if use case throws', async () => {
+  it('should throw if use case throws', async () => {
     jest
       .spyOn(listDeliveriesToBeMadeByTheUserUseCase, 'execute')
       .mockImplementation(async () => {
         throw new Error()
       })
 
-    const response = await listDeliveriesToBeMadeByTheUserController.handle({
-      loggedUserId: new UniqueEntityId().value,
-      data: {
-        neighborhood: ''
-      }
-    })
-
-    expect(response.statusCode).toBe(500)
+    await expect(
+      listDeliveriesToBeMadeByTheUserController.handle({
+        loggedUserId: new UniqueEntityId().value,
+        data: {
+          neighborhood: ''
+        }
+      })
+    ).rejects.toThrow()
   })
 
-  it('should return 500 if presenter throws', async () => {
+  it('should throw if presenter throws', async () => {
     jest
       .spyOn(listDeliveriesToBeMadeByTheUserPresenter, 'transform')
       .mockImplementation(() => {
         throw new Error()
       })
 
-    const response = await listDeliveriesToBeMadeByTheUserController.handle({
-      loggedUserId: new UniqueEntityId().value,
-      data: {
-        neighborhood: ''
-      }
-    })
-
-    expect(response.statusCode).toBe(500)
+    await expect(
+      listDeliveriesToBeMadeByTheUserController.handle({
+        loggedUserId: new UniqueEntityId().value,
+        data: {
+          neighborhood: ''
+        }
+      })
+    ).rejects.toThrow()
   })
 })

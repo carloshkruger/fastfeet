@@ -15,22 +15,16 @@ class AuthenticateUserController extends Controller {
   }
 
   async handle(request: ControllerRequest): Promise<ControllerResponse> {
-    try {
-      const { cpf, password } = request.data
+    const { cpf, password } = request.data
 
-      const useCaseResponse = await this.authenticateUserUseCase.execute({
-        cpf,
-        password
-      })
+    const useCaseResponse = await this.authenticateUserUseCase.execute({
+      cpf,
+      password
+    })
 
-      const viewModel = this.authenticateUserPresenter.transform(
-        useCaseResponse
-      )
+    const viewModel = this.authenticateUserPresenter.transform(useCaseResponse)
 
-      return this.ok(viewModel)
-    } catch (error) {
-      return this.fail(error)
-    }
+    return this.ok(viewModel)
   }
 }
 

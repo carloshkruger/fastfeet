@@ -15,17 +15,13 @@ class FindDeliveryDetailsController extends Controller {
   }
 
   async handle(request: ControllerRequest): Promise<ControllerResponse> {
-    try {
-      const { deliveryId } = request.data
+    const { deliveryId } = request.data
 
-      const useCaseResponse = await this.useCase.execute({ deliveryId })
+    const useCaseResponse = await this.useCase.execute({ deliveryId })
 
-      const viewModel = this.presenter.transform(useCaseResponse)
+    const viewModel = this.presenter.transform(useCaseResponse)
 
-      return this.ok(viewModel)
-    } catch (error) {
-      return this.fail(error)
-    }
+    return this.ok(viewModel)
   }
 }
 

@@ -62,14 +62,17 @@ describe('AuthenticateUserController', () => {
   it('should call use case with correct values', async () => {
     const useCaseSpy = jest.spyOn(authenticateUserUseCase, 'execute')
 
-    await authenticateUserController.handle({
-      data: validAuthenticationInfo
-    })
-
-    expect(useCaseSpy).toHaveBeenCalledWith(validAuthenticationInfo)
+    try {
+      await authenticateUserController.handle({
+        data: validAuthenticationInfo
+      })
+    } catch {
+    } finally {
+      expect(useCaseSpy).toHaveBeenCalledWith(validAuthenticationInfo)
+    }
   })
 
-  it('should return 500 if Presenter throws', async () => {
+  it('should throws if Presenter throws', async () => {
     jest
       .spyOn(authenticateUserUseCase, 'execute')
       .mockImplementation(async () => {
@@ -85,10 +88,10 @@ describe('AuthenticateUserController', () => {
         throw new Error()
       })
 
-    const response = await authenticateUserController.handle({
-      data: validAuthenticationInfo
-    })
-
-    expect(response.statusCode).toBe(500)
+    await expect(
+      authenticateUserController.handle({
+        data: validAuthenticationInfo
+      })
+    ).rejects.toThrow()
   })
 })

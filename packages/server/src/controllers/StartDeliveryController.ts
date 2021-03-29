@@ -11,19 +11,15 @@ class StartDeliveryController extends Controller {
   }
 
   async handle(request: ControllerRequest): Promise<ControllerResponse> {
-    try {
-      const { deliveryId } = request.data
-      const { loggedUserId = '' } = request
+    const { deliveryId } = request.data
+    const { loggedUserId = '' } = request
 
-      await this.startDeliveryUseCase.execute({
-        deliveryId,
-        deliveryManId: loggedUserId
-      })
+    await this.startDeliveryUseCase.execute({
+      deliveryId,
+      deliveryManId: loggedUserId
+    })
 
-      return this.noContent()
-    } catch (error) {
-      return this.fail(error)
-    }
+    return this.noContent()
   }
 }
 

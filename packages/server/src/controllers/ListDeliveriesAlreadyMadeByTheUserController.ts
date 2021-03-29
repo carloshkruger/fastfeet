@@ -15,19 +15,15 @@ class ListDeliveriesAlreadyMadeByTheUserController extends Controller {
   }
 
   async handle(request: ControllerRequest): Promise<ControllerResponse> {
-    try {
-      const { loggedUserId = '' } = request
+    const { loggedUserId = '' } = request
 
-      const useCaseResponse = await this.useCase.execute({
-        deliveryManId: loggedUserId
-      })
+    const useCaseResponse = await this.useCase.execute({
+      deliveryManId: loggedUserId
+    })
 
-      const viewModel = this.presenter.transform(useCaseResponse)
+    const viewModel = this.presenter.transform(useCaseResponse)
 
-      return this.ok(viewModel)
-    } catch (error) {
-      return this.fail(error)
-    }
+    return this.ok(viewModel)
   }
 }
 

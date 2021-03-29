@@ -56,15 +56,15 @@ describe('CreateUserController', () => {
     expect(useCaseSpy).toHaveBeenCalledWith(validUserInfo)
   })
 
-  it('should return 500 if Presenter throws', async () => {
+  it('should throws if Presenter throws', async () => {
     jest.spyOn(createUserṔresenter, 'transform').mockImplementation(() => {
       throw new Error()
     })
 
-    const response = await createUserController.handle({
-      data: validUserInfo
-    })
-
-    expect(response.statusCode).toBe(500)
+    await expect(
+      createUserController.handle({
+        data: validUserInfo
+      })
+    ).rejects.toThrow()
   })
 })

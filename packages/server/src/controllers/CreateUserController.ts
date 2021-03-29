@@ -15,31 +15,27 @@ class CreateUserController extends Controller {
   }
 
   async handle(request: ControllerRequest): Promise<ControllerResponse> {
-    try {
-      const {
-        name,
-        email,
-        cpf,
-        password,
-        passwordConfirmation,
-        isAdmin
-      } = request.data
+    const {
+      name,
+      email,
+      cpf,
+      password,
+      passwordConfirmation,
+      isAdmin
+    } = request.data
 
-      const useCaseResponse = await this.createUserUseCase.execute({
-        name,
-        email,
-        cpf,
-        password,
-        passwordConfirmation,
-        isAdmin
-      })
+    const useCaseResponse = await this.createUserUseCase.execute({
+      name,
+      email,
+      cpf,
+      password,
+      passwordConfirmation,
+      isAdmin
+    })
 
-      const viewModel = this.createUserPresenter.transform(useCaseResponse)
+    const viewModel = this.createUserPresenter.transform(useCaseResponse)
 
-      return this.created(viewModel)
-    } catch (error) {
-      return this.fail(error)
-    }
+    return this.created(viewModel)
   }
 }
 

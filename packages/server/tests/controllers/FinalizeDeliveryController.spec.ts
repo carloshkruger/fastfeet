@@ -101,20 +101,20 @@ describe('FinalizeDeliveryController', () => {
     })
   })
 
-  it('should return 500 if use case throws', async () => {
+  it('should throw if use case throws', async () => {
     jest
       .spyOn(finalizeDeliveryUseCase, 'execute')
       .mockImplementation(async () => {
         throw new Error()
       })
 
-    const response = await finalizeDeliveryController.handle({
-      data: {
-        deliveryId: delivery.id.value
-      },
-      loggedUserId: user.id.value
-    })
-
-    expect(response.statusCode).toBe(500)
+    expect(
+      finalizeDeliveryController.handle({
+        data: {
+          deliveryId: delivery.id.value
+        },
+        loggedUserId: user.id.value
+      })
+    ).rejects.toThrow()
   })
 })

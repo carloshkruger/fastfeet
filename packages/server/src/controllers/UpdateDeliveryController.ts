@@ -11,39 +11,35 @@ class UpdateDeliveryController extends Controller {
   }
 
   async handle(request: ControllerRequest): Promise<ControllerResponse> {
-    try {
-      const {
-        deliveryId,
-        deliveryManId,
-        recipientName,
-        productName,
-        address,
-        postalCode,
-        neighborhood,
-        complement,
-        number,
-        city,
-        state
-      } = request.data
+    const {
+      deliveryId,
+      deliveryManId,
+      recipientName,
+      productName,
+      address,
+      postalCode,
+      neighborhood,
+      complement,
+      number,
+      city,
+      state
+    } = request.data
 
-      await this.updateDeliveryUseCase.execute({
-        deliveryId,
-        deliveryManId,
-        recipientName,
-        productName,
-        address,
-        postalCode,
-        neighborhood,
-        complement,
-        number,
-        city,
-        state
-      })
+    await this.updateDeliveryUseCase.execute({
+      deliveryId,
+      deliveryManId,
+      recipientName,
+      productName,
+      address,
+      postalCode,
+      neighborhood,
+      complement,
+      number,
+      city,
+      state
+    })
 
-      return this.noContent()
-    } catch (error) {
-      return this.fail(error)
-    }
+    return this.noContent()
   }
 }
 

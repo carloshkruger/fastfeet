@@ -48,7 +48,7 @@ describe('CreateDeliveryController', () => {
     expect(response.statusCode).toBe(201)
   })
 
-  it('should return 500 if UseCase throws', async () => {
+  it('should throws if UseCase throws', async () => {
     const user = UserTestFactory.create()
 
     jest
@@ -57,21 +57,21 @@ describe('CreateDeliveryController', () => {
         throw new Error()
       })
 
-    const response = await createDeliveryController.handle({
-      data: {
-        deliveryManId: user.id.value,
-        recipientName: 'valid recipient name',
-        productName: 'valid product name',
-        address: 'valid address',
-        city: 'valid city',
-        state: 'valid state',
-        neighborhood: 'valid neighborhood',
-        complement: 'valid complement',
-        number: 999,
-        postalCode: '89186000'
-      }
-    })
-
-    expect(response.statusCode).toBe(500)
+    await expect(
+      createDeliveryController.handle({
+        data: {
+          deliveryManId: user.id.value,
+          recipientName: 'valid recipient name',
+          productName: 'valid product name',
+          address: 'valid address',
+          city: 'valid city',
+          state: 'valid state',
+          neighborhood: 'valid neighborhood',
+          complement: 'valid complement',
+          number: 999,
+          postalCode: '89186000'
+        }
+      })
+    ).rejects.toThrow()
   })
 })

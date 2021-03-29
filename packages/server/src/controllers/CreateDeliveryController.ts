@@ -15,39 +15,35 @@ class CreateDeliveryController extends Controller {
   }
 
   async handle(request: ControllerRequest): Promise<ControllerResponse> {
-    try {
-      const {
-        deliveryManId,
-        recipientName,
-        productName,
-        address,
-        postalCode,
-        neighborhood,
-        complement,
-        number,
-        city,
-        state
-      } = request.data
+    const {
+      deliveryManId,
+      recipientName,
+      productName,
+      address,
+      postalCode,
+      neighborhood,
+      complement,
+      number,
+      city,
+      state
+    } = request.data
 
-      const useCaseResponse = await this.createDeliveryUseCase.execute({
-        deliveryManId,
-        recipientName,
-        productName,
-        address,
-        postalCode,
-        neighborhood,
-        complement,
-        number,
-        city,
-        state
-      })
+    const useCaseResponse = await this.createDeliveryUseCase.execute({
+      deliveryManId,
+      recipientName,
+      productName,
+      address,
+      postalCode,
+      neighborhood,
+      complement,
+      number,
+      city,
+      state
+    })
 
-      const viewModel = this.presenter.transform(useCaseResponse)
+    const viewModel = this.presenter.transform(useCaseResponse)
 
-      return this.created(viewModel)
-    } catch (error) {
-      return this.fail(error)
-    }
+    return this.created(viewModel)
   }
 }
 

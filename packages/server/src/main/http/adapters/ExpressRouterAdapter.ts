@@ -1,5 +1,6 @@
-import { Controller } from '@core/controller'
+import { Controller, ControllerResponse } from '@core/controller'
 import { Logger } from '@shared/utils/Logger'
+import { removeTempFile } from '@shared/utils/removeTempFile'
 import { Request, Response } from 'express'
 
 class ExpressRouterAdapter {
@@ -22,11 +23,17 @@ class ExpressRouterAdapter {
           .status(controllerResponse.statusCode)
           .json(controllerResponse.body)
       } catch (error) {
+        try {
+          removeTempFile(request.file ? request.file.filename : '')
+        } catch {}
+
         Logger.error(error)
 
-        return response.status(500).json({
-          error: 'Internal server error'
-        })
+        const controllerResponse = controller.fail(error)
+
+        return response
+          .status(controllerResponse.statusCode)
+          .json(controllerResponse.body)
       }
     }
   }
