@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img alt="Login Screen" src="./screenshots/logo.png" />
+    FastFeet
 </h1>
 
 # Sobre o projeto
