@@ -55,6 +55,7 @@ Backend da aplicação foi desenvolvido utilizando arquitetura limpa.
 - BCrypt
 - JWT
 - Multer
+- Winston
 
 # Licença
 
