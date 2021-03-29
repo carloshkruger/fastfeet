@@ -1,4 +1,4 @@
-import { Controller, ControllerResponse } from '@core/controller'
+import { Controller } from '@core/controller'
 import { Logger } from '@shared/utils/Logger'
 import { removeTempFile } from '@shared/utils/removeTempFile'
 import { Request, Response } from 'express'
