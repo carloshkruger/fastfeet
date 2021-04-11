@@ -3,7 +3,6 @@ import {
   ControllerRequest,
   ControllerResponse
 } from '@core/controller'
-import { removeTempFile } from '@shared/utils/removeTempFile'
 import { FinalizeDeliveryUseCase } from '@useCases/FinalizeDelivery/FinalizeDeliveryUseCase'
 
 class FinalizeDeliveryController extends Controller {
