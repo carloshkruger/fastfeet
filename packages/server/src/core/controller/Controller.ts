@@ -4,6 +4,16 @@ import { ConflictError } from '@core/errors/ConflictError'
 import { Logger } from '@shared/utils/Logger'
 
 abstract class Controller {
+  public async execute(props: ControllerRequest): Promise<ControllerResponse> {
+    try {
+      const response = await this.handle(props)
+
+      return response
+    } catch (error) {
+      return this.fail(error)
+    }
+  }
+
   public abstract handle(props: ControllerRequest): Promise<ControllerResponse>
 
   protected ok(data: any): ControllerResponse {
@@ -36,6 +46,8 @@ abstract class Controller {
   }
 
   public fail(error: Error): ControllerResponse {
+    Logger.error(error)
+
     try {
       if (!(error instanceof AppError)) {
         return this.serverError(error)
