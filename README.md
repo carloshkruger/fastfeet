@@ -2,10 +2,10 @@
     FastFeet
 </h1>
 
-# Sobre o projeto
+# About the project
 
-Trata-se de uma aplicação para uma transportadora fictícia. A versão mobile representa a visão do entregador.
-Backend da aplicação foi desenvolvido utilizando arquitetura limpa.
+This is an application for a fictitious delivery company. The mobile version represents the delivery person's vision.
+Application backend was developed using clean architecture.
 
 # Layout
 
@@ -28,16 +28,16 @@ Backend da aplicação foi desenvolvido utilizando arquitetura limpa.
     </tr>
 </table>
 
-# Funcionalidades
+# Functionalities
 
-- Autenticação de usuários ( entregadores e admin )
-- Gestão de usuários (criar / atualizar)
-- Gestão de encomendas ( criar / atualizar )
-- Visualizar encomendas
-- Iniciar entrega
-- Finalizar entrega (enviando foto da assinatura do destinatário)
+- Authentication ( deliverers e administration )
+- User management (create / update)
+- Delivery management ( create / update )
+- View deliveries
+- Start a delivery
+- Finish a delivery (sending a photo of the recipient's signature)
 
-# Tecnologias
+# Tech stack
 
 ## Mobile
 
@@ -56,7 +56,3 @@ Backend da aplicação foi desenvolvido utilizando arquitetura limpa.
 - JWT
 - Multer
 - Winston
-
-# Licença
-
-Esse projeto está sob a licença MIT.
